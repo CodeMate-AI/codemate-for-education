@@ -1,0 +1,4 @@
+powershell
+
+.venv/scripts/activate
+uvicorn main:app

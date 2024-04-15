@@ -4,7 +4,8 @@ const env = {
     "scripts": {
         "paths": {
             "dash": "./components/dash.js",
-            "playground": "./components/playground.js"
+            "playground": "./components/playground.js",
+            "assignments": "./components/assignments.js"
         },
         "elements": {
             "dash": null,
@@ -22,8 +23,8 @@ const env = {
         }
         if(document.querySelector(".nav_elm_active")) {
             document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");}
-        document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
-        eval(`env.load.components.${env.active_page}()`);
+            document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
+            eval(`env.load.components.${env.active_page}()`);
 
 
         document.querySelectorAll(".nav_elm").forEach((e)=>{
@@ -33,6 +34,21 @@ const env = {
                 e.classList.add("nav_elm_active");
                 env.active_page = e.getAttribute("nav");
                 eval(`env.load.components.${env.active_page}()`);
+
+                // Update URL
+        
+                let newUrl = new URL(window.location.href);
+                newUrl.searchParams.set('app', env.active_page);
+                if(newUrl.searchParams.get('app') === "playground" && newUrl.searchParams.get('id') === null && newUrl.searchParams.get('language') === null){
+                        newUrl.searchParams.set('id',"123456")
+                        newUrl.searchParams.set('language',"text")
+                } else if(newUrl.searchParams.get('app') !== "playground" && newUrl.searchParams.get('id') !== null && newUrl.searchParams.get('language') !== null) {
+                        // newUrl.searchParams.set('id',"")
+                        // newUrl.searchParams.set('language',"")
+                        newUrl.searchParams.delete('id')
+                        newUrl.searchParams.delete('language')
+                    }
+                history.pushState({}, '', newUrl);
             }
         })
     },
@@ -224,6 +240,16 @@ const env = {
                         script.src = env.scripts.paths.playground;
                         document.body.appendChild(script);
                     })
+            },
+            "assignments" : () => {
+                fetch("./components/assignments.cmfe")
+                .then((assign) => assign.text())
+                .then((assignment)=>{
+                    env.app.innerHTML = assignment;
+                    var script = document.createElement("script");
+                    script.src = env.scripts.paths.assignments;
+                    document.body.appendChild(script);
+                })
             }
         }
     }

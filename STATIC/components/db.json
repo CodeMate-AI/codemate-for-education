@@ -43,6 +43,41 @@
                 },
                 "code_id": "123457"
             }
+        ],
+        "pending" : [
+            {
+                "title": "Api in Nodejs(Javascript)",
+                "description": "Write a Nodejs script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
+                "status": "pending",
+                "stats": {
+                    "accuracy": 0.99,
+                    "efficiency": 0.84,
+                    "score": 0.93
+                },
+                "code_id": "123457"
+            },
+            {
+                "title": "WebSite in C++",
+                "description": "Write a C++ script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
+                "status": "pending",
+                "stats": {
+                    "accuracy": 0.99,
+                    "efficiency": 0.84,
+                    "score": 0.93
+                },
+                "code_id": "123457"
+            },
+            {
+                "title": "Fibonnaci Series in Rust",
+                "description": "Write a Rust script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
+                "status": "pending",
+                "stats": {
+                    "accuracy": 0.99,
+                    "efficiency": 0.84,
+                    "score": 0.93
+                },
+                "code_id": "123457"
+            }
         ]
         
     }
