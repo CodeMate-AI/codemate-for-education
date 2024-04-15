@@ -1,0 +1,60 @@
+html,
+body{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+#root{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+#sidebar{
+    height: 100%;
+    width: 350px;
+    padding: 20px;
+    background: black;
+}
+
+#new_chat{
+    color: white;
+    height: 40px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    transition: all ease 0.2s;
+    /* border: 1px solid grey; */
+    border-radius: 7px;
+}#new_chat:hover{
+    background-color: rgba(255, 255, 255, 0.178);
+}#new_chat > span{
+    /* margin-left: 10px; */
+}
+
+#app{
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#header{
+    height: 50px;
+    width: 100%;
+    display: flex;
+}
+
+#inp_field{
+    height: ;
+}

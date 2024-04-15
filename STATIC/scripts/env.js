@@ -1,0 +1,235 @@
+const env = {
+    "active_page": null,
+    "app": document.getElementById("app"),
+    "scripts": {
+        "paths": {
+            "dash": "./components/dash.js",
+            "playground": "./components/playground.js"
+        },
+        "elements": {
+            "dash": null,
+        },
+        "data": {
+            "dash": null
+        }
+    },
+    "messages": [],
+    "init": ()=>{
+        let url = new URL(window.location.href);
+        env.active_page = url.searchParams.get('app');
+        if(env.active_page === null) {
+            env.active_page = "dash";
+        }
+        if(document.querySelector(".nav_elm_active")) {
+            document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");}
+        document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
+        eval(`env.load.components.${env.active_page}()`);
+
+
+        document.querySelectorAll(".nav_elm").forEach((e)=>{
+            e.onclick = ()=>{
+                if(document.querySelector(".nav_elm_active")) {
+                    document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");}
+                e.classList.add("nav_elm_active");
+                env.active_page = e.getAttribute("nav");
+                eval(`env.load.components.${env.active_page}()`);
+            }
+        })
+    },
+    "load": {
+        "components": {
+            "dash": ()=>{
+                fetch("./components/dash.cmfe")
+                .then((dash)=>dash.text())
+                .then((dash)=>{
+                    fetch("./components/db.json")
+                    .then((resp)=>resp.json())
+                    .then((resp)=>{
+                        env.scripts.data.dash = resp;
+                        dash = dash.replace("{{assignments.submitted}}", resp.assignment_stats.submitted);
+                        dash = dash.replace("{{assignments.pending}}", resp.assignment_stats.pending);
+                        dash = dash.replace("{{proficiency}}", resp.proficiency);
+                        return dash;
+                    }).then((dash)=>{
+                        env.scripts.elements.dash = document.createElement("script");
+                        env.scripts.elements.dash.src = env.scripts.paths.dash;
+                    }).then(()=>{
+                        var elm = document.createElement("script");
+                        elm.src = env.scripts.paths.dash;
+                        document.body.appendChild(elm);
+                    }).then(()=>{
+                        setTimeout(()=>{
+                            var assignments__sa = "";
+
+                            env.scripts.data.dash.assignments.submitted.forEach((e)=>{
+                                var temp = dash_elms.submitted_assignment;
+                                temp = temp.replace("{{sa.title}}", e.title);
+                                temp = temp.replace("{{sa.task}}", e.description);
+                                if(e.status == "pending"){
+                                    temp = temp.replace("{{sa.stat}}", dash_elms.submitted_assignment_stats.pending);
+                                    temp = temp.replace("{{sa.donwload.report}}", "sa_rept_disabled");
+                                }else{
+                                    temp = temp.replace("{{sa.stat}}", dash_elms.submitted_assignment_stats.success);
+                                    temp = temp.replace("{{sa.donwload.report}}", "");
+                                }
+
+                                assignments__sa += temp;
+                            });
+
+                            dash = dash.replace("{{sa.stat}}", assignments__sa);
+                            // console.log(dash);
+                            env.app.innerHTML = dash;
+                            env.app.appendChild(env.scripts.elements.dash);
+                            setTimeout(()=>{
+                                fillContainerWithDivs('presenter');
+                            }, 100);
+                        }, 100);
+                    })
+                    .then(()=>{
+                        var int___ = setInterval(()=>{
+                            if(document.getElementsByClassName("success_acc__").length > 0){
+                                console.log("FK I AM HERE!")
+                                var success_elms = {
+                                    "acc": document.querySelectorAll(".success_acc__"),
+                                    "eff": document.querySelectorAll(".success_eff__"),
+                                    "scr": document.querySelectorAll(".success_scr__")
+                                };
+
+                                console.log(success_elms);
+
+                                var counter = 0;
+
+                                env.scripts.data.dash.assignments.submitted.forEach((e)=>{
+                                    if(e.status == "completed"){
+                                        var sa__upss = new ProgressBar.Circle(success_elms.acc[counter], {
+                                            color: '#aaa',
+                                            // This has to be the same size as the maximum width to
+                                            // prevent clipping
+                                            strokeWidth: 4,
+                                            trailWidth: 10,
+                                            easing: 'easeInOut',
+                                            duration: 1400,
+                                            text: {
+                                            autoStyleContainer: false
+                                            },
+                                            from: { color: '#2A9D8F', width: 10},
+                                            to: { color: '#2A9D8F', width: 10},
+                                            // Set default step function for all animate calls
+                                            step: function(state, circle) {
+                                            circle.path.setAttribute('stroke', state.color);
+                                            circle.path.setAttribute('stroke-width', state.width);
+                                        
+                                            var value = Math.round(circle.value() * 100);
+                                            if (value === 0) {
+                                                circle.setText('');
+                                            } else {
+                                                circle.setText(value);
+                                            }
+                                        
+                                            }
+                                        });
+                                        // sa__upss.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+                                        sa__upss.text.style.fontSize = '1rem';
+
+                                        sa__upss.animate(e.stats.accuracy);
+
+
+
+
+                                        var sa__eff___ = new ProgressBar.Circle(success_elms.eff[counter], {
+                                            color: '#aaa',
+                                            strokeWidth: 4,
+                                            trailWidth: 10,
+                                            easing: 'easeInOut',
+                                            duration: 1400,
+                                            text: {
+                                            autoStyleContainer: false
+                                            },
+                                            from: { color: '#2A9D8F', width: 10},
+                                            to: { color: '#2A9D8F', width: 10},
+                                            // Set default step function for all animate calls
+                                            step: function(state, circle) {
+                                            circle.path.setAttribute('stroke', state.color);
+                                            circle.path.setAttribute('stroke-width', state.width);
+                                        
+                                            var value = Math.round(circle.value() * 100);
+                                            if (value === 0) {
+                                                circle.setText('');
+                                            } else {
+                                                circle.setText(value);
+                                            }
+                                        
+                                            }
+                                        });
+                                        // sa__eff___.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+                                        sa__eff___.text.style.fontSize = '1rem';
+
+                                        sa__eff___.animate(e.stats.efficiency);
+
+
+
+
+
+                                        
+                                        var sa__scr___ = new ProgressBar.Circle(success_elms.scr[counter], {
+                                            color: '#aaa',
+                                            // This has to be the same size as the maximum width to
+                                            // prevent clipping
+                                            strokeWidth: 4,
+                                            trailWidth: 10,
+                                            easing: 'easeInOut',
+                                            duration: 1000,
+                                            text: {
+                                            autoStyleContainer: false
+                                            },
+                                            from: { color: '#2A9D8F', width: 10 },
+                                            to: { color: '#2A9D8F', width: 10 },
+                                            // Set default step function for all animate calls
+                                            step: function(state, circle) {
+                                            circle.path.setAttribute('stroke', state.color);
+                                            circle.path.setAttribute('stroke-width', state.width);
+                                        
+                                            var value = Math.round(circle.value() * 100);
+                                            if (value === 0) {
+                                                circle.setText('');
+                                            } else {
+                                                circle.setText(value);
+                                            }
+                                        
+                                            }
+                                        });
+                                        // sa__scr___.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+                                        sa__scr___.text.style.fontSize = '1rem';
+
+                                        sa__scr___.animate(e.stats.score);
+
+
+
+                                        counter += 1;
+                                    }
+                                })
+
+                                clearInterval(int___);
+                            }
+                        }, 500);
+                    })
+                })
+            },
+            "playground": () => {
+                fetch("./components/playground.cmfe")
+                    .then((play)=>play.text())
+                    .then((playground)=>{
+                        env.app.innerHTML = playground;
+                        var script = document.createElement("script");
+                        script.src = env.scripts.paths.playground;
+                        document.body.appendChild(script);
+                    })
+            }
+        }
+    }
+}
+
+
+
+
+env.init();
