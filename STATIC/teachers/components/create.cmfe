@@ -24,28 +24,38 @@
     form {
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 20px;
+      padding-top: 30px;
+      padding-bottom: 10px;
     }
 
     .title-wali-div {
       display: flex;
       flex-direction: row;
-      justify-items: space-between;
-      gap: 10px;
+      gap: 50px; 
     }
     .div1 {
       flex:1;
       display:flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      margin: 0;
+    }
+    .div1 > .label2 {
+      padding-top: 10px;
     }
     .div2 {
-      flex:1;
-
+      flex:1.2;
+      display: flex;
+    flex-direction: column;
+      gap: 8px;
+      justify-content: start;
+      margin: 0;
     }
     .headings {
      color: #011936;
      font-weight: 600 ;
+     font-size: 0.9rem;
     }
 
   .common-input {
@@ -57,12 +67,28 @@
   background: none;
   padding: 5px;
   border-radius: 5px;
-  font-size: 1.2em;
-  font-size:1rem;
+  font-size:0.9rem;
 }
 
-.upload-container {
-  border: 2px dotted #000;
+.upload-area {
+  flex:1;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #48AEF3;
+  stroke-width: 2;
+  stroke-dashoffset: 35;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #48AEF3;
 }
 
 .text-area {
@@ -74,19 +100,117 @@
 textarea {
   top: 0;
   left: 0;
-  width: 95%;
+  width: 99.5%;
   border: 1px solid #d1d1d1;
   outline: none;
   background: none;
   padding: 5px;
   border-radius: 10px;
-  font-size: 1.2em;
-  font-size:1rem;
+  font-size:0.9rem;
 }
 
 .input-output {
   flex: 1;
 }
+
+.input_button {
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  width: 90%;
+  border: 1px solid #d1d1d1;
+  outline: none;
+  padding: 3px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.input_button input {
+    flex:2;
+    border: none; /* Remove borders from input and button */
+    padding: 5px; /* Optional: Add padding for better appearance */
+    margin: 0;
+}
+.input_button button {
+    flex:1;
+    border: none;
+    margin: 0;
+    color: #48AEF3;
+    background: none;
+}
+
+.input_button > input:focus {
+  border: none;
+  outline: none;
+}
+
+.publish_button {
+  background: #888888;
+  color: white;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  width: 8%;
+  height: 10%;
+  padding: 10px;
+}
+
+#progress-wali-class {
+ padding-right: 0 !important;
+ padding-left: 0 !important;
+  border-top: 1.5px solid #D9D9D9BF;
+  border-bottom: 1.5px solid #D9D9D9BF;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  font-size: 0.9rem;
+}
+
+.progress-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  color: #465362BF;
+  position: relative; /* Position relative for pseudo-element */
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background: #46536280;
+  border-radius: 50%;
+}
+
+span.active {
+  background-color: #011936;
+}
+
+/* Add dashed line between progress-content */
+.progress-content:not(:last-child)::after {
+  margin-left: 20px ;
+  margin-right: 20px ;
+  padding-left: 100px ;
+  content: "";
+  height: 1px;
+  width: 100px; /* Adjust width of the dashed line */
+  background-color: transparent; /* Set background color */
+  border-bottom: 1.6px dashed #888888;
+  stroke-width: 6; /* Add dashed line */
+  top: 50%; /* Position at the middle of the parent */
+  right: 100px;
+  left: 100px; /* Position to the right of the parent */
+}
+
+
  
 </style>
 
@@ -94,15 +218,31 @@ textarea {
   <span>User/Assignments</span>
   <h1>Create Assignment</h1>
 </div>
+<div id="progress-wali-class" style="padding-left: 0 !important; padding-right: 0 !important;">
+  <div class="progress-content">
+    <span class="dot active"></span>
+    <p>Generate</p>
+  </div>
+  <div class="progress-content">
+    <span class="dot"></span>
+    <p>Choose</p>
+  </div>
+  <div class="progress-content">
+    <span class="dot"></span>
+    <p>Publish and Share</p>
+  </div>
+</div>
 <form>
   <div class="title-wali-div">
     <div class="div1">
       <label for="title" class="headings">Enter Title</label>
-      <input type="text" placeholder="title" class="common-input">
-      <label for="description" class="headings">Brief Description</label>
-      <input type="text" placeholder="description" class="common-input">
+      <input type="text"  class="common-input" style="width: 99% !important; height: 23px;">
+      <label for="description" class="headings label2">Brief Description</label>
+      <textarea name="" id="" cols="35" rows="4"></textarea>
   </div>
-  <div class="upload-container div2">
+  <div class="div2">
+  <label for="" class="headings">Attachment</label>
+  <div class="upload-area">
     <label for="file-upload" class="upload-btn">
       <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 24C4.5 14.5719 4.5 9.85786 7.42894 6.92894C10.3579 4 15.0719 4 24.5 4C33.928 4 38.6422 4 41.571 6.92894C44.5 9.85786 44.5 14.5719 44.5 24C44.5 33.428 44.5 38.1422 41.571 41.071C38.6422 44 33.928 44 24.5 44C15.0719 44 10.3579 44 7.42894 41.071C4.5 38.1422 4.5 33.428 4.5 24ZM24.5 35.5C25.3284 35.5 26 34.8284 26 34V23.6214L29.4394 27.0606C30.0252 27.6464 30.9748 27.6464 31.5606 27.0606C32.1464 26.4748 32.1464 25.5252 31.5606 24.9394L25.5606 18.9393C25.2794 18.658 24.8978 18.5 24.5 18.5C24.1022 18.5 23.7206 18.658 23.4394 18.9393L17.4393 24.9394C16.8536 25.5252 16.8536 26.4748 17.4393 27.0606C18.0251 27.6464 18.9749 27.6464 19.5607 27.0606L23 23.6214V34C23 34.8284 23.6716 35.5 24.5 35.5ZM16.5 15.5C15.6716 15.5 15 14.8284 15 14C15 13.1716 15.6716 12.5 16.5 12.5H32.5C33.3284 12.5 34 13.1716 34 14C34 14.8284 33.3284 15.5 32.5 15.5H16.5Z" fill="#48AEF3"/>
@@ -112,18 +252,39 @@ textarea {
     <input type="file" id="file-upload" style="display: none;">
   </div>
   </div>
+  </div>
   <div class="text-area">
     <label for="name" class="headings">Problem Statement</label>
-    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <textarea name="" id="" cols="30" rows="4"></textarea>
   </div>
   <div class=" title-wali-div">
    <div class="text-area input-output">
     <label for="input" class="headings">Sample Input</label>
-    <input type="text" placeholder="title" >  
+   <div class="input_button">
+    <input type="text" >  
+    <button>Or Generate using AI</button>
+   </div>
   </div>
     <div class="text-area input-output">
       <label for="output" class="headings">Sample Output</label>
-    <input type="text" placeholder="description" >
+   <div class="input_button">
+    <input type="text"  >
+    <button>Or Generate using AI</button>
+   </div>
     </div>
   </div>
+  <button class="publish_button">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.4296 11.8442C18.5061 12.5945 18.55 13.3206 18.55 14.0002C18.55 15.2724 18.3962 16.7089 18.161 18.1613C16.7086 18.3965 15.2721 18.5502 14 18.5502C12.7336 18.5502 11.2975 18.3969 9.83877 18.1609C9.6037 16.7085 9.44995 15.2722 9.44995 14.0002C9.44995 13.3209 9.4938 12.5946 9.57047 11.8442C11.1014 12.0893 12.6286 12.2502 14 12.2502C15.3714 12.2502 16.8986 12.0893 18.4296 11.8442Z" fill="white"/>
+    <path d="M20.5003 11.466C20.595 12.344 20.65 13.1988 20.65 14.0001C20.65 15.1693 20.533 16.452 20.3466 17.7539C22.99 17.2023 25.4334 16.4976 26.7423 16.0964C27.1652 15.9668 27.3315 15.9152 27.5544 15.826C27.6659 15.7815 27.768 15.7361 27.9012 15.6725C27.9664 15.1241 28 14.566 28 14.0001C28 12.5041 27.7654 11.063 27.331 9.71143L27.2178 9.74704C25.8491 10.1634 23.287 10.8995 20.5003 11.466Z" fill="white"/>
+    <path d="M26.5356 7.75924C25.1598 8.17622 22.772 8.85379 20.2132 9.38131C19.6238 5.79895 18.5907 2.22595 18.0936 0.60791C21.7896 1.7363 24.8364 4.35283 26.5356 7.75924Z" fill="white"/>
+    <path d="M18.1489 9.76305C16.7004 9.99708 15.2684 10.15 14 10.15C12.7316 10.15 11.2996 9.99708 9.8512 9.76307C10.4062 6.3734 11.397 2.91075 11.9037 1.25777C12.0333 0.834747 12.0849 0.668587 12.1741 0.445573C12.2186 0.33416 12.264 0.231973 12.3276 0.0988533C12.876 0.0335733 13.4341 0 14 0C14.5912 0 15.1737 0.03664 15.7457 0.107773C15.7578 0.154187 15.769 0.19572 15.7801 0.235013C15.8129 0.351107 15.8642 0.514267 15.9504 0.788053L15.9594 0.816813C16.3913 2.18964 17.5358 6.01868 18.1489 9.76305Z" fill="white"/>
+    <path d="M7.78673 9.38128C8.37348 5.81471 9.39982 2.26096 9.8959 0.642363L9.90645 0.60791C6.21037 1.73628 3.16361 4.35282 1.46448 7.75923C2.84025 8.1762 5.22794 8.85376 7.78673 9.38128Z" fill="white"/>
+    <path d="M0.66912 9.71143C0.23464 11.063 0 12.5042 0 14.0002C0 14.5854 0.0359066 15.1622 0.10564 15.7286L0.32628 15.8022L0.32804 15.8027L0.3302 15.8035L0.33172 15.8039C0.402733 15.8275 2.48407 16.5148 5.22504 17.1968C5.99848 17.3892 6.81743 17.5794 7.65341 17.7536C7.467 16.4519 7.35 15.1694 7.35 14.0002C7.35 13.1986 7.40499 12.3438 7.49963 11.466C4.71237 10.8993 2.14957 10.163 0.781293 9.74668L0.771773 9.74377L0.66912 9.71143Z" fill="white"/>
+    <path d="M14 20.6501C15.1692 20.6501 16.4518 20.5331 17.7537 20.3467C17.2021 22.9901 16.4974 25.4335 16.0962 26.7423C15.9666 27.1653 15.915 27.3315 15.8258 27.5545C15.7813 27.666 15.736 27.7681 15.6724 27.9013C15.124 27.9665 14.5658 28.0001 14 28.0001C13.4341 28.0001 12.876 27.9665 12.3276 27.9013C12.264 27.7681 12.2186 27.666 12.1741 27.5545C12.0849 27.3316 12.0333 27.1653 11.9037 26.7424C11.5025 25.4336 10.7979 22.9904 10.2463 20.3472C11.5438 20.5329 12.8268 20.6501 14 20.6501Z" fill="white"/>
+    <path d="M4.71795 19.2347C2.98466 18.8034 1.50842 18.3701 0.60791 18.0938C1.96339 22.5337 5.46638 26.0367 9.90639 27.3921L9.89584 27.3577C9.46268 25.9444 8.62524 23.0557 8.02916 19.9713C6.86995 19.7472 5.74291 19.4896 4.71795 19.2347Z" fill="white"/>
+    <path d="M27.3576 18.1043C25.9443 18.5375 23.0554 19.3749 19.9708 19.9709C19.3748 23.0555 18.5374 25.9443 18.1042 27.3577L18.0936 27.3921C22.5336 26.0367 26.0366 22.5337 27.392 18.0938L27.3576 18.1043Z" fill="white"/>
+    <path d="M0.147095 15.7642C0.195561 15.7704 0.235068 15.7771 0.248175 15.78C0.259655 15.7828 0.277641 15.7876 0.284161 15.7894L0.298575 15.7935L0.306335 15.7959L0.314495 15.7984L0.321335 15.8006C0.317495 15.7994 0.239708 15.7799 0.147095 15.7642Z" fill="white"/>
+    </svg>
+    Publish</button>
 </form>
