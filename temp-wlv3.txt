@@ -1,0 +1,453 @@
+{
+    "text": " B. B. Bhophe. B. B. D. D She's got a smile that it seems to me Reminds me of childhood memories Where everything Once is precious, the bright blue sky Now and then When I see her face She takes me away to that special place And if I stare too long I'd probably break down and cry Oh, sweet tire of mine Whoa, oh, oh, oh, sweet love of mine. She's got eyes of the bluest skies As if they thought of rain I'd hate to look into those eyes And see an ounce of pain Her hair reminds me of a warm safe place Whereas a child I'd hide And grey on the thunder And the rain, you'd quietly my eyes Oh Sweet child of mine Oh Oh sweet love of mine Oh Oh Oh Oh sweet child of mine Ooh Yeah I, yeah. Thank you. Where do we go? Where do we go now? Where do we go? Where do we go? Where do we go? Where do we go now? Where do we go? Where do we go? Oh, where do we go now? Where do we go now? Where do we go now? Where do we go? Oh, where do we go now? Where do we go? Where do we go? Where do we go now? Where do we go? Where do we go now? No, no, no, no, no, no. Sweet child Sweet child Oh my Thank you.",
+    "chunks": [
+        {
+            "timestamp": [
+                0.0,
+                1.0
+            ],
+            "text": " B."
+        },
+        {
+            "timestamp": [
+                1.0,
+                2.0
+            ],
+            "text": " B."
+        },
+        {
+            "timestamp": [
+                2.0,
+                3.0
+            ],
+            "text": " Bhophe."
+        },
+        {
+            "timestamp": [
+                3.0,
+                4.0
+            ],
+            "text": " B."
+        },
+        {
+            "timestamp": [
+                4.0,
+                5.0
+            ],
+            "text": " B."
+        },
+        {
+            "timestamp": [
+                5.0,
+                6.0
+            ],
+            "text": " D."
+        },
+        {
+            "timestamp": [
+                6.0,
+                24.0
+            ],
+            "text": " D"
+        },
+        {
+            "timestamp": [
+                0.0,
+                4.36
+            ],
+            "text": " She's got a smile that it seems to me"
+        },
+        {
+            "timestamp": [
+                4.36,
+                8.0
+            ],
+            "text": " Reminds me of childhood memories"
+        },
+        {
+            "timestamp": [
+                8.0,
+                9.72
+            ],
+            "text": " Where everything"
+        },
+        {
+            "timestamp": [
+                9.72,
+                13.36
+            ],
+            "text": " Once is precious, the bright blue sky"
+        },
+        {
+            "timestamp": [
+                13.36,
+                17.76
+            ],
+            "text": " Now and then"
+        },
+        {
+            "timestamp": [
+                17.76,
+                19.72
+            ],
+            "text": " When I see her face"
+        },
+        {
+            "timestamp": [
+                19.72,
+                23.34
+            ],
+            "text": " She takes me away to that special place"
+        },
+        {
+            "timestamp": [
+                23.34,
+                25.42
+            ],
+            "text": " And if I stare too long"
+        },
+        {
+            "timestamp": [
+                25.42,
+                28.5
+            ],
+            "text": " I'd probably break down and cry"
+        },
+        {
+            "timestamp": [
+                0.0,
+                6.0
+            ],
+            "text": " Oh, sweet tire of mine"
+        },
+        {
+            "timestamp": [
+                6.0,
+                14.0
+            ],
+            "text": " Whoa, oh, oh, oh, sweet love of mine."
+        },
+        {
+            "timestamp": [
+                0.0,
+                5.76
+            ],
+            "text": " She's got eyes of the bluest skies"
+        },
+        {
+            "timestamp": [
+                5.76,
+                8.88
+            ],
+            "text": " As if they thought of rain"
+        },
+        {
+            "timestamp": [
+                8.88,
+                13.48
+            ],
+            "text": " I'd hate to look into those eyes"
+        },
+        {
+            "timestamp": [
+                13.48,
+                16.4
+            ],
+            "text": " And see an ounce of pain"
+        },
+        {
+            "timestamp": [
+                16.4,
+                21.12
+            ],
+            "text": " Her hair reminds me of a warm safe place"
+        },
+        {
+            "timestamp": [
+                21.12,
+                23.76
+            ],
+            "text": " Whereas a child I'd hide"
+        },
+        {
+            "timestamp": [
+                23.76,
+                27.04
+            ],
+            "text": " And grey on the thunder"
+        },
+        {
+            "timestamp": [
+                27.04,
+                29.98
+            ],
+            "text": " And the rain, you'd quietly"
+        },
+        {
+            "timestamp": [
+                0.0,
+                2.0
+            ],
+            "text": " my eyes"
+        },
+        {
+            "timestamp": [
+                2.0,
+                4.0
+            ],
+            "text": " Oh"
+        },
+        {
+            "timestamp": [
+                4.0,
+                7.0
+            ],
+            "text": " Sweet child of mine"
+        },
+        {
+            "timestamp": [
+                7.0,
+                9.0
+            ],
+            "text": " Oh"
+        },
+        {
+            "timestamp": [
+                9.0,
+                11.0
+            ],
+            "text": " Oh"
+        },
+        {
+            "timestamp": [
+                11.0,
+                15.0
+            ],
+            "text": " sweet love of mine"
+        },
+        {
+            "timestamp": [
+                16.0,
+                18.0
+            ],
+            "text": " Oh"
+        },
+        {
+            "timestamp": [
+                18.0,
+                19.0
+            ],
+            "text": " Oh"
+        },
+        {
+            "timestamp": [
+                19.0,
+                20.0
+            ],
+            "text": " Oh"
+        },
+        {
+            "timestamp": [
+                20.0,
+                23.0
+            ],
+            "text": " Oh sweet child of mine"
+        },
+        {
+            "timestamp": [
+                23.0,
+                25.0
+            ],
+            "text": " Ooh"
+        },
+        {
+            "timestamp": [
+                25.0,
+                26.0
+            ],
+            "text": " Yeah"
+        },
+        {
+            "timestamp": [
+                0.0,
+                1.0
+            ],
+            "text": " I, yeah."
+        },
+        {
+            "timestamp": [
+                0.0,
+                2.0
+            ],
+            "text": " Thank you."
+        },
+        {
+            "timestamp": [
+                0.0,
+                8.44
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                8.44,
+                10.88
+            ],
+            "text": " Where do we go now?"
+        },
+        {
+            "timestamp": [
+                10.88,
+                12.24
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                14.24,
+                15.92
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                15.92,
+                17.84
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                17.84,
+                20.32
+            ],
+            "text": " Where do we go now?"
+        },
+        {
+            "timestamp": [
+                22.0,
+                23.68
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                23.68,
+                25.68
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                25.68,
+                27.84
+            ],
+            "text": " Oh, where do we go now?"
+        },
+        {
+            "timestamp": [
+                0.0,
+                5.08
+            ],
+            "text": " Where do we go now?"
+        },
+        {
+            "timestamp": [
+                5.08,
+                7.16
+            ],
+            "text": " Where do we go now?"
+        },
+        {
+            "timestamp": [
+                7.16,
+                8.56
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                8.56,
+                12.84
+            ],
+            "text": " Oh, where do we go now?"
+        },
+        {
+            "timestamp": [
+                12.84,
+                15.92
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                15.92,
+                16.96
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                16.96,
+                20.32
+            ],
+            "text": " Where do we go now?"
+        },
+        {
+            "timestamp": [
+                20.32,
+                23.92
+            ],
+            "text": " Where do we go?"
+        },
+        {
+            "timestamp": [
+                23.92,
+                27.92
+            ],
+            "text": " Where do we go now?"
+        },
+        {
+            "timestamp": [
+                27.92,
+                29.84
+            ],
+            "text": " No, no, no, no, no, no."
+        },
+        {
+            "timestamp": [
+                0.0,
+                2.0
+            ],
+            "text": " Sweet child"
+        },
+        {
+            "timestamp": [
+                2.0,
+                4.0
+            ],
+            "text": " Sweet child"
+        },
+        {
+            "timestamp": [
+                4.0,
+                6.0
+            ],
+            "text": " Oh"
+        },
+        {
+            "timestamp": [
+                6.0,
+                8.0
+            ],
+            "text": " my"
+        },
+        {
+            "timestamp": [
+                0.0,
+                2.0
+            ],
+            "text": " Thank you."
+        }
+    ]
+}

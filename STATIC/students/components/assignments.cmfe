@@ -1,0 +1,194 @@
+<style>
+    /* #main {
+        height: 100%;
+        width: 100%;
+        flex: 1;
+        display: flex;
+        padding-bottom: 20px;
+        justify-content: space-between;
+        box-sizing: border-box;
+    } */
+
+    #main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    padding-bottom: 20px;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+#headings__ {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    padding-left: 0;
+    padding-top: 50px;
+    text-align: center;
+}
+
+    #header {
+        height: 100px;
+        width: 100%;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    #header>h1 {
+        font-size: 36px;
+        font-weight: bold !important;
+        margin: 0;
+        color: #011936;
+    }
+
+    #header>span {
+        color: rgb(88, 88, 88);
+        font-size: 17px;
+    }
+
+    #container {
+        flex: 1;
+        width: 33.33%;
+        border: 2px solid #d1d1d1;
+        padding-top: 20px;
+        padding-right: 25px;
+        padding-bottom: 20px;
+        padding-left: 15px;
+        border-radius: 15px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        gap: 10px;
+        overflow: auto;
+        margin-top: 10px;
+    }
+
+    #container-inside {
+        /* flex: 1; */
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        justify-content: space-between;
+        width: 100%;
+        border: 2px solid #d1d1d1;
+        padding: 20px;
+        padding-bottom: 2px;
+        border-radius: 15px;
+        box-sizing: border-box;
+    }
+
+    #container-inside  .content {
+        flex:2;
+        display: flex;
+        flex-direction: column;
+        color:  #465362BF;
+        margin: 0;
+    }
+
+    #container-inside  button{
+        width: Fixed (200px)px;
+        height: Hug (10px)px;
+        padding: 14px 60px 14px 60px;
+        gap: 10px;
+        border-radius: 5px;
+        opacity: 0px;
+        background: #2CA3F2;
+        border-color: #d1d1d1;
+        color: white;
+        outline: none;
+        border: none;
+    }
+
+      .btn {
+        flex: 1;
+        padding-top:35px;
+        padding-right: 0;
+        margin:0;
+    }
+
+    .btn-inside {
+        padding-left: 200px
+    }
+
+     .date-diff {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        margin:0
+    }
+
+     .date-diff  span {
+        color: #2CA3F2;
+    }
+
+     .title {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #011936;
+        margin:0
+    }
+
+    .description, .date-diff {
+        font-size: 0.9rem
+    }
+
+    /* #headings-above {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+        padding-left: 7px;
+        padding-top: 10px;
+    } */
+
+    #headings__ .assignment__ {
+            background-color: #d1d1d1;
+    font-size: 1rem;
+    display: flex;
+    color: black;
+    padding: 10px;
+    border-radius: 6px;
+    /* border-top-right-radius: 15px; */
+    /* border-bottom-left-radius: 0; */
+    /* border-bottom-right-radius: 0; */
+    border: none;
+    width: 10vw;
+    justify-content: center;
+    cursor: pointer;
+    }
+    #headings__ div.active {
+    background-color: #011936;
+    color: white /* Change to your active color */
+}
+.assignment__{
+    pointer-events: all;
+}
+
+*{
+    pointer-events: all;
+}
+</style>
+<div id="header">
+    <span>User/Assignments</span>
+    <h1>My Assignments</h1>
+</div>
+<div id="headings__">
+    <div class="assignment__ active">Pending</div>
+    <div class="assignment__">Completed</div>
+</div>
+<div id="main">
+    <div id="container">
+        {{assignments.pending}}
+    </div>
+</div>

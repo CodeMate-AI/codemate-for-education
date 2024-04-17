@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import requests
 import json
+from transcription_pipeline import pipe
 
 load_dotenv(override=True)
 app = FastAPI()
@@ -120,13 +121,3 @@ async def chat(request: Request):
         return {
             "response": response.choices[0].message.content
         }
-
-
-
-
-app.mount("/", StaticFiles(directory="./STATIC"), name="static")
-@app.get("/")
-async def read_root():
-    # Specify the path to your index.html file
-    file_path = "./STATIC/index.html"
-    return FileResponse(file_path)

@@ -1,0 +1,129 @@
+<style>
+       #header {
+        height: 100px;
+        width: 100%;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    #header>h1 {
+        font-size: 36px;
+        font-weight: bold !important;
+        margin: 0;
+        color: #011936;
+    }
+
+    #header>span {
+        color: rgb(88, 88, 88);
+        font-size: 17px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .title-wali-div {
+      display: flex;
+      flex-direction: row;
+      justify-items: space-between;
+      gap: 10px;
+    }
+    .div1 {
+      flex:1;
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .div2 {
+      flex:1;
+
+    }
+    .headings {
+     color: #011936;
+     font-weight: 600 ;
+    }
+
+  .common-input {
+  top: 0;
+  left: 0;
+  width: 80%;
+  border: 1px solid #d1d1d1;
+  outline: none;
+  background: none;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  font-size:1rem;
+}
+
+.upload-container {
+  border: 2px dotted #000;
+}
+
+.text-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+textarea {
+  top: 0;
+  left: 0;
+  width: 95%;
+  border: 1px solid #d1d1d1;
+  outline: none;
+  background: none;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  font-size:1rem;
+}
+
+.input-output {
+  flex: 1;
+}
+ 
+</style>
+
+<div id="header">
+  <span>User/Assignments</span>
+  <h1>Create Assignment</h1>
+</div>
+<form>
+  <div class="title-wali-div">
+    <div class="div1">
+      <label for="title" class="headings">Enter Title</label>
+      <input type="text" placeholder="title" class="common-input">
+      <label for="description" class="headings">Brief Description</label>
+      <input type="text" placeholder="description" class="common-input">
+  </div>
+  <div class="upload-container div2">
+    <label for="file-upload" class="upload-btn">
+      <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 24C4.5 14.5719 4.5 9.85786 7.42894 6.92894C10.3579 4 15.0719 4 24.5 4C33.928 4 38.6422 4 41.571 6.92894C44.5 9.85786 44.5 14.5719 44.5 24C44.5 33.428 44.5 38.1422 41.571 41.071C38.6422 44 33.928 44 24.5 44C15.0719 44 10.3579 44 7.42894 41.071C4.5 38.1422 4.5 33.428 4.5 24ZM24.5 35.5C25.3284 35.5 26 34.8284 26 34V23.6214L29.4394 27.0606C30.0252 27.6464 30.9748 27.6464 31.5606 27.0606C32.1464 26.4748 32.1464 25.5252 31.5606 24.9394L25.5606 18.9393C25.2794 18.658 24.8978 18.5 24.5 18.5C24.1022 18.5 23.7206 18.658 23.4394 18.9393L17.4393 24.9394C16.8536 25.5252 16.8536 26.4748 17.4393 27.0606C18.0251 27.6464 18.9749 27.6464 19.5607 27.0606L23 23.6214V34C23 34.8284 23.6716 35.5 24.5 35.5ZM16.5 15.5C15.6716 15.5 15 14.8284 15 14C15 13.1716 15.6716 12.5 16.5 12.5H32.5C33.3284 12.5 34 13.1716 34 14C34 14.8284 33.3284 15.5 32.5 15.5H16.5Z" fill="#48AEF3"/>
+      </svg>        
+      <span>Browse or Upload File</span>
+    </label>
+    <input type="file" id="file-upload" style="display: none;">
+  </div>
+  </div>
+  <div class="text-area">
+    <label for="name" class="headings">Problem Statement</label>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+  </div>
+  <div class=" title-wali-div">
+   <div class="text-area input-output">
+    <label for="input" class="headings">Sample Input</label>
+    <input type="text" placeholder="title" >  
+  </div>
+    <div class="text-area input-output">
+      <label for="output" class="headings">Sample Output</label>
+    <input type="text" placeholder="description" >
+    </div>
+  </div>
+</form>

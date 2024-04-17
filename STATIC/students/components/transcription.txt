@@ -1,0 +1,633 @@
+Current Time: 22:15:08
+
+[00:03.280 --> 00:04.640]  Hey everyone, welcome back to the channel.
+[00:04.800 --> 00:06.260]  I hope you guys are doing extremely well.
+[00:06.620 --> 00:10.120]  So this video is going to be another video from the Strivers A to Z DSA course.
+[00:10.800 --> 00:14.500]  And this is India's most in-depth DSA Algo course.
+[00:14.640 --> 00:15.320]  Why do I see that?
+[00:15.340 --> 00:18.180]  Because this course has 455 modules.
+[00:18.760 --> 00:24.160]  I can guarantee you that you can take any paid batches, any free courses, none of those
+[00:24.160 --> 00:26.180]  courses will have 455 modules.
+[00:26.180 --> 00:32.340]  This is an extremely in-depth DSA Algo course that can teach you everything in-breath about
+[00:32.340 --> 00:33.180]  DSA Algo.
+[00:33.640 --> 00:37.900]  And in the previous videos, we have covered step 1.1 and 1.2.
+[00:38.460 --> 00:43.100]  And regarding step 1.3, I've added a video on C++ STL on the playlist.
+[00:43.560 --> 00:44.700]  You can go and watch it.
+[00:44.960 --> 00:48.620]  Regarding Java collection, I'll be adding a video in the future, not now.
+[00:48.840 --> 00:52.640]  If you need a video now, you can go to YouTube and you'll find a lot of other resources from
+[00:52.640 --> 00:53.940]  where you can study.
+[00:54.380 --> 00:57.960]  So in this video, we will be discussing about basic maths.
+[00:58.440 --> 01:00.980]  Why am I teaching just the basic maths as of now?
+[01:01.300 --> 01:04.220]  So you're starting off as of now, your brain will not be that mature.
+[01:04.460 --> 01:09.560]  So if I teach you the advanced level concepts, you might understand, but it won't be that
+[01:10.020 --> 01:10.920]  convenient for you.
+[01:11.020 --> 01:13.140]  That is why my teaching way is very different.
+[01:13.320 --> 01:16.240]  What I do is I usually start off with the basic stuffs.
+[01:16.420 --> 01:19.680]  I give you a lot of time to absorb it and then we move on to the advanced part.
+[01:19.880 --> 01:22.760]  This is why all the basic stuffs are initially there.
+[01:22.760 --> 01:27.280]  And then we move on to the DS Algo and in the step 8, we have a section as advanced
+[01:27.280 --> 01:27.900]  mathematics.
+[01:28.020 --> 01:31.980]  I'll be covering everything that is related to advanced mathematics that might be asked
+[01:31.980 --> 01:32.740]  in interviews.
+[01:33.120 --> 01:35.380]  But as of now, we will be learning basic maths.
+[01:35.780 --> 01:37.620]  Now these are the problems which we will be solving.
+[01:38.120 --> 01:42.220]  But before that, let's learn some basic maths concept.
+[01:42.820 --> 01:47.180]  So before solving all the problems that are listed under basic maths, we'll be starting
+[01:47.180 --> 01:49.600]  off with the basic maths concept.
+[01:49.600 --> 01:54.340]  I'll be teaching you the concepts initially and then we can solve all the problems listed
+[01:54.340 --> 01:55.240]  under the section.
+[01:55.780 --> 01:58.760]  The first concept that I'll be teaching you is the digit concept.
+[01:59.340 --> 02:04.860]  Remember one thing, this is a very, very important concept because if you know how to play around
+[02:06.080 --> 02:10.620]  digits, then you'll be able to solve most of the problems in basic maths.
+[02:11.140 --> 02:12.740]  Let's understand the digit concept.
+[02:12.740 --> 02:16.640]  Imagine I give you a number like 7789.
+[02:17.700 --> 02:19.440]  This is the number that I'm giving you.
+[02:19.780 --> 02:23.620]  Now I ask you to perform extraction of digits.
+[02:24.460 --> 02:26.760]  I ask you to perform extraction of digits.
+[02:27.480 --> 02:32.100]  Let's learn the extraction of digits and after that you will see how we can implement the
+[02:32.100 --> 02:35.180]  extraction of digits in order to solve most of the problems.
+[02:35.880 --> 02:38.500]  So when I say extraction of digits, what does it mean?
+[02:38.500 --> 02:47.200]  It means I need 9, I need 8, I need 7, I need 7, I need all the digits individually.
+[02:48.080 --> 02:49.480]  So what is this digit?
+[02:49.940 --> 02:50.100]  9.
+[02:50.800 --> 02:51.980]  Can I say this?
+[02:52.480 --> 02:55.320]  If I do a module of 10, I'll actually get 9.
+[02:55.780 --> 02:56.960]  Now you might ask, why?
+[02:58.040 --> 03:01.820]  If I ask you the numbers that are divisible by 10, what are they?
+[03:01.820 --> 03:10.380]  10, 20, 30, 40, 50, 60, 70, so on, 100 and so on, do you see a pattern?
+[03:11.180 --> 03:16.000]  All the numbers that are divisible by 10 are actually ending with 0, is it?
+[03:16.480 --> 03:16.700]  Right?
+[03:17.340 --> 03:22.100]  So can I say, if I'm doing a module of 10, what is the meaning of module operator in
+[03:22.100 --> 03:22.660]  basic maths?
+[03:23.060 --> 03:27.900]  The module operator says, I will divide the number by 10 and whatever is the remainder,
+[03:28.300 --> 03:29.460]  that is what I'll give you.
+[03:29.460 --> 03:34.620]  So if I see, if I'm dividing this number by 10, what is the nearest number?
+[03:35.580 --> 03:38.780]  Obviously, that will be 7, 7, 8, 0.
+[03:39.380 --> 03:42.640]  If I divide it by 10, this is what the nearest number will be.
+[03:43.020 --> 03:45.660]  And can I say that the remainder then will be 9?
+[03:46.220 --> 03:50.720]  Because if I divide it by 10, then this is where the division, like this is the number
+[03:50.720 --> 03:52.820]  which will get divided by 10.
+[03:54.060 --> 03:56.380]  And after that, we'll be left out with 9.
+[03:56.380 --> 04:03.020]  That is why when you do a module of 10, you always get the last digit, you get the last
+[04:03.020 --> 04:04.280]  digit as 9.
+[04:04.800 --> 04:06.060]  So this is how you get the 9 digit.
+[04:06.560 --> 04:09.360]  If I ask you, can I get the next digit 8?
+[04:09.960 --> 04:11.300]  How will you get the next digit 8?
+[04:11.740 --> 04:12.380]  Very simple.
+[04:12.840 --> 04:15.660]  You say, okay, this number, let's divide it by 10.
+[04:16.200 --> 04:23.020]  So if I divide 7, 7, 8, 9 by 10, can I say I'll get 7, 7, 8, 0.9?
+[04:23.620 --> 04:24.200]  Can I say this?
+[04:24.800 --> 04:29.680]  If I divide the number 7, 7, 8, 9 by 10, I'll get 7, 7, 8, 0.9.
+[04:30.120 --> 04:34.960]  And if I take an integer round off, if I take an integer portion of it, the integer portion
+[04:34.960 --> 04:36.580]  is 7, 7, 8.
+[04:36.980 --> 04:42.180]  So what you will do is, in order to go to the next step, you will say, divide by 10.
+[04:42.680 --> 04:48.700]  If you do a division by 10, you'll actually get 7, 7, 8, 0.9, but you just take the integer
+[04:48.700 --> 04:49.020]  part.
+[04:49.260 --> 04:51.480]  That is why you get 7, 7, 8.
+[04:52.000 --> 04:57.180]  So once you have 7, 7, 8 with you, if I need the last digit, which is 8, how do you extract
+[04:57.180 --> 04:57.480]  it?
+[04:57.880 --> 05:02.240]  Again, the same way, you say, can I divide, modularize with 10?
+[05:02.900 --> 05:06.040]  If I do a mod of 10, I'll actually get 8, why?
+[05:06.380 --> 05:11.080]  Because the nearest number will be 7, 7, 0, which is divisible by 10, which will still
+[05:11.080 --> 05:15.200]  leave a remainder of 8, so I get the digit 8 as well.
+[05:15.200 --> 05:21.200]  Now, can I see if I require the next digit 7, can I again do a division by 10?
+[05:21.900 --> 05:26.560]  If I do a division by 10, can I say I'll get 77, why?
+[05:26.740 --> 05:35.640]  Because if I write 7, 7, 8 by 10, I'll get 77.8, and the integer portion is 77, so I
+[05:35.640 --> 05:36.280]  get 77.
+[05:36.800 --> 05:41.780]  Again, if I have to extract the last digit, can I say I'll do a modularize, a modular
+[05:41.780 --> 05:43.300]  of 10, and I'll get 7?
+[05:43.300 --> 05:51.140]  Again, I will, hence I've again extracted 7, now if I need the next extraction, I again
+[05:51.140 --> 05:58.600]  divide it by 7, so I divide it by 10, and I'll get 7, because 77, because 77 divided
+[05:58.600 --> 06:03.000]  by 10 is 7.7, and the integer part is 7, so I get 7.
+[06:03.380 --> 06:09.560]  If I do a modularize of 10, I'll actually again get 7, why will you get again 7?
+[06:09.560 --> 06:17.160]  Very obvious because the nearest number that is divisible by 10 to 7 is 0, thereby you
+[06:17.160 --> 06:19.780]  get a remainder of 7, so you get 7.
+[06:20.340 --> 06:25.380]  After that, if you again try to divide it by 10, this time you'll end up getting 0,
+[06:25.800 --> 06:32.560]  because if I take 7 divided by 10, it'll be 0.7, hence the integer part is 0, so can I
+[06:32.560 --> 06:38.220]  say if I get an integer part as 0, can I say I've extracted all the digits I have, and
+[06:38.220 --> 06:43.340]  if you see the extraction has been done in the reverse order, and all the digits have
+[06:43.340 --> 06:49.400]  been extracted, as simple as that, so this is how you can easily extract all the digits.
+[06:49.620 --> 06:52.420]  So if I try to write the pseudocode, how will the pseudocode look like?
+[06:52.900 --> 06:58.780]  Can I say, if I have the N, I can take it from the user, I can take the N from the user,
+[06:59.160 --> 07:04.520]  and imagine I'm asking you to print all the digits, extract all the digits like 9, 8,
+[07:04.520 --> 07:07.540]  7, 7, and you can print it, so how will you do it?
+[07:07.540 --> 07:08.500]  It's very simple.
+[07:09.340 --> 07:13.980]  I will be like, okay while, I know what is the last step, last step is, the extraction
+[07:13.980 --> 07:22.320]  goes on from N when it is 7789 to N till 0, so I'll be like, I'll go on till N is greater
+[07:22.320 --> 07:27.840]  than 0, which means till N doesn't becomes 0, right, and can I say, the extraction is
+[07:27.840 --> 07:34.600]  very simple, the first time N was 7789, if I had to do an extraction, it's very simple,
+[07:34.600 --> 07:42.440]  can I say the last digit is nothing but N modularized N, if I do an N modularized N,
+[07:42.580 --> 07:48.600]  I'll get the last digit 9, and in order to get the next digit, what I do is, I say N
+[07:48.600 --> 07:55.220]  is N by 10, and this is how I can do it, so what will happen, let's do a dry run, at first
+[07:55.220 --> 08:03.540]  imagine I give, the user gives N as 7789, so this says 7789 greater than 0, which is
+[08:03.540 --> 08:11.080]  true, so the last digit happens to be 7789 modularized N, hence the last digit is 9,
+[08:11.560 --> 08:16.540]  if you want to print this last digit, you can definitely put a print operation, in C++
+[08:16.540 --> 08:22.360]  it is C out, in Java it is system.out.println, so you can go ahead and print the 9, once
+[08:22.360 --> 08:29.480]  you have done this, can I say if you do 7789 by 10, then the N will reduce itself, what
+[08:29.480 --> 08:35.860]  will be the value of N now, can I say the value of N will be nothing but 778, this is
+[08:35.860 --> 08:41.460]  how the first iteration, first iteration will happen, and then it will reach here, then
+[08:41.460 --> 08:46.040]  again goes here, when it goes here, it will be a new iteration, and can I say this time
+[08:46.040 --> 08:54.400]  the iteration will be 778, because N has changed itself to 778, and 778 greater than 0, what
+[08:54.400 --> 08:58.360]  I'll do is, I'll quickly erase this, because it's the next iteration, so let's quickly
+[08:58.360 --> 09:06.400]  erase this, and the next iteration what will happen, it will say 778 modularized N, the
+[09:06.400 --> 09:10.760]  last digit this time will be 8, again you can print that last digit, and this time it
+[09:10.760 --> 09:18.840]  will be 778 by 10, hence N will become 77, again the iteration will go and will be 77
+[09:18.840 --> 09:24.480]  greater than 0, and this way all these steps will be performed at the end of the day, the
+[09:24.680 --> 09:30.480]  value of N, yes the value of the N will be 0, hence the while loop will be false, and
+[09:30.480 --> 09:36.240]  I can say that the execution has been completed, and you have successfully extracted all the
+[09:36.240 --> 09:41.580]  digits in the reverse fashion, very important in the reverse fashion, got it, this is what
+[09:41.580 --> 09:46.520]  is the concept of extraction of digits, and this is going to help you solve a lot of other
+[09:46.520 --> 09:47.380]  problems as well.
+[09:48.180 --> 09:53.560]  So now let's look at the first problem, it states count digits, let's understand the
+[09:53.560 --> 09:59.600]  problem, given the number N, find out and return the digits present in a number, very
+[09:59.600 --> 10:06.340]  simple, it says 156 is the number, and the number of digits is 3, imagine the N is given
+[10:06.340 --> 10:11.680]  as 7, it has just one digit, so it will be given an N, and it will tell me the number
+[10:11.680 --> 10:18.340]  of digits, so if I go back to my iPad, can I say, if I give you the number 7789, this
+[10:18.340 --> 10:24.960]  has 4 digits, can you solve this problem, using the extraction of digits, can you, you
+[10:24.960 --> 10:29.980]  will be like, this is super easy, why, because you know the extraction of digits, you know
+[10:29.980 --> 10:36.540]  one digit, two digit, three digit, four digit, the digits are extracted four times, so can
+[10:36.540 --> 10:41.820]  I say, I can give something like a counter variable over here, and you know the number
+[10:41.820 --> 10:47.860]  of times the extraction happens, that is the number of times the digit will be, so can
+[10:47.860 --> 10:54.820]  I say, I can put a counter equal to counter plus 1 on the logic of extraction of digits,
+[10:55.180 --> 11:01.260]  if I do this, can I say, I'll be able to count the number of digits, and eventually if I
+[11:01.260 --> 11:07.560]  print the count over here, can I say, that I'll always have the count of digits of any
+[11:07.560 --> 11:13.820]  given N I can. Usually in coding rounds or in your interviews, you just have to code
+[11:13.820 --> 11:18.220]  the function, the function is an int function, that means you have to return the count of
+[11:18.220 --> 11:23.160]  digits, and they'll be giving you the input, so you are given the variable, you just have
+[11:23.160 --> 11:27.080]  to return, you have to just write the code inside the function, int main and everything
+[11:27.080 --> 11:31.200]  will be written on the backend, I've already discussed about this in the pattern video,
+[11:31.300 --> 11:35.740]  in case you haven't watched it, please go back and watch it. So this was the code that
+[11:35.740 --> 11:42.360]  we discussed on the iPad, right, so the count stores the count of digits, so I'll just return
+[11:42.360 --> 11:46.620]  the count, and then I'll go ahead and run the code, and I'll see that it is running
+[11:46.620 --> 11:51.400]  absolutely fine, and then I'll go ahead and submit this. So this is how you can easily
+[11:51.400 --> 11:56.400]  solve this particular problem. Now remember one thing, this last digit does not have any
+[11:56.400 --> 12:01.700]  significance, so you can remove it. So that was for extraction of digits, but this is
+[12:01.700 --> 12:06.740]  kind of reducing the numbers, so the number of times it is divisible by 10 is the number
+[12:06.740 --> 12:13.420]  of times the digits are. Now since I've removed the modular operation, we observe something,
+[12:14.080 --> 12:19.280]  can I say the number of times it is getting divisible by 10, the number of times it is
+[12:19.280 --> 12:25.280]  getting divisible by 10 is the count of the digits, it is, and this is where something
+[12:25.280 --> 12:32.660]  like logarithmic, log base 10, 7789, if you do this in your calculator, you'll actually
+[12:32.660 --> 12:37.660]  get something like 3.89 something. So this is the value that you'll get if you do a log
+[12:37.660 --> 12:45.080]  base 10 of the number, and then if you can add a 1 to it, this will be 4.89, and if you
+[12:45.080 --> 12:51.500]  take an integer of it, that will be 4. This is another way to find count of digits. What
+[12:51.500 --> 13:00.180]  you do is very simple, you say count is equal to log 10, the number, plus 1, and you're
+[13:00.320 --> 13:05.460]  saying take the integer, or you can just autocast it, like typecast it to integer.
+[13:06.620 --> 13:12.460]  This is how, whatever you get, this is converted to an integer. If you're getting 4.89, it
+[13:12.460 --> 13:18.140]  will be truncated to 4. And now let's run this and see if it is running fine. Okay,
+[13:18.180 --> 13:24.860]  so it says out of scope, log 10 was not declared. So if you find such errors, what you can do
+[13:24.860 --> 13:30.600]  is you can go to hash include. That's basically because in their backend, they might not have
+[13:30.600 --> 13:35.400]  added all the directories. You can go ahead and add all the directories and that will
+[13:35.400 --> 13:39.260]  start working fine. Once you've done this, you can go and compile and you're seeing that
+[13:40.300 --> 13:45.180]  this is also running fine. This is one of the other ways to count digits as well. But
+[13:45.780 --> 13:49.980]  the primary concept is extraction of digits and that is what you should focus on. Now
+[13:49.980 --> 13:55.560]  if I discuss the time complexity over here, what will be the time complexity? The time
+[13:55.560 --> 14:03.360]  complexity will be nothing but log base 10 N. This is the big go of time complexity.
+[14:04.300 --> 14:11.020]  Why log base 10 N? The reason was very simple. You saw this is getting divisible by 10. How
+[14:11.020 --> 14:16.100]  many times is the loop running? The number of times it is getting divisible by 10. This
+[14:16.100 --> 14:23.800]  is why you will see time complexity is near about log base 10 N. This was 3.89 near about
+[14:23.800 --> 14:30.080]  4. The number of times this loop did run was 4. Yeah, you can avoid these operations. These
+[14:30.080 --> 14:35.920]  are single operations because imagine the number being very large. These will be considered
+[14:35.920 --> 14:43.540]  as unit operations. That is why the time complexity is log base 10 N. Got it? Whenever there is
+[14:43.820 --> 14:48.020]  division, remember this, whenever there is division, if the division is happening by
+[14:48.020 --> 14:54.840]  10, you say log base 10 N. If the division is happening by 2, you say log base 2 N. If
+[14:54.840 --> 15:00.860]  the division is happening by 5, you say log base 5 N. This is how you compute the time
+[15:00.860 --> 15:06.540]  complexity of like, this is how the logarithmic time complexities are. So whenever you're
+[15:06.640 --> 15:14.600]  writing a logic where the number of iterations depends on division and you're dividing, dividing,
+[15:14.980 --> 15:21.120]  that is when something like logarithmic will come into the time complexity. That time the
+[15:21.120 --> 15:26.500]  time complexity will not be VGO of N. If the number of iterations is based on division,
+[15:26.840 --> 15:32.080]  time complexity will be logarithmic. Remember this always. So you solved the first problem
+[15:32.080 --> 15:36.760]  count digits. The next problem is reverse a number. Let's go to the problem. It states
+[15:36.760 --> 15:41.460]  write a program to generate the reverse of a given number. Print the corresponding reverse
+[15:41.460 --> 15:46.380]  number. If a number has trailing zeros, then its reverse will not include them. For example,
+[15:46.600 --> 15:53.860]  the reverse of 100400 will be 401 instead of 00401 and these are some of the examples.
+[15:54.820 --> 16:01.300]  So let's get back to our extraction of digits concept. So according to the problem, what
+[16:01.300 --> 16:07.020]  they are wanting is, if I'm giving you the number 7789, the reverse of this number will
+[16:07.020 --> 16:14.860]  be 9877. Now we know that the extraction of digits happens in the reverse fashion where
+[16:14.860 --> 16:22.820]  we generate 9, then we generate 8, then we get 7, then we get 7. Somehow we need 9877
+[16:23.460 --> 16:29.380]  which is the similar fashion. This is where the basic maths comes in. What you do is,
+[16:30.280 --> 16:39.800]  you define a variable sum or maybe reverse number. Reverse number equal to zero. And
+[16:39.800 --> 16:51.740]  you say reverse number equal to reverse number into 10 plus last digit. Remember this. This
+[16:51.740 --> 16:59.020]  is what you say. Reverse number into 10 plus last digit. Let's see how it works. So I'm
+[16:59.020 --> 17:06.040]  saying initially reverse number is zero to start off. Let's do the step by step. First
+[17:06.040 --> 17:13.180]  step, 9 gets generated. So what am I doing is, zero into 10 because reverse number is
+[17:13.180 --> 17:22.420]  zero at the first step. At the first step, 7789, 10 will generate 9 and N would have
+[17:22.420 --> 17:31.180]  as of now become something like 7789 by 10. So N would have as of now become 778 and reverse
+[17:31.180 --> 17:39.060]  number says, reverse number is zero into 10 plus the last digit 9. So the number becomes
+[17:39.060 --> 17:45.080]  or rather the reverse number as of now is 9. Right? This is what the first iteration
+[17:45.080 --> 17:51.160]  is. Let's do the next iteration. The next iteration will be, I'll just quickly omit
+[17:51.160 --> 18:01.020]  this off. So the next iteration, can I say it's 778 greater than zero and 778 modulo
+[18:01.020 --> 18:07.840]  10. Hence the last digit is 8. I can't say this. And this will be 778 by 10. So N will
+[18:07.840 --> 18:15.480]  become 77. This time, reverse number is stored as 9 because you stored reverse number as
+[18:15.480 --> 18:22.740]  this value. So this is 9. So what do you do is, you say 9 into 10 plus the last digit
+[18:22.740 --> 18:30.900]  8. What do you get is, 9 into 10 plus the last digit 8 which makes it 98. The next time
+[18:30.900 --> 18:41.760]  you get 7, the reverse is 98 into 10 plus 7 which is 987. Next time it is 7. So 987
+[18:42.540 --> 18:52.480]  into 10 plus 7 is 9877. So you got the reverse number there. Why it's simple? Why did this
+[18:52.480 --> 18:58.260]  work? It's very easy. Understand, you're getting in last digit, you're easily getting
+[18:58.260 --> 19:04.060]  the last digit, 9. And after that you're getting the next last digit 8 and you somehow want
+[19:04.060 --> 19:11.400]  to add 8 to that 9. You somehow want to add 8 to that 9. And the easiest way is, if you
+[19:11.400 --> 19:17.440]  can somehow add a zero to this 9, it will become 90. And then if you add 8 to it, it
+[19:17.440 --> 19:22.780]  will become 98. Similarly, if you want to add 7 to it, if you want to add a 7 to it,
+[19:23.080 --> 19:29.620]  make it 987. You again add a zero and then a 7 to it, it becomes 987. Again, if you want
+[19:29.620 --> 19:36.300]  to add a 7, you again add a zero. This is why at every step, I am doing reverse number
+[19:36.840 --> 19:41.740]  into 10. Whatever you have generated into 10, that will allow the last unit digit to
+[19:41.740 --> 19:47.360]  be zero. Then when you add a digit, it goes and gets into that place. As simple as that.
+[19:49.740 --> 19:54.320]  So again, you saw that extraction of digits is actually handy. So what I'll do is I'll
+[19:54.320 --> 20:01.000]  take the number and I'll keep the reverse num equal to zero. And then I'll go ahead
+[20:01.000 --> 20:08.260]  and say n greater than zero. And I can say last digit is n modulo 10. I can say reverse
+[20:08.260 --> 20:15.740]  number is reverse number into 10 plus last digit. And I can say n is n by 10. And the
+[20:15.740 --> 20:22.420]  same time I can say cout of reverse number is what I need. Perfect. And I'll quickly
+[20:22.420 --> 20:26.260]  run the code and see if it is running fine. It is. Let's quickly sum up this and this
+[20:26.260 --> 20:32.280]  should be running fine. This dead. So the reverse number is solved again with the concept
+[20:32.280 --> 20:38.700]  of extraction of digits. Next problem is check palindrome. Now when I go to the palindrome
+[20:38.700 --> 20:43.800]  problem, let's understand the problem. It states write a program to determine if a given
+[20:43.800 --> 20:50.620]  number is palindrome or not. Print true if it is palindrome or false otherwise. So over
+[20:50.620 --> 20:56.500]  here it states palindrome are the numbers for which reverse is exactly same as the original
+[20:56.500 --> 21:01.860]  one. For example one to one. Because if you take one to one and you do a reverse of it,
+[21:02.440 --> 21:07.880]  one to one's reverse is one to one. That is why it is called as palindrome. So if I go
+[21:07.880 --> 21:14.280]  to the iPad and I write some other palindrome numbers, it's like one double three one. If
+[21:14.280 --> 21:20.500]  you write the reverse of it, it stays still one double three one. Something like 11. 11
+[21:20.500 --> 21:26.660]  in itself is a palindrome. Seven. Seven in itself is a palindrome. Whereas one to three,
+[21:27.000 --> 21:32.020]  the reverse of one to three is three to one. This is not a palindrome. So any number which
+[21:32.020 --> 21:37.540]  on reversal is the same number is a palindrome number. So the definition of palindrome number
+[21:37.540 --> 21:43.900]  says reverse of a number. So if I somehow can generate the reverse of a number, if I somehow
+[21:43.900 --> 21:49.080]  can generate the reverse of a number, which I've already did and then compare it with the original
+[21:49.080 --> 21:54.740]  N and if they come out to be same, can I say they are palindrome? I can. So over here, if you
+[21:54.740 --> 22:00.900]  remember, we took a reverse number and at the end of the day, the reverse number was nothing but the
+[22:00.900 --> 22:07.480]  reverse number. And now if I can compare this reverse number with the original number, with the
+[22:07.480 --> 22:12.360]  original number, which is N and if they come out to be same, I can say it is palindrome. Like if
+[22:12.360 --> 22:18.200]  this is true, I can say it is palindrome or I can say it is not palindrome. Can I say it? But wait,
+[22:18.920 --> 22:29.860]  if you remember, we were dividing N by 10 and at the end of the day, N was zero. So does N have
+[22:29.860 --> 22:36.820]  the original number? No, because we are doing operations with N, which has made N to be zero
+[22:36.820 --> 22:44.080]  at the end of the day. So what I need to do is maybe I need to store a duplicate of N in some
+[22:44.080 --> 22:52.100]  top variable and instead of comparing it with N, I can compare it with a duplicate because N will
+[22:52.620 --> 22:59.120]  be zero at the end of the extraction of digits. It's very important to store a copy of N somewhere
+[22:59.120 --> 23:05.040]  so that it can be used to compare it with the reverse of a number. That is the only change
+[23:05.040 --> 23:08.160]  that you have to do and that is the only thing that you have to keep in mind. So if you remember,
+[23:08.280 --> 23:12.200]  this was the code. So what I'll do is I'll just go ahead and say duplicate equal to N
+[23:12.700 --> 23:18.540]  and over here I say if do is equal to equal to reverse number, I can go ahead and print true,
+[23:18.780 --> 23:24.920]  which is what they want, which is true or else you can just go ahead and print false.
+[23:25.520 --> 23:33.380]  That is what they required. I'll quickly run it and see if it is running fine. It should be and
+[23:33.380 --> 23:39.520]  let's quickly submit this. On submitting you see that it is running absolutely fine. The next one
+[23:39.520 --> 23:46.220]  is GCD or HCF but before that we will be solving Armstrong numbers. So what is the definition of
+[23:46.220 --> 23:52.440]  Armstrong number? It's very simple. Imagine you're given this number 371. You take three cube,
+[23:53.420 --> 23:59.840]  seven cube plus one cube. If taking the cubes of these numbers like cubes of these digits
+[23:59.840 --> 24:05.760]  and adding them up sums up to the number itself, that is what you call as an Armstrong number.
+[24:05.760 --> 24:12.920]  Even if you take 1634, one cube plus six cube plus three cube plus four cube, if you sum them up,
+[24:12.920 --> 24:21.260]  you actually get 1634. But something like 35, if you take three cube plus five cube, this is not
+[24:21.260 --> 24:29.520]  going to be equal to 35. This is going to be equal to 134. So this and this are not same. Whereas 1634
+[24:29.520 --> 24:36.860]  and the summation of cubes of its digits is 1634. So you call 1634 as an Armstrong number
+[24:36.860 --> 24:42.000]  or 371 as an Armstrong number. So I hope you've got the definition of Armstrong number.
+[24:42.420 --> 24:46.340]  If you have got the definition of Armstrong number, you know how to solve it. I've already
+[24:46.340 --> 24:51.820]  taught you the extraction of digits. You know how do you extract nine? You know how do you extract
+[24:51.820 --> 24:58.460]  eight? You know how do you extract seven? You just have to do a cube of it. So can I see this time
+[24:58.460 --> 25:05.280]  instead of taking any such duplicate or reverse n, I can just take a summation because I need to
+[25:05.280 --> 25:14.560]  sum cubes and last digit is what I have to sum. Can I say sum equal to sum plus last digit multiplied
+[25:14.560 --> 25:21.580]  thrice, last digit into last digit into last digit. Can I do this? So first time nine comes in,
+[25:21.580 --> 25:28.740]  what happens? Nine into nine into nine gets added to sum. Next time eight comes in,
+[25:29.080 --> 25:33.760]  eight into eight into eight gets added to the sum. So everything is getting added.
+[25:34.320 --> 25:40.860]  First time, nine into nine, sorry, nine into nine into nine got, next time eight went eight
+[25:40.860 --> 25:45.560]  into eight into eight. Next time, seven came in seven into seven into seven. Next time again,
+[25:45.720 --> 25:49.660]  seven came in seven into seven into seven. So can I say at the end of the day,
+[25:49.660 --> 25:56.060]  Some will be storing the summation of digit cubes and after that you need to
+[25:56.060 --> 26:00.640]  just compare it with the original end. So maybe again keep a duplicate variable
+[26:00.640 --> 26:05.280]  which stores the end because at the end of the day you have to compare if this
+[26:05.280 --> 26:10.520]  and the duplicate are same. If this is, then you say it is announced. If this is not,
+[26:10.700 --> 26:16.180]  it's not announced. Again what logic worked? Extraction of digits. If you know
+[26:16.180 --> 26:19.500]  how to extract digits, you can play around with them and you can solve this
+[26:19.500 --> 26:23.860]  problem. So Armstrong number is completed and the next problem that we will be
+[26:23.860 --> 26:29.780]  doing is print all divisors. So when I say print all divisors, what does it mean?
+[26:30.140 --> 26:34.540]  Imagine I take a number like 36 and ask you what are all the numbers that divide
+[26:34.540 --> 26:40.680]  36. So you can say 1 is something which completely divides 36. You can say 2 is
+[26:40.680 --> 26:44.620]  something which completely divides 36. You can again say 3 is something which
+[26:44.620 --> 26:50.340]  completely divides 36. 4 is something which completely divides. Is 5 something
+[26:50.340 --> 26:56.400]  which completely divides 36? No. If 36 is divided by 5, it leaves a remainder of 1.
+[26:56.540 --> 27:03.640]  So not 5. 6 is something which does it. 9 is something which does it. And 12 is
+[27:03.640 --> 27:08.460]  something which does it. And 18 is something which does it. And then 36 is
+[27:08.460 --> 27:14.520]  something which does it. If I talk about 36, the divisors of 36 are 1, 2, 3,
+[27:14.520 --> 27:22.300]  4, 6, 9, 12, 18 and 36. These are the divisors of 36. The question is very
+[27:22.300 --> 27:28.460]  straightforward. You have to print all of them in this particular order. Okay. Now
+[27:28.460 --> 27:34.560]  how do I do it? It's very simple. One thing I know for sure is if I'm talking about
+[27:34.560 --> 27:39.860]  divisors or factors, they're definitely going to lie between 1 to the number
+[27:39.860 --> 27:46.320]  itself. Can I say all the divisors will be between 1 to n itself because
+[27:46.320 --> 27:51.880]  anything greater than n will never divide n for sure? So if I know all the
+[27:51.880 --> 27:58.180]  divisors are going to be between 1 and n, can I just loop from 1 to n? That's my
+[27:58.180 --> 28:02.680]  first thought process. Since I know the divisors are from 1 to n, my first
+[28:02.680 --> 28:06.860]  thought process is very simple. Then let's do one. Let's start the loop from i
+[28:07.000 --> 28:12.820]  equal to 1, i lesser than equal to n and i plus plus. This is something I know
+[28:12.820 --> 28:17.480]  for sure. So i is used to loop around. Now the first value of i is 1, then it's 2,
+[28:17.600 --> 28:22.940]  then it's 3, then it's 4, then it's 5 and then so on till 36 in this case if it is
+[28:22.940 --> 28:29.640]  n. So how do you determine that this i is a part of all the divisors? It's very
+[28:29.640 --> 28:41.600]  Can I say if it is completely dividing, if i is completely dividing n, then it is a
+[28:41.600 --> 28:46.160]  factor or a divisor. And what do you mean by completely dividing? It should leave a
+[28:46.160 --> 28:51.920]  remainder of 0. When I say leaving a remainder of 0, does it mean if I do a
+[28:51.920 --> 28:58.240]  modulated of i, if I do n module i, the value should be 0 because it's
+[28:58.240 --> 29:05.720]  completely divisible. But what I will do is I'll say okay if n module i is equal
+[29:05.720 --> 29:11.420]  to equal to 0, I will go ahead and print i in C++, C out in Java system dot out dot
+[29:11.420 --> 29:17.000]  print out. I'll go ahead and print out i. In this way I'll be able to print all the
+[29:17.000 --> 29:22.760]  factors of a particular n. If I talk about the time complexity, ask you what
+[29:22.760 --> 29:26.180]  is the time complexity of this code? You'll be like Stryver, it's very simple.
+[29:26.180 --> 29:31.820]  Since the loop is running from 1 to n, it's taking n iterations. And this is an
+[29:31.820 --> 29:35.960]  unit operation so let's not calculate it. Thereby the time
+[29:35.960 --> 29:41.320]  complexity of this particular approach is nothing but BGO of n. Very simple.
+[29:41.660 --> 29:45.640]  Over here they've given us everything. They want us to write this print divisors
+[29:45.640 --> 29:49.880]  function. Let's write the print divisors function. It takes an n and as I said
+[29:49.880 --> 29:56.200]  it's very simple. You go from 1, you go on till n, let me say i, this one. And you
+[29:56.200 --> 30:02.120]  know if n module i is equal to equal to 0, you say C out i and then you give a
+[30:02.120 --> 30:04.460]  bit of space. That's what you need to write.
+[30:06.880 --> 30:11.820]  And on submitting you will see that this is running absolutely fine. But the time
+[30:11.820 --> 30:18.300]  complexity is BGO of n. I don't want a BGO of n time complexity. Can I do it in
+[30:18.300 --> 30:22.300]  a much better way? I can't. But it requires a bit of mathematical observation.
+[30:22.860 --> 30:29.820]  Let's see that mathematical observation. So for 36 I said that 1 was a factor. If
+[30:29.820 --> 30:35.740]  1 is a factor, 1 has to be multiplied with something in order to get 36. So 1
+[30:35.740 --> 30:43.600]  was multiplied with 36. And if you carefully observe, if this is 1 and the
+[30:43.600 --> 30:51.500]  number is 36, the other number will always be n by 1. Very simple. If it is 2, the other
+[30:51.500 --> 30:58.960]  number will be n by 2 which is 36 by 2. That means 18. So you get 18. Next time it
+[30:58.960 --> 31:07.100]  was 3. So the next time it is 3. So when I take 3, it is nothing but 12, 36 by 3.
+[31:07.400 --> 31:13.240]  Because 3 into 12 will be 36. The next time when I take 4, it is 4 into 9. The next time
+[31:13.240 --> 31:20.400]  when I take 6, it is 6 into 6. Next time, the next factor is actually 9. And then
+[31:20.400 --> 31:26.220]  you multiply it with 4. The next factor is 12 and you multiply it with 3. And the
+[31:26.220 --> 31:32.160]  next factor is 18. You multiply it with 2. And the next time it is 36, you multiply
+[31:32.160 --> 31:40.880]  it with 1. So if I have to write all the factors, these are all the
+[31:40.880 --> 31:49.160]  factors. Right? But do you have a bit of observation? If I draw a line at this
+[31:49.160 --> 32:01.220]  portion, if I draw a line at this portion, and I take this and I take this, aren't they
+[32:01.220 --> 32:10.180]  equal? 1 into 36, 36 into 1. So can I say, even if I consider everything before the
+[32:10.180 --> 32:20.820]  orange line, I will get 1, I'll get 2, I'll get 3, I'll get 4, I'll get 6, I'll get 9,
+[32:21.460 --> 32:28.100]  I'll get 12, I'll get 18, and I'll get 36. Even if I take everything before the orange
+[32:28.100 --> 32:33.940]  line, even if I take everything before this orange line, do I get all the facts? I do.
+[32:33.940 --> 32:40.300]  So do I need to go beyond this orange line? No. So what is this orange line? If you
+[32:40.300 --> 32:45.960]  carefully observe, what are you doing? A small number into a big number, a small
+[32:45.960 --> 32:51.300]  number into a big number, a small number into a big number, same number, same
+[32:51.300 --> 32:59.120]  number. And then a big into small, a big into small, a big into small. Can I say,
+[32:59.120 --> 33:05.140]  this is nothing but the square root of n, because when you take square root of n,
+[33:05.700 --> 33:11.740]  square root of 36 is 6. Beyond square root, the numbers will grow, the numbers
+[33:11.740 --> 33:16.420]  will grow, and it is nothing but a replication of the upper half, the
+[33:16.420 --> 33:22.120]  replication of the upper half. So thereby, this is nothing but a repetition of the
+[33:22.120 --> 33:28.060]  upper half. Thereby I can say, even if you loop till square root of n, even if you
+[33:28.060 --> 33:33.540]  loop till square root of n, you actually can get your factors. How? If this is 1,
+[33:34.080 --> 33:40.520]  this has to be n by 1. If this is 2, this has to be n by 2. If this is 3, this has
+[33:40.520 --> 33:46.280]  to be n by 3. If this is 4, this has to be n by 4. If this is 6, this has to be n
+[33:46.280 --> 33:51.800]  by 6. So can I say, now the looping is going to be very straightforward. I loop
+[33:51.800 --> 34:00.440]  from i equal to 1 till i less than equal to square root of n and i plus plus. Can I do that?
+[34:00.960 --> 34:08.860]  And can I say, if n modulo i is a factor, then print i as one of the factors,
+[34:09.600 --> 34:14.260]  print i as one of the factors. What is the other factor? We just now found out
+[34:14.260 --> 34:18.780]  the other factor was n by i. But we need to be careful. What is the careful
+[34:18.780 --> 34:24.460]  observation? If it is 6, the other factor might be 6. They are not two different
+[34:24.460 --> 34:29.080]  factors. So if you're taking the second factor, if you're taking the second
+[34:29.080 --> 34:34.760]  factor to n by i, just make sure that n by i is not equal to i. Because the
+[34:34.760 --> 34:39.420]  second factor might turn out to be the same factor. It's very important. The n by
+[34:39.420 --> 34:43.600]  i, which is the second factor, must be compared with i. And if they're not same,
+[34:43.600 --> 34:52.720]  you can say that, maybe print, that's your another factor. That's it. So first, check
+[34:52.720 --> 34:59.860]  if i is a factor, print it. Now the other factor, n by i, with which the i will be
+[34:59.860 --> 35:05.720]  multiplied, just check if this is not equal to i. If it is not, that's the
+[35:05.720 --> 35:10.680]  second factor. That's it. So if you go ahead and print this, the printing will
+[35:10.680 --> 35:16.340]  be something like this. First 1 and 36 will get printed. Next 2 and 18 will get
+[35:16.340 --> 35:24.180]  printed. Next 3 and 12 will get printed. Next 4 and 9 will get printed. Next one i is 6.
+[35:24.740 --> 35:30.340]  6 gets printed, but the other factor is 6. And it fails this condition check.
+[35:30.680 --> 35:35.600]  Thereby, the other 6 doesn't get printed. So all the factors are printed, but
+[35:35.600 --> 35:41.700]  they're not printed in a proper, yes, they're not printed in a sorted way. So
+[35:41.700 --> 35:46.480]  what you can do is, whenever you are getting all the factors, probably you can
+[35:46.480 --> 35:51.940]  store them into a data structure. And if you have seen the C++ STL video, you know
+[35:51.940 --> 35:57.460]  which data structure you can use. You do not know what will be the size or what
+[35:57.460 --> 36:02.340]  will be the number of factors. The data structure that you will be using is a
+[36:02.340 --> 36:09.600]  list, a list in Java or a vector in C++. You'll be using an undefined, like you
+[36:09.600 --> 36:14.320]  cannot define the size of the data structure. We'll be using a list, okay. And
+[36:14.320 --> 36:18.780]  in that list, you can store it, you can store it, store, store, store. So
+[36:18.780 --> 36:23.880]  everything will be stored in the list. Once you have stored in the list, sort
+[36:23.880 --> 36:28.620]  the list. And if you sort the list, you will get everything in the sorted
+[36:28.620 --> 36:33.240]  fashion. So if I go back to the code, what did I say? We will be going till
+[36:33.240 --> 36:38.460]  square root of n, right. We will be going till square root of n. We know this is a factor.
+[36:39.040 --> 36:43.920]  And we need a list now. So let's take a list. This is our list, vector. And we
+[36:43.920 --> 36:50.540]  know ls.push back of i, we push back i. And we know the other factor is
+[36:50.540 --> 36:56.140]  n by i. If this is not equal to i, that's the other factor. Again, we will say list
+[36:56.140 --> 37:00.260]  Can you store the other factor? The other factor is n by i. Once you have stored
+[37:00.260 --> 37:08.480]  everything, can you go ahead and say over here, sort ls.begin, ls.end. Once you
+[37:08.480 --> 37:12.960]  have done this, just need to print it. You know how to print it. This is how you
+[37:12.960 --> 37:20.620]  print the list. C++ STL video guys. So I'll just iterate on the list and I'll
+[37:20.620 --> 37:25.920]  print the list with space. So all of them are correct. I'll go ahead and print and
+[37:25.920 --> 37:30.500]  it will be correct. Why did I sort it? Because they wanted us to print
+[37:30.500 --> 37:34.340]  everything in the sorted order. It's very important to sort the list. If I talk
+[37:34.340 --> 37:38.460]  about the time complexity, what will be the time complexity? Something before
+[37:38.460 --> 37:41.920]  discussing the time complexity, you're writing i less than equal to square root
+[37:41.920 --> 37:47.000]  of n. Instead of this, because square root is a function, and every time the
+[37:47.000 --> 37:51.580]  function will be called, because square root is a mathematical function in C++
+[37:51.580 --> 37:56.180]  STL. This will be called every time, which will take time itself. Instead of
+[37:56.180 --> 38:01.280]  writing this, you can actually write i into i lesser than equal to n. It will be
+[38:01.280 --> 38:08.680]  like when i reaches 6, it will be like 6 into 6 lesser than equal to 36. It will
+[38:08.680 --> 38:16.400]  work. But normally it goes to 7. 7 into 7 is not equal to 36. So this will be false.
+[38:17.180 --> 38:21.480]  Alright. So this is the other way of writing for the square root. This is
+[38:21.480 --> 38:26.740]  what you can write. So can I say this loop is running for, we go off square
+[38:26.740 --> 38:31.680]  root of n times. Can I say this? That this loop is running for, we go off square
+[38:31.680 --> 38:36.340]  root of n times. And then the number of factors, whatever is the number of factors,
+[38:36.780 --> 38:41.920]  you're sorting it. The internal sorting function takes n log n. What is the
+[38:41.920 --> 38:47.780]  internal sorting function taking? n log n. What is n? n is the number of
+[38:47.780 --> 38:53.520]  factors. n is the number of factors. Right? So can I say n is the number of
+[38:53.520 --> 38:58.040]  factors. n is not the original n. It is the number of factors. And then you're
+[38:58.040 --> 39:02.840]  going ahead and printing it. So again, taking a number of factors time to print
+[39:02.840 --> 39:07.540]  it, whatever is the number of times. So the overall time complexity in this case
+[39:07.540 --> 39:14.240]  is we go off square root of plus we go off number of factors into log of number
+[39:14.240 --> 39:24.300]  of factors. So number of factors into log of, if I write it properly, number of
+[39:25.380 --> 39:32.140]  factors. Got it? And then plus this. So we go off this plus we go off this plus we go
+[39:32.140 --> 39:36.500]  off this is the time complexity. But the motive was to teach you that you can
+[39:36.500 --> 39:42.540]  also find factors in we go off square root of n. Got it? I can say I've also
+[39:42.540 --> 39:46.820]  done print all divisors in both the ways. Now what is the next question? It
+[39:46.820 --> 39:52.080]  states check for prime. So what is the definition of a prime number? A lot of
+[39:52.080 --> 39:57.380]  you will say a number that is divisible by one and itself. This is a wrong
+[39:57.380 --> 40:02.480]  definition. Why? Because according to this definition, one is a prime number.
+[40:02.700 --> 40:06.860]  Because one is divisible by one and one is divisible by itself, which is one.
+[40:07.180 --> 40:11.600]  It's a wrong definition. Instead of this, the definition that you should always
+[40:11.600 --> 40:20.600]  keep in mind is a number that has exactly two factors, one and itself.
+[40:20.940 --> 40:26.000]  That's a better definition. One and itself. A number that has two factors, which is
+[40:26.000 --> 40:33.540]  one and itself. So if you remember, we just now computed factors. So if you're
+[40:33.540 --> 40:39.320]  given a number, something like 11. Can I say 11 has a factor of 1 and 11 itself?
+[40:39.780 --> 40:45.420]  Any other number doesn't divide. So 11 is a prime number. If I say 13, 13 is a
+[40:45.420 --> 40:50.480]  prime number because 1 and 13 divides it. If I say 5, 5 is a prime number because 1 and 5
+[40:50.480 --> 40:57.180]  divides it. If I say 4, 4 is not a prime number. Why? Because it is divisible by 1.
+[40:57.760 --> 41:01.960]  It is divisible by 2. It is also divisible by 4. So there are three
+[41:01.960 --> 41:06.700]  factors. So 4 is not a prime number. If I take 8, it is not a prime number. Why?
+[41:06.700 --> 41:13.520]  Divisible by 1, 2, 4, 8 is not a prime number. Something like 17 is a prime number
+[41:13.520 --> 41:20.740]  because divisible by 1 and 17. So what is the first? The brute force. What is the
+[41:20.740 --> 41:25.680]  definition of brute force? The algorithm which is the first algorithm or the
+[41:25.680 --> 41:32.500]  initial algorithm that comes to your mind. Okay. So can I say the simplest way
+[41:32.500 --> 41:38.840]  to check is I will do one thing. I'll keep a counter equal to zero and I know
+[41:38.840 --> 41:46.140]  it exactly has two factors. So run a loop from 1 and I'll go on till n and I'll
+[41:46.140 --> 41:51.680]  say I plus plus and I'll say hey listen if it is a factor it will be completely
+[41:51.680 --> 41:57.540]  divisible by I. Hence it will leave a remainder zero and I'll do a counter
+[41:58.040 --> 42:04.340]  plus plus and can I say at the end of the day if the counter turns out to be
+[42:04.340 --> 42:09.840]  two then I'll say it's a prime number or else it's not a prime number. So can I
+[42:09.840 --> 42:15.960]  say this is the extreme brute force approach and if I write the extreme
+[42:15.960 --> 42:20.400]  brute force approach what will be the time complexity of the extreme brute
+[42:20.400 --> 42:25.140]  force approach? Can I say I'm running a loop n and these are unit operations so
+[42:25.140 --> 42:30.040]  I can ignore. So can I say the time complexity will be b go of n because I'm
+[42:30.040 --> 42:34.580]  running a loop to check for every I which can be a factor and then I'm
+[42:34.580 --> 42:38.960]  checking it and there is and after that there are conditional checks which are
+[42:38.960 --> 42:45.000]  unit operations can be avoided. So this is b go of n and we know that factors
+[42:45.000 --> 42:50.660]  are involved. In the previous problem we did learn that all the factors can be
+[42:50.660 --> 42:56.300]  found in square root of n. Why? Because if you remember 36, 36 had a factor one
+[42:56.300 --> 43:01.760]  and the corresponding factor like the corresponding other factor was 36. 2's
+[43:01.760 --> 43:11.340]  18, 3's 12, 4's 9 and 6 6. Even if you checked till square root of n you could
+[43:11.340 --> 43:19.800]  actually count all the factors and all the factors were 1 2 3 4 6 9 12 18 36 you
+[43:19.800 --> 43:26.800]  can count all the factors. Even if you loop till square root of n. So why are you
+[43:26.800 --> 43:32.220]  looping till b go of n? Kindly loop till square root of n. So what you'll do is
+[43:32.220 --> 43:37.440]  you'll say I equal to 1 I into I lesser than n I've already taught you this and
+[43:37.960 --> 43:45.320]  counter equal to 0 and you'll say if n modulo I is equal to equal to 0 that is
+[43:45.320 --> 43:51.260]  definitely a factor and at the same time the other factor has to be different and
+[43:51.260 --> 43:57.460]  if the other factor is different then it will also be counted and then you can
+[43:57.460 --> 44:04.160]  have a same check if counter is equal to equal to 2 prime else not a prime number
+[44:04.160 --> 44:10.560]  as simple as that and if I talk about the time complexity this loop ends up
+[44:10.650 --> 44:15.950]  running for b go of square root of n if someone is coming up and asking you how
+[44:15.950 --> 44:20.090]  do you check for a prime number you say I know the square root method because I
+[44:20.090 --> 44:24.290]  know the observation for every factor there is the other corresponding number
+[44:24.290 --> 44:29.070]  with which it has to get multiplied in order to get the number thereby I can
+[44:29.070 --> 44:33.290]  just go up to square root of n nothing beyond it because till square root of n
+[44:33.290 --> 44:38.490]  I'll get all the factors. So this is the code that I did right in the iPad so
+[44:38.490 --> 44:42.550]  I'll now quickly go ahead and submit this and see if it is working fine. It is indeed
+[44:42.550 --> 44:48.230]  working fine. So we have completed the check for prime. So apparently you have
+[44:48.230 --> 44:53.670]  completed everything and the GCD or the HCF is left. So let's go across and learn
+[44:53.670 --> 44:58.670]  the GCD or HCF and then come back and take it over. So what do you mean by GCD
+[44:58.670 --> 45:05.610]  or HCF? It's very simple. Greatest common divisor or highest common factor. Let me
+[45:05.610 --> 45:11.010]  give you an example. If I give you two numbers n1 equal to 9 and n2 equal to 12
+[45:11.010 --> 45:15.850]  you need to find the highest common factor or greatest common divisor that
+[45:15.850 --> 45:22.690]  actually divides n and that divides 9 and 12. So if I write down all the factors
+[45:22.690 --> 45:35.330]  of 9 it is 1, 3 and 9. If I write down all the factors of 12 it is 1, 2, 6 and 12.
+[45:35.330 --> 45:43.710]  Even 3, 4. These are all the factors of 12. So if I ask you the common factors, the
+[45:43.710 --> 45:50.810]  common factors if I go ahead and mark it is 1, 1, it is 3, 3. So there are two common
+[45:50.810 --> 45:56.470]  factors. Out of these two common factors which is the highest one 3. So I can say
+[45:56.470 --> 46:04.350]  the GCD of 9, 12 is 3 because 3 is the largest number that divides 9 and 12
+[46:04.350 --> 46:12.150]  both. If I ask you the GCD of 11 and 13 what will it be? It will be 1. Because if
+[46:12.150 --> 46:16.750]  you try to write down all the factors of 11 it's going to be 1 and 11. All the
+[46:16.750 --> 46:24.070]  factors of 13, 1 and 13. So the common one is just 1 and that is the GCD. So there
+[46:24.070 --> 46:29.010]  will always be a GCD because 1 is a number that divides every other number.
+[46:29.010 --> 46:35.470]  So for every given two numbers there will always be a GCD or HCF. If I ask you
+[46:35.470 --> 46:43.910]  what is the GCD of 20, 30 or rather 20, 40. What is the GCD of 20, 40?
+[46:44.690 --> 46:51.330]  Because for 20, 20 is a factor and for 40, 20 is also a factor. So that's why 20. So
+[46:51.330 --> 46:56.710]  for two given numbers one of them can also be a GCD of those two given numbers.
+[46:56.710 --> 46:59.790]  So that is what is the definition of GCD.
+[47:11.290 --> 47:17.370]  So all of you know, so you know how to find factors of two given numbers. A given
+[47:17.370 --> 47:23.070]  N1 and a given N2. So in the last two problems you have learned how to find
+[47:23.070 --> 47:33.390]  factors. So imagine it's like N1 is 9 and N2 is 12. So can I say if I loop from
+[47:33.390 --> 47:41.750]  1 to 12 and for every number I'll check if they're dividing both. Does 1 divide
+[47:41.750 --> 47:49.470]  both? Yes. 1 as of now is the largest factor. Does 2 divide both? No. Does 3 divide
+[47:49.470 --> 47:55.710]  both? Yes. So 3 is the largest factor. If I can check every number and if every
+[47:55.710 --> 48:00.730]  number divides both of them, if a number divides both of them I just replace that
+[48:00.730 --> 48:07.070]  with my GCD's answer. The largest number that I get that divides both of them
+[48:07.070 --> 48:14.470]  will be my GCD. If I try to write it, can I write this as i equal to 1? Maybe I
+[48:14.700 --> 48:23.200]  will loop till N1. Maybe. I plus plus and I'll see if N1 modulo i equal to
+[48:23.200 --> 48:30.080]  equal to 0 and then N2 modulo i equal to equal to 0. As of now I know one
+[48:30.080 --> 48:35.960]  thing for sure. Any given two numbers, any given two numbers will always have a
+[48:35.960 --> 48:43.760]  GCD of 1. So GCD will be replaced by i. Can I say this? Because i is starting
+[48:43.760 --> 48:49.760]  from 1, so it goes from 1, then it goes to 2, then goes to 3. So whichever
+[48:49.760 --> 48:54.580]  number divides both of them it just keeps on getting replaced. The last
+[48:54.580 --> 49:00.260]  number which will be stored in GCD will definitely be the largest because i is
+[49:00.260 --> 49:05.560]  moving in the increasing fashion. Very simple. Now you might ask me, but Stryver,
+[49:05.560 --> 49:16.760]  what if N was given as 12 and N2 was given as 9? Then the for loop would have
+[49:16.760 --> 49:24.880]  been running for 12 times. But I know one thing for sure that if i is 10, that 10
+[49:24.880 --> 49:31.080]  will not divide 9. There is no point in checking. So can I say instead of running
+[49:31.080 --> 49:38.220]  till N1, I can actually run it for something like minimum of N1, N2
+[49:38.220 --> 49:45.720]  because I know if I run till minimum of N1, N2 like 9, if I run till 9 that
+[49:45.720 --> 49:51.660]  will suffice. Running 10, 11 doesn't make sense. For example if the number was 20
+[49:51.660 --> 49:59.340]  and 40, if I run till 20 that will work because 20 is the largest factor I can
+[49:59.340 --> 50:04.600]  have. Running it for 21, 22 will not make sense. So can I say I can run the loop
+[50:04.600 --> 50:11.500]  till minimum of N1 command? I can. Thereby, can I say the time complexity will be
+[50:11.500 --> 50:17.360]  we go of minimum of N1, N2 whichever is minimum till that I'll run the loop so
+[50:17.360 --> 50:21.800]  thereby the time complexity is minimum of N1, N2. Now you might have
+[50:21.800 --> 50:28.780]  questions in your head. But Stryver, we are trying to find IS and over
+[50:28.780 --> 50:34.760]  here what are you doing? You're going from 1, 2, 3, 4 and you're checking everyone. But
+[50:34.760 --> 50:43.420]  what if N1 is 20, N2 is 40 and I do the other way. Yes, I do the other way and I
+[50:43.420 --> 50:51.400]  say I'll run it from minimum of N1, N2, I greater than equal to 1, I minus
+[50:52.560 --> 51:02.060]  and I'll say if N1 modulo I equal to equal to 0 and and N2 modulo I equal to
+[51:02.060 --> 51:09.640]  equal to 0, I will print that as my GCD and I'll break and I'll break and you
+[51:09.640 --> 51:14.600]  know what is the task of break? It always breaks out from the outer loop. Not this
+[51:14.600 --> 51:19.540]  is a conditional statement. This is not a loop. For this break which is the loop
+[51:19.540 --> 51:23.600]  that is outside this break, this one. It will break out from this. How does it work?
+[51:24.460 --> 51:33.380]  The minimum of 20, 40 is 20. So 20. 20 modulo 20 equal to equal to 0. Yes. 40
+[51:33.380 --> 51:41.040]  modulo 20 equal to equal to 0. Yes. Print GCD as 20. Yes. Break. So the program
+[51:41.040 --> 51:46.620]  terminates. In this way you will say, in this way it will have a better complexity
+[51:46.620 --> 51:51.440]  because the moment you are getting someone from behind, it breaks out. You
+[51:51.440 --> 51:56.640]  might give me this. Yeah, definitely this might turn out to be a better one for a
+[51:56.640 --> 52:03.180]  lot of cases but still the worst case will be minimum of N1, N2.
+[52:03.920 --> 52:10.560]  Imagine I give you two numbers. N1 equal to 11, N2 equal to 13. In this case what
+[52:10.560 --> 52:16.380]  will happen? For 11 and 13, the highest common factor is 1. It will start from
+[52:16.380 --> 52:23.660]  11, 10, 9 but will not find anyone till 1. It will eventually loop from 11 to 1.
+[52:24.220 --> 52:29.460]  So no matter what you do, the time complexity will be still this because if
+[52:30.040 --> 52:35.780]  both the numbers have GCD as 1, it ends up running completely. The loop ends up
+[52:35.780 --> 52:39.740]  running completely and you know when you determine the time complexity, taught you
+[52:39.740 --> 52:44.520]  in the time complexity lecture, you always take worst case. You always take
+[52:44.520 --> 52:50.100]  worst case. The worst case is when you run it till 1. We saw the previous
+[52:50.100 --> 52:54.160]  method was a brute force method and was taking linear time complexity. Now there
+[52:54.160 --> 52:59.480]  is an algorithm known as eucalydian algorithm which is going to take much
+[52:59.480 --> 53:04.580]  much lesser time. So let's learn about it. So what is eucalydian algorithm? It
+[53:04.580 --> 53:12.960]  states if we're given two numbers N1, N2, the GCD of N1, N2, whatever is
+[53:12.960 --> 53:24.600]  the GCD of N1, N2, that's equivalent to the GCD of N1 minus N2, N2, where N1
+[53:24.600 --> 53:31.760]  is greater than N2. Usually in books you'll find them written as GCD of A, B
+[53:31.760 --> 53:39.080]  is equal to GCD of A minus B, B where A is greater than B. This is what the
+[53:39.280 --> 53:44.280]  eucalydian algorithm states. If you want a mathematical proof of it, you can
+[53:44.280 --> 53:49.540]  definitely Google search. There's a huge mathematical proof to it. Again we will
+[53:49.540 --> 53:53.520]  not go deep into the mathematical proof because it is not required in
+[53:54.060 --> 53:59.220]  programming world. You just need this concept. So just have the concept. Now if
+[53:59.220 --> 54:04.120]  I try to prove this with induction it's very simple. If I give you two numbers
+[54:04.120 --> 54:10.400]  imagine 15 and 20. So it basically states the greater number and the
+[54:10.400 --> 54:16.300]  smaller number. What is the GCD of 20, 15? We know the GCD of 20, 15 is 5.
+[54:17.020 --> 54:21.420]  So it states the GCD of 20, 15, the greater number 20 and the smaller
+[54:21.420 --> 54:29.820]  number 15 is equal to, it states greater minus smaller, 20 minus 15, 5, the
+[54:29.820 --> 54:35.600]  smaller number 15. So what is the GCD of 5, 15? That is also 5. So again by
+[54:35.600 --> 54:39.160]  induction also you can prove it. You can take any two numbers and you'll be able
+[54:39.160 --> 54:45.660]  to prove that they are same. So I can say that the GCD of 20, 15 is
+[54:45.660 --> 54:53.280]  equivalent to the GCD of 5, 15. Now you apply the eucalydian on the first two
+[54:53.280 --> 54:59.240]  numbers and whatever you get that will always be a truncated number. You saw 20
+[54:59.240 --> 55:07.340]  getting truncated to 5. Again you will apply eucalydian to this. If you try to apply
+[55:07.340 --> 55:12.540]  eucalydian to 5, 15 it has to be the greater number at first. So apparently
+[55:12.540 --> 55:17.760]  you have to apply eucalydian to 15, 5 because 15 is the greater number.
+[55:18.260 --> 55:22.020]  Right? So what do you do is you say okay let's apply eucalydian to 15, 5.
+[55:22.020 --> 55:31.000]  It will be like GCD of 15 minus 5, 10, 5. Again you can apply eucalydian to 10, 5.
+[55:31.000 --> 55:37.140]  If you apply eucalydian to 10, 5 it will be greater is 10, 10 minus 5 is 5, 5, 5.
+[55:37.780 --> 55:43.420]  Again if you apply eucalydian to 5, 5 it'll be, both of them are same,
+[55:43.580 --> 55:49.880]  any one can be at the front, 0, 5. So 1 apparently becomes 0. The moment
+[55:49.880 --> 55:56.840]  one of the numbers becomes 0, the other number is actually a GCD, is actually a
+[55:56.840 --> 56:02.640]  GCD. So the GCD of 20, 15 is this. What do you do is you take two numbers, apply
+[56:02.640 --> 56:06.960]  eucalydian, get it smaller, apply eucalydian, get it smaller, get it smaller, get it
+[56:06.960 --> 56:11.980]  smaller till one of them is 0. If one of them is 0, the other is 0. So the
+[56:11.980 --> 56:19.860]  algorithm is quite simple. Start with a, b, keep on truncating, keep on
+[56:19.860 --> 56:26.180]  minus b, b and keep on doing till one of them, the greater number becomes 0.
+[56:26.780 --> 56:31.620]  As simple as that. But there's a catch. This might end up taking a lot more time.
+[56:32.380 --> 56:39.700]  Imagine I give you a number like a equal to 52 and b equal to 10. So it'll be like
+[56:39.700 --> 56:49.360]  what will you do? You will say GCD of 52, 10 truncated to GCD 42, 10.
+[56:49.360 --> 56:58.920]  Truncated to GCD 32, 10. Truncated to GCD 22, 10. Truncated to GCD 12, 10.
+[56:59.340 --> 57:05.620]  Truncated to GCD 2, 10. And then you again take the bigger number at first,
+[57:06.140 --> 57:11.020]  10, 2. And then you'll be again like truncated to 8, 2. Truncated to
+[57:11.020 --> 57:17.880]  6, 2. 4, 2. 2, 2 and 0, 2. And ultimately 2 is left because
+[57:17.880 --> 57:23.660]  everything comes up. So it's a lot of sticks. It's a lot of sticks. It might not improve the
+[57:23.660 --> 57:29.280]  linear complexity by so much. But there's a catch over here. If it is 52 and it was 10
+[57:29.280 --> 57:36.140]  and you're reducing it with 10 every time and you ended up at a place of 2, 10.
+[57:36.780 --> 57:45.220]  Isn't it equivalent to saying you're dividing it by 10? And you're like 52, if you
+[57:45.220 --> 57:52.920]  did it 5 times. 1, 2, 3, 4, 5. And you ended up having the remainder because you're
+[57:52.920 --> 57:57.960]  minus 10, minus 10, minus 10, minus 10 till it is possible. It's equivalent to saying you
+[57:57.960 --> 58:04.840]  subtract it till it was possible or till it is greater. Can I say, instead of
+[58:04.840 --> 58:10.640]  subtracting it 5 times, you could have directly gone from here to here by
+[58:10.640 --> 58:19.700]  saying 52 modulo 10, 10. That's same. 2, 10. That is same instead of
+[58:19.700 --> 58:25.880]  subtracting 10, 5, 10. Directly get 2, 10. Even from 10, 2 to 0, 2, you
+[58:25.880 --> 58:29.640]  could have directly gone by saying 10 modulo 2 because that is what you did
+[58:29.640 --> 58:35.820]  indirectly. Simple maths. So can I say the algorithm in a better sense will be GCD
+[58:35.820 --> 58:42.460]  of A, B, where definitely A is greater than B, is equal to A modulo B, B.
+[58:42.760 --> 58:49.580]  That's a better word. And you go on doing till it becomes 0. As simple as that. You always take the
+[58:49.580 --> 58:55.300]  greater number. So the logic is very simple. Forget about A and B. The logic is very
+[58:55.300 --> 59:03.800]  simple. The greater modulo is smaller. That's the logic. And you go on till one of them
+[59:03.800 --> 59:12.540]  is 0. And if one of them is 0, remember this, if one of them is 0, the other is GCD, the
+[59:12.540 --> 59:26.300]  other is GCD. As simple as that. If I try to quote this up, try to quote this up, you're given A, you're given B. Can I say you go on till both of them are greater
+[59:26.300 --> 59:33.660]  greater than 0. Basically. And I know one of them will be greater. Either A will be greater. In that
+[59:33.660 --> 59:43.360]  case, I'll do A modulo B. Or else if B is greater, I'll do B modulo A. Instead of swapping, changing, because I did not want to get into swapping, changing. Why?
+[59:44.400 --> 59:57.600]  Over here it was 2, 10. So A was this, B was this. And you swapped it to this. I did not want to implement that. I just, I knew now 10 will be modulated. So what I did was I implemented it in such a way
+[59:57.600 --> 01:00:17.860]  stating, if A is greater, A will be modulated. If B is greater, B will be modulated. And once this is over, if A is 0, if A becomes 0, the while loop is false. Can I say the GCD will be B? I will. Or else can I say the GCD will be print of A? Simple.
+[01:00:19.760 --> 01:00:32.620]  Yes. You can, you can just take this example, 52, 10, and you can do a dry run on this. And you will see that eventually one of them will become 0. And that is when the looping ends.
+[01:00:32.620 --> 01:01:02.460]  And the time complexity of this equilaudian algorithm is we go of log of phi minimum of A, B. While log, if you remember, I clearly stated during the digit extraction, or in the pattern videos, or the time complexity videos, that whenever there is division happening, whenever there is division happening, the number of iterations will be in terms of logarithm.
+[01:01:02.620 --> 01:01:31.340]  Over here there is modulo. You are reducing the number by division. The modulation operations are happening. Thereby the time complexity will be in terms of logarithm. Now, Wi-Fi, why not something like log base 10? In the digit extraction, it is always n by 10. Over here, this A and B, it's always changing, fluctuating. You're not sure what will be A and B. Depending on different examples, it will fluctuate.
+[01:01:31.340 --> 01:02:01.100]  That is why they're giving it a term phi. If you want to know what is phi in depth, there's a huge mathematical proof to it. Not required. You can read it, but it's not required. And minimum of A, B. Because that is the initial number where you start from. That's the initial number where you start to do it. So that's why the time complexity is this. No one is going to ask you how and everything. Just keep it in mind that the time complexity is log phi minimum of A, B.
+[01:02:01.340 --> 01:02:02.020]  This is the equivalent.
+[01:02:03.980 --> 01:02:21.700]  I've written the same code after if I'm not given else because if this line executes, the function would have end and this line will not execute. That's why. So now I'll go ahead and run this code and it is running absolutely fine. And if I'll submit this, we get the correct answer.
+[01:02:21.700 --> 01:02:31.640]  So with this, we'll be wrapping up the basic maths. Next is basic recursion. I've already made videos on it. I'll be attaching them to the playlist. So watch this maths video.
+[01:02:32.180 --> 01:02:43.640]  Who's that going towards the basic recursion video. Once you have done this, then we will be going across to the next topic. That is basic hashing and I'll be explaining hashing in depth.
+[01:02:43.640 --> 01:02:57.200]  But I hope for this video, you've understood basic maths completely just in case you have. Please hit that like button and to follow our ritual, do comment understood so that I get an idea that you guys are understanding and you have watched the video.
+[01:02:57.620 --> 01:03:10.100]  Till here, if you're new to our channel, what are you? Please, please do consider subscribing to us because that is the only thing that keeps me motivated to make these kind of content. And here with this, I'll be wrapping up this video. Let's be in some other video till then goodbye.
+[01:03:14.380 --> 01:03:17.080]  Don't ever forget your gold.
+
+End Time: 04:39:22
+Time taken to complete execution: 63346 seconds
