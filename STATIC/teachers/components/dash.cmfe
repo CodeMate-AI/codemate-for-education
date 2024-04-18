@@ -1,0 +1,205 @@
+<style>
+    #header{
+        height: 100px;
+        width: 100%;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 10px;
+    } #header > h1{
+        font-size: 36px;
+        font-weight: bold !important;
+        margin: 0;
+        color: rgb(36, 36, 36);
+    } #header > span{
+        color: rgb(88, 88, 88);
+        font-size: 17px;
+    }
+
+
+    #screen_container{
+        height: calc(100vh - 130px); 
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    #screen_container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+#screen_container {
+    scrollbar-width: none;
+}
+
+    #assignments_stats{
+        height: 70px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #assignments_stats > div{
+        flex: 1;
+        padding: 15px;
+        padding-left: 30px;
+        padding-right: 30px;
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgb(238, 238, 238);
+    } #assignments_stats > div:not(:last-child){
+        margin-right: 30px;
+    }
+
+    .stats__ .icon{
+        height: 50px;
+        width: 50px;
+        margin-right: 20px;
+    }.stats__ .title{
+        font-size: 18px;
+        color: rgb(119, 119, 119);
+    }.stats__ .stats{
+        font-size: 40px;
+        font-weight: bold;
+        color: rgb(36, 36, 36);
+        background: transparent;
+    }
+
+    #container-inside {
+        /* flex: 1; */
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border: 2px solid #d1d1d1;
+        padding: 20px;
+        padding-bottom: 2px;
+        border-radius: 15px;
+        box-sizing: border-box;
+    }
+
+    #container-inside  .content {
+        flex:2;
+        display: flex;
+        flex-direction: column;
+        color:  #465362BF;
+        margin: 0;
+    }
+
+    #container-inside  button{
+        width: Fixed (200px)px;
+        height: Hug (10px)px;
+        padding: 10px 50px 10px 50px;
+        gap: 10px;
+        border-radius: 5px;
+        opacity: 0px;
+        background: #2CA3F2;
+        border-color: #d1d1d1;
+        color: white;
+        outline: none;
+        border: none;
+    }
+
+      .bton {
+        flex: 1;
+        /* padding-top:10px; */
+        padding-right: 0;
+        margin:0;
+        background: none;
+    }
+
+    .btn-inside {
+        background: none;
+        padding-left: 200px
+    }
+
+     .date-diff {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        gap: 30px;
+        margin:0;
+        text-align: center;
+        color: #465362;
+        padding-bottom: 10px;
+    }
+
+     .date-diff  .stats___ {
+        color: #011936;
+        font-size: 2.5rem;
+        font-weight: bolder;
+    }
+
+     .title {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #011936;
+        margin:0
+    }
+
+    .description {
+        font-size: 0.9rem;
+        overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+
+    }
+
+    .class_____{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+   
+</style>
+<div id="header">
+    <span>Teacher Portal</span>
+    <h1>Dashboard</h1>
+</div>
+<div id="screen_container">
+    <div id="assignments_stats">
+        <div class="stats__" id="submitted">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <img class="icon" src="../assets/images/teacher-profile-dash.svg" alt="">
+                <div class="title">Number of <br>Students</div>
+            </div>
+            <div class="stats">{{teacher.students.count}}</div>
+        </div>
+        <div class="stats__" id="accuracy">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <img class="icon" src="../assets/images/dashboard-stats-icon1.png" alt="">
+                <div class="title">Assignments <br> Created</div>
+            </div>
+            <div class="stats">{{teacher.assignments}}</div>
+        </div>
+        <div class="stats__" id="pending">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <img class="icon" src="../assets/images/dashboard-stats-icon3.png" alt="">
+                <div class="title">Pending <br> to Check</div>
+            </div>
+            <div class="stats">{{teacher.unchecked}}</div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <!-- <div id="strks_mgr">
+        <h2>Recently Created</h2>
+        <div id="presenter"></div>
+    </div> -->
+    <div id="submitted_assignments" style="padding-bottom:10px  ;">
+        <h2 style="font-size: 1.5rem; color: #011936;font-weight: 600;">Recently Created</h2>
+    </div>
+        {{data}}
+</div>
