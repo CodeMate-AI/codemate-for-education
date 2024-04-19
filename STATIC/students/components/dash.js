@@ -69,7 +69,7 @@ function getRandomColor(date) {
     const color_YES = "#2FCACE";
 
     // Assuming env.scripts.data.dash.submissions is an array of dates in YYYY-MM-DD format
-    if (env.scripts.data.dash.submissions.includes(date)) {
+    if (env.scripts.data.dash.students.submissions.includes(date)) {
         return color_YES;
     } else {
         return color_NO;

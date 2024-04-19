@@ -1,0 +1,169 @@
+<style>
+    #header {
+     height: 100px;
+     width: 100%;
+     border-radius: 20px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     margin-bottom: 10px;
+ }
+
+ #header>h1 {
+     font-size: 36px;
+     font-weight: bold !important;
+     margin: 0;
+     color: #011936;
+ }
+
+ #header>span {
+     color: rgb(88, 88, 88);
+     font-size: 17px;
+ }
+
+
+ #data {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border: 1px solid #d1d1d1;
+ padding:20px;
+ /* gap: 10px;  */
+}
+
+#data:first-child {
+ border-top-left-radius: 10px;
+ border-top-right-radius: 10px;
+}
+
+#data:last-child {
+ border-bottom-left-radius: 10px;
+ border-bottom-right-radius: 10px;
+}
+
+
+#data p.title,
+#data div#ontime,
+#data div.image-profile,
+#data .view {
+ margin: 0; /* Remove default margin */
+ flex: 1; /* Each element takes equal space */
+}
+
+#data p.date {
+ flex:1.5;
+ padding-right: 10px;
+}
+
+.image-profile {
+ padding-left: 20px;
+ padding-right: 150px;
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ gap: 20px;
+}
+
+#data input[type="checkbox"] {
+ flex:0.4;
+ width: 20px;
+ height: 20px;
+ background-color: #0081A7;
+ outline: none;
+}
+
+#data p.title {
+ font-weight: 600;
+ color: #011936;
+}
+
+
+/* #data button {
+ margin-left: 100px; /* Add margin between buttons */
+img {
+ width: 40px; /* Set the width of the image */
+ height: 40px; /* Set the height of the image */
+ border-radius: 50%; /* Set the border radius to 50% of the width (or height) */
+}
+
+#ontime {
+ margin-left: 10px;
+}
+
+.ontime {
+ background: #2A9D8F;
+ border-radius: 30px;
+ padding: 10px;
+ border: none;
+ outline: none;
+ color: white;
+ width: 50% !important;
+}
+
+.view {
+ color:#48AEF3;
+ width: 50% !important;
+ background: none;
+ outline: none;
+ border: none;
+ font-size:1rem;
+ font-weight: 600;
+}
+
+.view:hover {
+text-decoration: underline;
+ color:#48AEF3;
+ width: 50% !important;
+ background: none;
+ outline: none;
+ border: none;
+}
+
+.date > span {
+ color: #0081A7;
+}
+
+.assignment {
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ margin-bottom: 10px;
+}
+
+.submissions-arrow {
+ display: flex;
+ flex-direction: row;
+ /* justify-content: center; */
+ align-items: center;
+ /* align-content: center; */
+}
+
+.submissions-arrow > p > span {
+ color:#48AEF3;
+}
+
+
+.assignment > p {
+ color:#48AEF3;
+}
+
+</style>
+
+<div id="header">
+<span>User/Assignments</span>
+<h1>Student-Wise Report </h1>
+</div>
+<div class="assignment">
+ <div class="submissions-arrow">
+     <button style="outline: none; border: none; background: none;">
+         <svg width="30" height="30" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <path d="M16.5 13.5L12 18M12 18L16.5 22.5M12 18H24M31.5 18C31.5 25.4559 25.4559 31.5 18 31.5C10.5442 31.5 4.5 25.4559 4.5 18C4.5 10.5442 10.5442 4.5 18 4.5C25.4559 4.5 31.5 10.5442 31.5 18Z" stroke="#011936" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+         </svg>
+       </button>
+       <p><span>Assignment 4</span> / Submissions </p>
+ </div>
+ <p>Select All</p>
+ </div>
+{{data}} 
+
+

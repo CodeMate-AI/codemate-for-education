@@ -67,6 +67,7 @@ body{
     /* font-weight: bold; */
 }
 
+
 #app{
     height: 100%;
     width: 100%;
@@ -77,6 +78,11 @@ body{
     padding-right: 40px;
     overflow: scroll;
 }
+
+/* #app > .progress-wali-class {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+} */
 
 .tooltip:before {
     z-index: 1000;

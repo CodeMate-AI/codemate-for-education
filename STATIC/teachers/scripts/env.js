@@ -5,15 +5,21 @@ const env = {
         "paths": {
             // "dash": "./components/dash.js",
             // "playground": "./components/playground.js",
-            "assignments": "./components/create.js"
+            "assignments": "./components/create.js",
+            "unchecked": "./components/unchecked.js",
+            "student": "./components/student-wise.js"
         },
         "elements": {
             "dash": null,
             "assignments": null,
+            "unchecked": null,
+            "student": null,
         },
         "data": {
             "dash": null,
             "assignments": null,
+            "unchecked" : null,
+            "student": null,
         }
     },
     "messages": [],
@@ -251,7 +257,6 @@ const env = {
                     .then((create) => {
                         env.scripts.elements.assignments = document.createElement("script");
                         env.scripts.elements.assignments.src = env.scripts.paths.assignments;
-                        console.log(create);
                         return create;
                     })
                     .then((create) => {
@@ -266,44 +271,100 @@ const env = {
                             env.app.appendChild(env.scripts.elements.assignments);
                    
                     })
-                    // .then((assign) => {
-                    //     fetch("./components/db.json")
-                    //         .then((resp) => resp.json())
-                    //         .then((resp) => {
-                    //             env.scripts.data.assignments = resp;
-                    //             // assign = assign.replace("{{assignments.pending}}", resp.assignments.pending);
-                            
-                    //             // return assign
-                    //         }).then((assign) => {
-                    //             env.scripts.elements.assignments = document.createElement("script");
-                    //             env.scripts.elements.assignments.src = env.scripts.paths.assignments;
-                    //         }).then(() => {
-                    //             var elm = document.createElement("script");
-                    //             elm.src = env.scripts.paths.assignments;
-                    //             document.body.appendChild(elm);
-                    //         }).then(() => {
-                    //             setTimeout(() => {
-                    //                  let assignments_pending = "";
-                    
-                    //                 env.scripts.data.assignments.assignments.pending.forEach((e) => {
-                    //                     var temp2 = pa_elm.pending;
-                                
-                    //                     temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
-                    //                     temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
-                    //                     temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
-                    //                     temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
-                    //                     temp2 = temp2.replace("{{assignments.pending.aid}}", e.aid);
-                    //                     assignments_pending += temp2;
-                    //                 });
-                
-                    //                 // env.app.innerHTML = assign+assignments_pending;
-                    //                 env.app.appendChild(env.scripts.elements.assignments);
-                               
-                    //                 assign = assign.replace("{{assignments.pending}}", assignments_pending);
-                    //                 env.app.innerHTML = assign
-                    //             }, 100);
-                    //         })
-                    // })
+            },
+            "unchecked" : () => {
+                fetch("./components/unchecked.cmfe")
+                .then((unchecked) => unchecked.text())
+                .then((unchecked) => {
+                    fetch("../db.json")
+                    .then((res) => res.json())
+                    .then((res) => {
+                        env.scripts.data.unchecked = res.teachers
+                        console.log(res.teachers)
+                    }).then(() => {
+                        env.scripts.elements.unchecked = document.createElement("script")
+                        env.scripts.elements.unchecked.src = env.scripts.paths.unchecked
+                    })
+                    .then(() => {
+                        var elm = document.createElement("script");
+                        elm.src = env.scripts.paths.unchecked
+                        document.body.appendChild(elm);
+                    }).then(() => {
+                        setTimeout(() => {
+                             let unchecked__ = "";
+                            //  let assignment__ = ""
+                          if(env.scripts.data.unchecked !== null) {
+                            env.scripts.data.unchecked.assignments.unchecked[0].submissions.forEach((e) => {
+                                var temp2 = uncheck_assign.unchecked;
+                        
+                                temp2 = temp2.replace("{{students.name}}", e.name);
+                                temp2 = temp2.replace("{{students.submitted_on}}", e.submitted_on);
+                                if(e.submitted_on <= env.scripts.data.unchecked.assignments.unchecked[0].due_date) {
+                                    temp2 = temp2.replace("{{students.ontime}}", "Ontime");
+                                } else {
+                                    temp2 = temp2.replace("{{students.ontime}}", "Late");
+                                }
+                                temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                temp2 = temp2.replace("{{assignments.pending.aid}}", e.aid);
+                                unchecked__ += temp2;
+                            });
+                          }
+        
+                            // env.app.innerHTML = assign+assignments_pending;
+                            env.app.appendChild(env.scripts.elements.unchecked);
+                       
+                            unchecked = unchecked.replace("{{data}}", unchecked__);
+                            env.app.innerHTML = unchecked
+                        }, 100);
+                    })
+                })
+            },
+            "student" : () => {
+                fetch("./components/student-wise.cmfe")
+                .then((student) => student.text())
+                .then((student) => {
+                    fetch("../db.json")
+                    .then((res) => res.json())
+                    .then((res) => {
+                        env.scripts.data.student = res.teachers
+                        console.log(res.teachers)
+                    }).then(() => {
+                        env.scripts.elements.student = document.createElement("script")
+                        env.scripts.elements.student.src = env.scripts.paths.student
+                    })
+                    .then(() => {
+                        var elm = document.createElement("script");
+                        elm.src = env.scripts.paths.student
+                        document.body.appendChild(elm);
+                    }).then(() => {
+                        setTimeout(() => {
+                             let unchecked__ = "";
+                            //  let assignment__ = ""
+                          if(env.scripts.data.student !== null) {
+                            env.scripts.data.student.assignments.checked[0].submissions.forEach((e) => {
+                                var temp2 = uncheck_assign.unchecked;
+                        
+                                temp2 = temp2.replace("{{students.name}}", e.name);
+                                temp2 = temp2.replace("{{students.submitted_on}}", e.submitted_on);
+                                if(e.submitted_on <= env.scripts.data.student.assignments.checked[0].due_date) {
+                                    temp2 = temp2.replace("{{students.ontime}}", "Ontime");
+                                } else {
+                                    temp2 = temp2.replace("{{students.ontime}}", "Late");
+                                }
+                                temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                temp2 = temp2.replace("{{assignments.pending.aid}}", e.aid);
+                                unchecked__ += temp2;
+                            });
+                          }
+        
+                            // env.app.innerHTML = assign+assignments_pending;
+                            env.app.appendChild(env.scripts.elements.unchecked);
+                       
+                            unchecked = student.replace("{{data}}", unchecked__);
+                            env.app.innerHTML = unchecked
+                        }, 100);
+                    })
+                })
             }
         }
     }

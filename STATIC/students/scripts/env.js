@@ -66,9 +66,9 @@ const env = {
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp;
-                                dash = dash.replace("{{assignments.submitted}}", resp.assignment_stats.submitted);
-                                dash = dash.replace("{{assignments.pending}}", resp.assignment_stats.pending);
-                                dash = dash.replace("{{proficiency}}", resp.proficiency);
+                                dash = dash.replace("{{assignments.submitted}}", resp.students.assignment_stats.submitted);
+                                dash = dash.replace("{{assignments.pending}}", resp.students.assignment_stats.pending);
+                                dash = dash.replace("{{proficiency}}", resp.students.proficiency);
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -82,7 +82,7 @@ const env = {
                                     var assignments__sa = "";
                                     
                                     if(dash_elms !== undefined) {
-                                        env.scripts.data.dash.assignments.submitted.forEach((e) => {
+                                        env.scripts.data.dash.students.assignments.submitted.forEach((e) => {
                                             var temp = dash_elms.submitted_assignment;
                                             temp = temp.replace("{{sa.title}}", e.title);
                                             temp = temp.replace("{{sa.task}}", e.description);
@@ -121,7 +121,7 @@ const env = {
 
                                         var counter = 0;
 
-                                        env.scripts.data.dash.assignments.submitted.forEach((e) => {
+                                        env.scripts.data.dash.students.assignments.submitted.forEach((e) => {
                                             if (e.status == "completed") {
                                                 var sa__upss = new ProgressBar.Circle(success_elms.acc[counter], {
                                                     color: '#aaa',
@@ -260,7 +260,7 @@ const env = {
                         fetch("../db.json")
                             .then((resp) => resp.json())
                             .then((resp) => {
-                                env.scripts.data.assignments = resp;
+                                env.scripts.data.assignments = resp.students;
                                 // assign = assign.replace("{{assignments.pending}}", resp.assignments.pending);
                             
                                 // return assign
