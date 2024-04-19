@@ -25,125 +25,11 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
-      padding-top: 30px;
+      /* padding-top: 30px; */
       padding-bottom: 10px;
     }
 
-    .title-wali-div {
-      display: flex;
-      flex-direction: row;
-      gap: 50px; 
-    }
-    .div1 {
-      flex:1;
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 0;
-    }
-    .div1 > .label2 {
-      padding-top: 10px;
-    }
-    .div2 {
-      flex:1.2;
-      display: flex;
-    flex-direction: column;
-      gap: 8px;
-      justify-content: start;
-      margin: 0;
-    }
-    .headings {
-     color: #011936;
-     font-weight: 600 ;
-     font-size: 0.9rem;
-    }
 
-  .common-input {
-  top: 0;
-  left: 0;
-  width: 80%;
-  border: 1px solid #d1d1d1;
-  outline: none;
-  background: none;
-  padding: 5px;
-  border-radius: 5px;
-  font-size:0.9rem;
-}
-
-.upload-area {
-  flex:1;
-  width: 100%;
-  height: 100%;
-  border: 2px dashed #48AEF3;
-  stroke-width: 2;
-  stroke-dashoffset: 35;
-  border-radius: 7px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.upload-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #48AEF3;
-}
-
-.text-area {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-textarea {
-  top: 0;
-  left: 0;
-  width: 99.5%;
-  border: 1px solid #d1d1d1;
-  outline: none;
-  background: none;
-  padding: 5px;
-  border-radius: 10px;
-  font-size:0.9rem;
-}
-
-.input-output {
-  flex: 1;
-}
-
-.input_button {
-  display: flex;
-  flex-direction: row;
-  top: 0;
-  left: 0;
-  width: 90%;
-  border: 1px solid #d1d1d1;
-  outline: none;
-  padding: 3px;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.input_button input {
-    flex:2;
-    border: none; /* Remove borders from input and button */
-    padding: 5px; /* Optional: Add padding for better appearance */
-    margin: 0;
-}
-.input_button button {
-    flex:1;
-    border: none;
-    margin: 0;
-    color: #48AEF3;
-    background: none;
-}
-
-.input_button > input:focus {
-  border: none;
-  outline: none;
-}
 
 .publish_button {
   background: #888888;
@@ -198,7 +84,10 @@ textarea {
 span.active {
   background-color: #011936;
 }
-
+span.completed {
+  background-color: #2A9D8F;
+  color: #2A9D8F !important;
+}
 /* Add dashed line between progress-content */
 .progress-content:not(:last-child)::after {
   margin-left: 20px ;
@@ -215,7 +104,150 @@ span.active {
   left: 100px; /* Position to the right of the parent */
 }
 
+#container-inside {
+        /* flex: 1; */
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border: 2px solid #d1d1d1;
+        padding: 20px;
+        padding-bottom: 2px;
+        border-radius: 15px;
+        box-sizing: border-box;
+    }
 
+    #container-inside  .content {
+        flex:2;
+        display: flex;
+        flex-direction: column;
+        color:  #465362BF;
+        margin: 0;
+        /* border-right: 1px solid #465362; */
+    }
+
+    #container-inside  button{
+        width: Fixed (200px)px;
+        height: Hug (10px)px;
+        padding: 10px 50px 10px 50px;
+        gap: 10px;
+        border-radius: 5px;
+        opacity: 0px;
+        background: none;
+        border: 1px solid #2CA3F2;
+        color: #2CA3F2;
+    }
+
+      .bton {
+        flex: 1;
+        /* padding-top:10px; */
+        padding-right: 0;
+        margin:0;
+        background: none;
+    }
+
+    .btn-inside {
+        background: none;
+        padding-left: 200px
+    }
+
+     .date-diff {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 30px;
+        margin:0;
+        text-align: center;
+        color: #465362;
+        padding-bottom: 10px;
+        padding-left: 70px;
+    }
+
+     .date-diff  .stats___ {
+        color: #011936;
+        font-size: 2.5rem;
+        font-weight: bolder;
+    }
+
+     .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #011936;
+        margin:0
+    }
+
+    .description {
+        font-size: 1rem;
+        overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+
+    }
+
+    /* .class_____{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    } */
+
+    .easy {
+        font-size: 1.7rem;
+        font-weight: 700;
+        color: #2A9D8F;
+    }
+
+    .publish_button {
+  background: #888888;
+  color: white;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  width: 8%;
+  height: 100%;
+  padding: 10px;
+}
+
+
+.view {
+    flex: 3;
+    /* align-items: flex-end; */
+    color:#48AEF3;
+    width: 100% !important;
+    background: none;
+    outline: none;
+    border: none;
+    font-size:1rem;
+    font-weight: 600;
+}
+
+.view:hover {
+  text-decoration: underline;
+    color:#48AEF3;
+    width: 50% !important;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.headingupper {
+    padding-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    padding-left: 0;
+}
  
 </style>
 
@@ -224,11 +256,11 @@ span.active {
 </div>
 <div id="progress-wali-class" style="padding-left: 0 !important; padding-right: 0 !important;">
   <div class="progress-content">
-    <span class="dot active"></span>
+    <span class="dot completed"></span>
     <p>Generate</p>
   </div>
   <div class="progress-content">
-    <span class="dot"></span>
+    <span class="dot active"></span>
     <p>Choose</p>
   </div>
   <div class="progress-content">
@@ -236,48 +268,33 @@ span.active {
     <p>Publish and Share</p>
   </div>
 </div>
-<form>
-  <div class="title-wali-div">
-    <div class="div1">
-      <label for="title" class="headings">Enter Title</label>
-      <input type="text"  class="common-input" style="width: 99% !important; height: 23px;">
-      <label for="description" class="headings label2">Brief Description</label>
-      <textarea name="" id="" cols="35" rows="4"></textarea>
-  </div>
-  <div class="div2">
-  <label for="" class="headings">Attachment</label>
-  <div class="upload-area">
-    <label for="file-upload" class="upload-btn">
-      <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 24C4.5 14.5719 4.5 9.85786 7.42894 6.92894C10.3579 4 15.0719 4 24.5 4C33.928 4 38.6422 4 41.571 6.92894C44.5 9.85786 44.5 14.5719 44.5 24C44.5 33.428 44.5 38.1422 41.571 41.071C38.6422 44 33.928 44 24.5 44C15.0719 44 10.3579 44 7.42894 41.071C4.5 38.1422 4.5 33.428 4.5 24ZM24.5 35.5C25.3284 35.5 26 34.8284 26 34V23.6214L29.4394 27.0606C30.0252 27.6464 30.9748 27.6464 31.5606 27.0606C32.1464 26.4748 32.1464 25.5252 31.5606 24.9394L25.5606 18.9393C25.2794 18.658 24.8978 18.5 24.5 18.5C24.1022 18.5 23.7206 18.658 23.4394 18.9393L17.4393 24.9394C16.8536 25.5252 16.8536 26.4748 17.4393 27.0606C18.0251 27.6464 18.9749 27.6464 19.5607 27.0606L23 23.6214V34C23 34.8284 23.6716 35.5 24.5 35.5ZM16.5 15.5C15.6716 15.5 15 14.8284 15 14C15 13.1716 15.6716 12.5 16.5 12.5H32.5C33.3284 12.5 34 13.1716 34 14C34 14.8284 33.3284 15.5 32.5 15.5H16.5Z" fill="#48AEF3"/>
-      </svg>        
-      <span>Browse or Upload File</span>
-    </label>
-    <input type="file" id="file-upload" style="display: none;">
-  </div>
-  </div>
-  </div>
-  <div class="text-area">
-    <label for="name" class="headings">Problem Statement</label>
-    <textarea name="" id="" cols="30" rows="4"></textarea>
-  </div>
-  <div class=" title-wali-div">
-   <div class="text-area input-output">
-    <label for="input" class="headings">Sample Input</label>
-   <div class="input_button">
-    <input type="text" >  
-    <button>Or Generate using AI</button>
-   </div>
-  </div>
-    <div class="text-area input-output">
-      <label for="output" class="headings">Sample Output</label>
-   <div class="input_button">
-    <input type="text"  >
-    <button>Or Generate using AI</button>
-   </div>
+<div class="headingupper">
+    <h2>Choose the Right One</h2>
+    <div style="display: flex; align-items: center;">
+        <button class="view">Regenerate Problems</button>
     </div>
-  </div>
-  <button id="create-publish" class="publish_button" type="submit">
+</div>
+<form>
+    <div id="container-inside">
+       <div>
+        <input type="radio" style="width: 100%;">
+       </div>
+        <div class="content">
+        <p class="title">Problem Statement</p>
+        <!-- <p class="description">{{problem.statement}}</p> -->
+        <p class="description">Create a snake game in Python and store the highest score of the user. Update the highest score every time the player beats the record. The highest score shall be saved locally and not in-memory, so that it can be reloaded when the game is started again after being closed.</p>
+        </div>
+        <div class="date-diff">
+     <span class="easy">Easy</span>
+     <span >Difficulty Level</span>
+        </div>
+        <div class="bton">
+        <div class="btn-inside">
+        <button assignment_id={{assignment_id}}>View</button>
+        </div>
+        </div>
+        </div>
+  <button id="choose-publish" class="publish_button" type="submit">
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M18.4296 11.8442C18.5061 12.5945 18.55 13.3206 18.55 14.0002C18.55 15.2724 18.3962 16.7089 18.161 18.1613C16.7086 18.3965 15.2721 18.5502 14 18.5502C12.7336 18.5502 11.2975 18.3969 9.83877 18.1609C9.6037 16.7085 9.44995 15.2722 9.44995 14.0002C9.44995 13.3209 9.4938 12.5946 9.57047 11.8442C11.1014 12.0893 12.6286 12.2502 14 12.2502C15.3714 12.2502 16.8986 12.0893 18.4296 11.8442Z" fill="white"/>
     <path d="M20.5003 11.466C20.595 12.344 20.65 13.1988 20.65 14.0001C20.65 15.1693 20.533 16.452 20.3466 17.7539C22.99 17.2023 25.4334 16.4976 26.7423 16.0964C27.1652 15.9668 27.3315 15.9152 27.5544 15.826C27.6659 15.7815 27.768 15.7361 27.9012 15.6725C27.9664 15.1241 28 14.566 28 14.0001C28 12.5041 27.7654 11.063 27.331 9.71143L27.2178 9.74704C25.8491 10.1634 23.287 10.8995 20.5003 11.466Z" fill="white"/>

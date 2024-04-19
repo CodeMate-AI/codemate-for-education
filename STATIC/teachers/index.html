@@ -82,14 +82,14 @@
     
         /* Button styles */
         button#manual-btn, button#ai-generated-btn {
-            background-color: #E4F4FF;
-          padding: 10px 20px;
+            background-color: #E4F4FF !important;
+          padding: 10px 20px !important;
           margin: 5px;
           cursor: pointer;
           border: none;
           outline: none;
           border-radius: 10px;
-          color: #2CA3F2;
+          color: #2CA3F2 !important;
           font-weight: bold;
           font-size: 1.3rem;
           display: flex;
@@ -129,18 +129,10 @@
                     <i class="ph-fill ph-squares-four"></i>
                     <p>Dashboard</p>
                 </div>
-                <div class="nav_elm" nav="playground">
-                    <i class="ph-fill ph-terminal"></i>
-                    <p>Playground</p>
-                </div>
-                <div class="nav_elm" nav="unchecked">
-                    <i class="ph-fill ph-notebook"></i>
-                    <p>Unchecked</p>
-                </div>
-                <div class="nav_elm" nav="studentwise">
-                    <i class="ph-fill ph-notebook"></i>
-                    <p>Student-wise</p>
-                </div>
+                <div class="nav_elm " nav="assignments">
+                  <i class="ph-fill ph-squares-four"></i>
+                  <p>Assignments</p>
+              </div>
                 <div class="nav_elm" nav="reports">
                     <i class="ph-fill ph-chart-bar-horizontal"></i>                     
                     <p>Reports</p>
@@ -149,10 +141,10 @@
                     <i class="ph-fill ph-user"></i>
                     <p>Profile</p>
                 </div>
-                <div style="background:none; padding-top: 100px;">
-                   <button id="assignments-btn" style=" margin: 0 ;height: 45px ; width: 100% !important;background: #48AEF3; border: none; outline: none; border-radius: 7px; display: flex; flex-direction: row; align-items: center; justify-items: space-between;">
+                <div style="background:none; padding-top: 100px; padding-left: 15px;">
+                   <button id="assignments-btn" style=" margin: 0 ;height: 45px ; width: 85% !important;background: #48AEF3; border: none; outline: none; border-radius: 7px; display: flex; flex-direction: row; align-items: center; justify-items: center;">
            
-                    <svg style="flex: 0.3;" width="50" height="50" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg style="flex: 0.4;" width="50" height="50" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M15 27.5C21.9035 27.5 27.5 21.9035 27.5 15C27.5 8.09644 21.9035 2.5 15 2.5C8.09644 2.5 2.5 8.09644 2.5 15C2.5 21.9035 8.09644 27.5 15 27.5ZM15.9375 11.25C15.9375 10.7322 15.5177 10.3125 15 10.3125C14.4823 10.3125 14.0625 10.7322 14.0625 11.25V14.0625H11.25C10.7322 14.0625 10.3125 14.4823 10.3125 15C10.3125 15.5177 10.7322 15.9375 11.25 15.9375H14.0625V18.75C14.0625 19.2677 14.4823 19.6875 15 19.6875C15.5177 19.6875 15.9375 19.2677 15.9375 18.75V15.9375H18.75C19.2677 15.9375 19.6875 15.5177 19.6875 15C19.6875 14.4823 19.2677 14.0625 18.75 14.0625H15.9375V11.25Z" fill="white"/>
                         </svg>                        
                     <p class="create" style="flex: 2;color: white !important; font-size: 1rem; font-weight: 500;">Assignment</p>
@@ -167,11 +159,11 @@
                 <span class="close">&times;</span>
               </div>
               <div class="modal-body">
-                <button class="nav_elm" nav="assignments" id="manual-btn"><svg width="42" height="42" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <button class="nav_elm" nav="create" id="manual-btn"><svg width="42" height="42" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 18C0.5 9.75041 0.5 5.62563 3.06282 3.06282C5.62563 0.5 9.75041 0.5 18 0.5C26.2495 0.5 30.3744 0.5 32.9371 3.06282C35.5 5.62563 35.5 9.75041 35.5 18C35.5 26.2495 35.5 30.3744 32.9371 32.9371C30.3744 35.5 26.2495 35.5 18 35.5C9.75041 35.5 5.62563 35.5 3.06282 32.9371C0.5 30.3744 0.5 26.2495 0.5 18ZM18 28.0625C18.7248 28.0625 19.3125 27.4748 19.3125 26.75V17.6687L22.322 20.678C22.8345 21.1906 23.6654 21.1906 24.178 20.678C24.6906 20.1654 24.6906 19.3345 24.178 18.822L18.928 13.5719C18.682 13.3258 18.3481 13.1875 18 13.1875C17.6519 13.1875 17.318 13.3258 17.072 13.5719L11.8219 18.822C11.3094 19.3345 11.3094 20.1654 11.8219 20.678C12.3345 21.1906 13.1655 21.1906 13.6781 20.678L16.6875 17.6687V26.75C16.6875 27.4748 17.2751 28.0625 18 28.0625ZM11 10.5625C10.2751 10.5625 9.6875 9.97487 9.6875 9.25C9.6875 8.52513 10.2751 7.9375 11 7.9375H25C25.7248 7.9375 26.3125 8.52513 26.3125 9.25C26.3125 9.97487 25.7248 10.5625 25 10.5625H11Z" fill="#2CA3F2"/>
                     </svg>
                     <p>Self Generated</p></button>
-                <button class="nav_elm" nav="assignments" id="ai-generated-btn">
+                <button class="nav_elm" nav="create" id="ai-generated-btn">
                     <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.72793 6.72793C4.75736 8.69848 4.75736 11.8934 6.72793 13.864L9.50647 16.6425C9.52733 16.6184 9.54921 16.5948 9.57211 16.5719L16.5721 9.57192C16.595 9.54908 16.6184 9.52726 16.6425 9.50645L13.864 6.72793C11.8934 4.75736 8.69848 4.75736 6.72793 6.72793Z" fill="#2CA3F2"/>
                         <path d="M18.4938 11.3579C18.473 11.382 18.4511 11.4054 18.4282 11.4283L11.4282 18.4282C11.4053 18.4512 11.3818 18.473 11.3577 18.4939L28.1359 35.2723C30.1066 37.2428 33.3014 37.2428 35.2721 35.2723C37.2426 33.3017 37.2426 30.1069 35.2721 28.1362L18.4938 11.3579Z" fill="#2CA3F2"/>
@@ -208,21 +200,33 @@
         // Handle manual button click
         document.getElementById("manual-btn").addEventListener("click", function() {
           console.log("Manual option clicked");
-          // Add your code to handle the manual option here
+          let newUrl = new URL(window.location.href);
+          newUrl.searchParams.set('app', env.active_page);
+          newUrl.searchParams.set('mode', "manual");
+          history.pushState({}, '', newUrl)
+          const closeButton = document.querySelector('.close');
+if (closeButton) {
+    closeButton.click();
+}
         });
       
         // Handle AI generated button click
         document.getElementById("ai-generated-btn").addEventListener("click", function() {
-          console.log("AI Generated option clicked");
           let newUrl = new URL(window.location.href);
           newUrl.searchParams.set('app', env.active_page);
+          newUrl.searchParams.set('mode', "ai");
           history.pushState({}, '', newUrl)
+          const closeButton = document.querySelector('.close');
+if (closeButton) {
+    closeButton.click();
+}
         });
       </script>
     
     <script src="./scripts/env.js"></script>
     <script src="./components/create.js"></script>
-    <script src="./components/unchecked.js"></script>
+    <script src="./components/submissions.js"></script>
     <script src="./components/studentwise.js"></script>
+    <script src="./components/assignments.js"></script>
 </body>
 </html>
