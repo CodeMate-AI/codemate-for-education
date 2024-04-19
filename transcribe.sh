@@ -6,7 +6,7 @@ start_time=$(date +%T)
 echo "Current Time: $start_time"
 
 # Run the desired command
-whisper dsa.mp3 --model medium.en --word_timestamps True --output_format srt --device cpu
+whisper sweet_child_o_mine.mp3 --model medium.en --word_timestamps True --output_format srt --device cpu
 
 # Record end time
 end_time=$(date +%T)

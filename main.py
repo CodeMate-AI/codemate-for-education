@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import requests
 import json
-from transcription_pipeline import pipe
+# from transcription_pipeline import pipe
 
 load_dotenv(override=True)
 app = FastAPI()
@@ -25,76 +25,27 @@ client = AzureOpenAI(
 )
 
 
+
+
+def references(query):
+    pass
+
+
 @app.post("/chat")
 async def chat(request: Request):
     data = await request.json()
+
     messages = [
-        {
-            "role": "system",
-            "content": "You are CodeMate by CodeMate for Education. You help individuals to learn programming languages. Your task is to explain the concepts to the user rather than providing the code. Don't ever provide the code to the user. You are allowed to provide sudo code to the users but never complete code. Help them in learning the language rather than just handing them over the code.\n\nRESPONSE FORMAT: STRICT MARKDOWN"
-        },
-        {
-            "role": "user",
-            "content": "THE TASK GIVEN TO THE USER RELATED TO WHICH HE/SHE WILL BE ASKING QUESTIONS POSSIBLY IS: "+data["task"]
-        },
-        {
-            "role": "assistant",
-            "content": "Understood! I will help the user accomplish the task and will not provide the complete code to them. However, as per the instructions, I will provide the user with sudo code whenever necessary."
-        }
+        {"role": "system", "content": "You are CodeMate by CodeMate for Education. You help individuals to learn programming languages. Your task is to explain the concepts to the user rather than providing the code. Don't ever provide the code to the user. You are allowed to provide sudo code to the users but never complete code. Help them in learning the language rather than just handing them over the code.\n\nRESPONSE FORMAT: STRICT MARKDOWN"},
+        {"role": "user", "content": "THE TASK GIVEN TO THE USER RELATED TO WHICH HE/SHE WILL BE ASKING QUESTIONS POSSIBLY IS: "+data["task"]},
+        {"role": "assistant", "content": "Understood! I will help the user accomplish the task and will not provide the complete code to them. However, as per the instructions, I will provide the user with sudo code whenever necessary."}
     ]
-    messages.extend(data["messages"])
-    if "enhanced_context" in data:
-        response = client.chat.completions.create(
-            model="gpt-35-turbo-16k",
-            messages=messages,
-            temperature=0.3,
-            functions=[{
-                "name": "references",
-                "description": "Function to fetch resources from the internet when --resources flag is in the message.",
-                "parameters":{
-                    "type": "object",
-                    "properties": {
-                        "q": {
-                            "type": "string",
-                            "description": "the query for which we need to search the internet."
-                        }
-                    },
-                    "required": ["q"]
-                }
-            }],
-            function_call="auto"
-        )
-    else:
-        response = client.chat.completions.create(
-            model="gpt-35-turbo-16k",
-            messages=messages,
-            temperature=0.3
-        )
 
+    messages = messages.extend(data["messages"])
     
-
-    if response.choices[0].message.function_call != None and response.choices[0].message.content == None:
-            # at this point we know there is only one function so no need to complicate things, we can directly call the function here itself...
-        q = json.loads(response.choices[0].message.function_call.arguments)["q"]
-        resp = requests.get("https://focus.os.deepnight.tech/search?q="+q).json()
-        r_ = []
-        i = 0
-        for r in range(len(resp["serp"]["organic_search_results"])):
-            if i <= 2:
-                r_.append(resp["serp"]["organic_search_results"][r])
-                i += 1
-            else:
-                break
-
-
-        messages.append({
-            "role": "function",
-            "name": "references",
-            "content": str(r_)
-        })
-
-        resp = client.chat.completions.create(
-            model="gpt-35-turbo-16k",
+    while True:
+        response = client.chat.completions.create(
+            model="gpt4-turbo",
             messages=messages,
             temperature=0.3,
             functions=[{
@@ -113,11 +64,40 @@ async def chat(request: Request):
             }],
             function_call="auto"
         )
-        return {
-            "results": r_,
-            "response": resp.choices[0].message.content
-        }
-    else:
-        return {
-            "response": response.choices[0].message.content
-        }
+
+        if response.choices[0].message.content != None:
+            return {
+                "response": response.choices[0].message.content
+            }
+        else:
+            messages.append({
+                "role": "assistant",
+                "function_call": {
+                    "name": "references",
+                    "arguments": response.choices[0].message.function_call.arguments
+                }
+            })
+
+            function_response = references(query="")
+            messages.append({
+                "role": "function",
+                "name": "references",
+                "content": str(function_response)
+            })
+
+
+
+
+
+
+
+@app.post("/evaluate")
+async def evaluate_asignment(request: Request):
+    data = await request.json()
+    response = client.chat.completions.create(
+        model="gpt4-turbo",
+        messages=[{
+            "role": "system",
+            "content": "On the basis of the following evaluation benchmarks:\n=== EVAL BENCHMARKS START ===\n"+str(data["benchmarks"])+"\n=== EVAL BENCHMARKS END ===\n\nEvaluate the code provided below for the mentioned task.\n\nTASK"+data["task"]["description"]+"\n\n=====\nCODE:\n"+data["code"]
+        }]
+    )

@@ -1,1 +1,0 @@
-# codemate-for-education
