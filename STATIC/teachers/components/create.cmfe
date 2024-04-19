@@ -215,7 +215,6 @@ span.active {
 </style>
 
 <div id="header">
-  <span>User/Assignments</span>
   <h1>Create Assignment</h1>
 </div>
 <div id="progress-wali-class" style="padding-left: 0 !important; padding-right: 0 !important;">

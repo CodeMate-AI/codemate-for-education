@@ -3,31 +3,31 @@ const env = {
     "app": document.getElementById("app"),
     "scripts": {
         "paths": {
-            // "dash": "./components/dash.js",
+            "dash": "./components/dash.js",
             // "playground": "./components/playground.js",
             "assignments": "./components/create.js",
             "unchecked": "./components/unchecked.js",
-            "student": "./components/student-wise.js"
+            "studentwise": "./components/studentwise.js"
         },
         "elements": {
             "dash": null,
             "assignments": null,
             "unchecked": null,
-            "student": null,
+            "studentwise": null,
         },
         "data": {
             "dash": null,
             "assignments": null,
             "unchecked" : null,
-            "student": null,
+            "studentwise": null,
         }
     },
     "messages": [],
     "init": () => {
         let url = new URL(window.location.href);
         env.active_page = url.searchParams.get('app');
-        if (env.active_page === null) {
-            env.active_page = "assignments";
+        if (env.active_page === null || env.active_page === undefined || env.active_page !== env.scripts.paths ) {
+            env.active_page = "dash";
         }
         if (document.querySelector(".nav_elm_active")) {
             document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");
@@ -64,195 +64,75 @@ const env = {
     },
     "load": {
         "components": {
-            // "dash": () => {
-            //     fetch("./components/dash.cmfe")
-            //         .then((dash) => dash.text())
-            //         .then((dash) => {
-            //             fetch("./components/db.json")
-            //                 .then((resp) => resp.json())
-            //                 .then((resp) => {
-            //                     env.scripts.data.dash = resp;
-            //                     dash = dash.replace("{{assignments.submitted}}", resp.assignment_stats.submitted);
-            //                     dash = dash.replace("{{assignments.pending}}", resp.assignment_stats.pending);
-            //                     dash = dash.replace("{{proficiency}}", resp.proficiency);
-            //                     return dash;
-            //                 }).then((dash) => {
-            //                     env.scripts.elements.dash = document.createElement("script");
-            //                     env.scripts.elements.dash.src = env.scripts.paths.dash;
-            //                 }).then(() => {
-            //                     var elm = document.createElement("script");
-            //                     elm.src = env.scripts.paths.dash;
-            //                     document.body.appendChild(elm);
-            //                 }).then(() => {
-            //                     setTimeout(() => {
-            //                         var assignments__sa = "";
+            "dash": () => {
+                fetch("./components/dash.cmfe")
+                    .then((dash) => dash.text())
+                    .then((dash) => {
+                        fetch("../db.json")
+                            .then((resp) => resp.json())
+                            .then((resp) => {
+                                env.scripts.data.dash = resp.teachers;
+                                console.log(env.scripts.data.dash.assignments.unchecked[0].submissions)
+                                dash = dash.replace("{{teacher.students.count}}", resp.teachers.students);
+                                dash = dash.replace("{{teacher.assignments}}", resp.teachers.assignment_stats.created);
+                                dash = dash.replace("{{teacher.unchecked}}", resp.teachers.assignment_stats.unchecked);
+                                return dash;
+                            }).then((dash) => {
+                                env.scripts.elements.dash = document.createElement("script");
+                                env.scripts.elements.dash.src = env.scripts.paths.dash;
+                            }).then(() => {
+                                var elm = document.createElement("script");
+                                elm.src = env.scripts.paths.dash;
+                                document.body.appendChild(elm);
+                            }).then(() => {
+                                setTimeout(() => {
+                                    var assignments__sa = "";
+                                    var uncheckedLength = env.scripts.data.dash.assignments.unchecked.length
+                                    env.scripts.data.dash.assignments.unchecked.forEach((e,index) => {
+                                        var temp = dash_elm_teachers.pending;
+                                        temp = temp.replace("{{assignments.pending.title}}",e.title)
+                                        temp = temp.replace("{{assignments.pending.description}}",e.description)
+                                        temp = temp.replace("{{assignments.pending.submissions}}",e.submissions.length)
+                                        temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.dash.students - e.submissions.length)
+                                        temp = temp.replace("{{assignment_id}}",e.aid)
+                                        if(index === uncheckedLength - 1) {
+                                            assignments__sa += temp;
+                                        }
+                                    });
 
-            //                         env.scripts.data.dash.assignments.submitted.forEach((e) => {
-            //                             var temp = dash_elms.submitted_assignment;
-            //                             temp = temp.replace("{{sa.title}}", e.title);
-            //                             temp = temp.replace("{{sa.task}}", e.description);
-            //                             if (e.status == "pending") {
-            //                                 temp = temp.replace("{{sa.stat}}", dash_elms.submitted_assignment_stats.pending);
-            //                                 temp = temp.replace("{{sa.donwload.report}}", "sa_rept_disabled");
-            //                             } else {
-            //                                 temp = temp.replace("{{sa.stat}}", dash_elms.submitted_assignment_stats.success);
-            //                                 temp = temp.replace("{{sa.donwload.report}}", "");
-            //                             }
-
-            //                             assignments__sa += temp;
-            //                         });
-
-            //                         dash = dash.replace("{{sa.stat}}", assignments__sa);
-            //                         // console.log(dash);
-            //                         env.app.innerHTML = dash;
-            //                         env.app.appendChild(env.scripts.elements.dash);
-            //                         setTimeout(() => {
-            //                             fillContainerWithDivs('presenter');
-            //                         }, 100);
-            //                     }, 100);
-            //                 })
-            //                 .then(() => {
-            //                     var int___ = setInterval(() => {
-            //                         if (document.getElementsByClassName("success_acc__").length > 0) {
-            //                             console.log("FK I AM HERE!")
-            //                             var success_elms = {
-            //                                 "acc": document.querySelectorAll(".success_acc__"),
-            //                                 "eff": document.querySelectorAll(".success_eff__"),
-            //                                 "scr": document.querySelectorAll(".success_scr__")
-            //                             };
-
-            //                             console.log(success_elms);
-
-            //                             var counter = 0;
-
-            //                             env.scripts.data.dash.assignments.submitted.forEach((e) => {
-            //                                 if (e.status == "completed") {
-            //                                     var sa__upss = new ProgressBar.Circle(success_elms.acc[counter], {
-            //                                         color: '#aaa',
-            //                                         // This has to be the same size as the maximum width to
-            //                                         // prevent clipping
-            //                                         strokeWidth: 4,
-            //                                         trailWidth: 10,
-            //                                         easing: 'easeInOut',
-            //                                         duration: 1400,
-            //                                         text: {
-            //                                             autoStyleContainer: false
-            //                                         },
-            //                                         from: { color: '#2A9D8F', width: 10 },
-            //                                         to: { color: '#2A9D8F', width: 10 },
-            //                                         // Set default step function for all animate calls
-            //                                         step: function (state, circle) {
-            //                                             circle.path.setAttribute('stroke', state.color);
-            //                                             circle.path.setAttribute('stroke-width', state.width);
-
-            //                                             var value = Math.round(circle.value() * 100);
-            //                                             if (value === 0) {
-            //                                                 circle.setText('');
-            //                                             } else {
-            //                                                 circle.setText(value);
-            //                                             }
-
-            //                                         }
-            //                                     });
-            //                                     // sa__upss.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-            //                                     sa__upss.text.style.fontSize = '1rem';
-
-            //                                     sa__upss.animate(e.stats.accuracy);
-
-
-
-
-            //                                     var sa__eff___ = new ProgressBar.Circle(success_elms.eff[counter], {
-            //                                         color: '#aaa',
-            //                                         strokeWidth: 4,
-            //                                         trailWidth: 10,
-            //                                         easing: 'easeInOut',
-            //                                         duration: 1400,
-            //                                         text: {
-            //                                             autoStyleContainer: false
-            //                                         },
-            //                                         from: { color: '#2A9D8F', width: 10 },
-            //                                         to: { color: '#2A9D8F', width: 10 },
-            //                                         // Set default step function for all animate calls
-            //                                         step: function (state, circle) {
-            //                                             circle.path.setAttribute('stroke', state.color);
-            //                                             circle.path.setAttribute('stroke-width', state.width);
-
-            //                                             var value = Math.round(circle.value() * 100);
-            //                                             if (value === 0) {
-            //                                                 circle.setText('');
-            //                                             } else {
-            //                                                 circle.setText(value);
-            //                                             }
-
-            //                                         }
-            //                                     });
-            //                                     // sa__eff___.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-            //                                     sa__eff___.text.style.fontSize = '1rem';
-
-            //                                     sa__eff___.animate(e.stats.efficiency);
-
-
-
-
-
-
-            //                                     var sa__scr___ = new ProgressBar.Circle(success_elms.scr[counter], {
-            //                                         color: '#aaa',
-            //                                         // This has to be the same size as the maximum width to
-            //                                         // prevent clipping
-            //                                         strokeWidth: 4,
-            //                                         trailWidth: 10,
-            //                                         easing: 'easeInOut',
-            //                                         duration: 1000,
-            //                                         text: {
-            //                                             autoStyleContainer: false
-            //                                         },
-            //                                         from: { color: '#2A9D8F', width: 10 },
-            //                                         to: { color: '#2A9D8F', width: 10 },
-            //                                         // Set default step function for all animate calls
-            //                                         step: function (state, circle) {
-            //                                             circle.path.setAttribute('stroke', state.color);
-            //                                             circle.path.setAttribute('stroke-width', state.width);
-
-            //                                             var value = Math.round(circle.value() * 100);
-            //                                             if (value === 0) {
-            //                                                 circle.setText('');
-            //                                             } else {
-            //                                                 circle.setText(value);
-            //                                             }
-
-            //                                         }
-            //                                     });
-            //                                     // sa__scr___.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-            //                                     sa__scr___.text.style.fontSize = '1rem';
-
-            //                                     sa__scr___.animate(e.stats.score);
-
-
-
-            //                                     counter += 1;
-            //                                 }
-            //                             })
-
-            //                             clearInterval(int___);
-            //                         }
-            //                     }, 500);
-            //                 })
-            //         })
-            // },
-            // "playground": () => {
-            //     fetch("./components/playground.cmfe")
-            //         .then((play) => play.text())
-            //         .then((playground) => {
-            //             env.app.innerHTML = playground;
-            //             var script = document.createElement("script");
-            //             script.src = env.scripts.paths.playground;
-            //             document.body.appendChild(script);
-            //         })
-            // },
+                                    dash = dash.replace("{{data}}", assignments__sa);
+                                    // console.log(dash);
+                                    env.app.innerHTML = dash;
+                                    env.app.appendChild(env.scripts.elements.dash);
+                                }, 100);
+                            })
+                    })
+            },
+            "playground": () => {
+                fetch("./components/playground.cmfe")
+                    .then((play) => play.text())
+                    .then((playground) => {
+                        env.app.innerHTML = playground;
+                        var script = document.createElement("script");
+                        script.src = env.scripts.paths.playground;
+                        document.body.appendChild(script);
+                    })
+            },
             "assignments": () => {
-                fetch("./components/create.cmfe")
+                const queryParams = new URL(window.location.href);
+                const mode = queryParams.searchParams.get('mode'); 
+                console.log(mode);
+            
+                let createFile;
+                if (mode === 'self') {
+                    createFile = "./components/create.cmfe";
+                } else if (mode === 'ai') {
+                    createFile = "./components/create-2.cmfe";
+                } else {
+                    // Default to a certain file if no mode is specified
+                    createFile = "./components/create.cmfe";
+                }
+                fetch(createFile)
                     .then((create) => create.text())
                     .then((create) => {
                         env.scripts.elements.assignments = document.createElement("script");
@@ -319,49 +199,71 @@ const env = {
                     })
                 })
             },
-            "student" : () => {
+            "studentwise" : () => {
                 fetch("./components/student-wise.cmfe")
                 .then((student) => student.text())
                 .then((student) => {
                     fetch("../db.json")
                     .then((res) => res.json())
                     .then((res) => {
-                        env.scripts.data.student = res.teachers
+                        env.scripts.data.studentwise = res.teachers
                         console.log(res.teachers)
                     }).then(() => {
-                        env.scripts.elements.student = document.createElement("script")
-                        env.scripts.elements.student.src = env.scripts.paths.student
+                        env.scripts.elements.studentwise = document.createElement("script")
+                        env.scripts.elements.studentwise.src = env.scripts.paths.studentwise
                     })
                     .then(() => {
                         var elm = document.createElement("script");
-                        elm.src = env.scripts.paths.student
+                        elm.src = env.scripts.paths.studentwise
                         document.body.appendChild(elm);
                     }).then(() => {
                         setTimeout(() => {
-                             let unchecked__ = "";
+                             let checked__ = "";
                             //  let assignment__ = ""
-                          if(env.scripts.data.student !== null) {
-                            env.scripts.data.student.assignments.checked[0].submissions.forEach((e) => {
-                                var temp2 = uncheck_assign.unchecked;
-                        
-                                temp2 = temp2.replace("{{students.name}}", e.name);
-                                temp2 = temp2.replace("{{students.submitted_on}}", e.submitted_on);
-                                if(e.submitted_on <= env.scripts.data.student.assignments.checked[0].due_date) {
-                                    temp2 = temp2.replace("{{students.ontime}}", "Ontime");
-                                } else {
-                                    temp2 = temp2.replace("{{students.ontime}}", "Late");
-                                }
-                                temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
-                                temp2 = temp2.replace("{{assignments.pending.aid}}", e.aid);
-                                unchecked__ += temp2;
-                            });
-                          }
+                            console.log(env.scripts.data.studentwise.assignments.checked[0]);
+                            if(env.scripts.data.studentwise !== null) {
+                                env.scripts.data.studentwise.assignments.checked[0].submissions.forEach((e) => {
+                                    var temp2 = check_assign.checked_status;
+                                    temp2 = temp2.replace("{{students.name}}", e.name);
+                                    temp2 = temp2.replace("{{student.accuracy}}", `  <div class="pie-wrapper">
+                                    <span class="label">
+                                        <span class="num">${e.accuracy}</span>
+                                    </span>
+                                    <div class="pie">
+                                      <div class="left-side half-circle"></div>
+                                      <div class="right-side half-circle"></div>
+                                    </div>
+                                    <div class="shadow"></div>
+                                  </div>`);
+                                    temp2 = temp2.replace("{{student.efficiency}}",`  <div class="pie-wrapper">
+                                    <span class="label">
+                                        <span class="num">${e.efficiency}</span>
+                                    </span>
+                                    <div class="pie">
+                                      <div class="left-side half-circle"></div>
+                                      <div class="right-side half-circle"></div>
+                                    </div>
+                                    <div class="shadow"></div>
+                                  </div>`);
+                                    temp2 = temp2.replace("{{student.score}}", `  <div class="pie-wrapper">
+                                    <span class="label">
+                                        <span class="num">${e.score}</span>
+                                    </span>
+                                    <div class="pie">
+                                      <div class="left-side half-circle"></div>
+                                      <div class="right-side half-circle"></div>
+                                    </div>
+                                    <div class="shadow"></div>
+                                  </div>`);
+                                    checked__ += temp2;
+                                });
+                              }
         
                             // env.app.innerHTML = assign+assignments_pending;
-                            env.app.appendChild(env.scripts.elements.unchecked);
+                            env.app.appendChild(env.scripts.elements.studentwise);
                        
-                            unchecked = student.replace("{{data}}", unchecked__);
-                            env.app.innerHTML = unchecked
+                            student = student.replace("{{data}}", checked__);
+                            env.app.innerHTML = student
                         }, 100);
                     })
                 })
