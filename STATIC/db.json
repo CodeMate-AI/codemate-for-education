@@ -78,14 +78,83 @@
             "created": 20
         },
         "students": 34 ,
-        "assignments": {
-            "checked": [
+        "assignments": [
                 {
                     "title": "Python Snake Game",
                     "language": "python",
                     "description": "Create a snake game in Python and store the highest score of the user. Update the highest score every time the player beats the record. The highest score shall be saved locally and not in-memory, so that it can be reloaded when the game is started again after being closed.",
                     "report_link": "",
-                    "code_id": "123123",
+                    "aid": "123123",
+                    "due_date" :"12/02/24",
+                    "submissions":[
+                        {
+                        "name": "Chandu",
+                        "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60",
+                        "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Archana",
+                            "efficiency": "23",
+                        "accuracy": "8",
+                        "score": "60",
+                        "submitted_on": "13/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Akasnha",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60",
+                        "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Mia",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60",
+                        "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Save_Me",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60",
+                        "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Police",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60",
+                        "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Police",
+                            "efficiency": "23",
+                            "accuracy": "82",
+                            "score": "60",
+                            "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Police",
+                            "efficiency": "23",
+                            "accuracy": "82",
+                            "score": "60",
+                            "submitted_on": "10/02/24, 09:31 AM"
+                        }
+                        ]
+                },
+                {
+                    "title": "Web Scraper (Python)",
+                    "description": "Write a Python script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
+                    "status": "completed",
+                    "stats": {
+                        "accuracy": 0.8,
+                        "efficiency": 0.25,
+                        "score": 0.72
+                    },
+                    "aid": "123456",
                     "submissions":[
                         {
                         "name": "Chandu",
@@ -142,25 +211,62 @@
                     "description": "Write a Python script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
                     "status": "completed",
                     "stats": {
-                        "accuracy": 0.8,
-                        "efficiency": 0.25,
-                        "score": 0.72
-                    },
-                    "code_id": "123456"
-                },
-                {
-                    "title": "Web Scraper (Python)",
-                    "description": "Write a Python script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
-                    "status": "completed",
-                    "stats": {
                         "accuracy": 0.99,
                         "efficiency": 0.84,
                         "score": 0.93
                     },
-                    "code_id": "123457"
-                }
-            ],
-            "unchecked" : [
+                    "aid": "123457",
+                    "submissions":[
+                        {
+                        "name": "Chandu",
+                        "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60"
+                        },
+                        {
+                            "name": "Archana",
+                            "efficiency": "23",
+                        "accuracy": "8",
+                        "score": "60"
+                        },
+                        {
+                            "name": "Akasnha",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60"
+                        },
+                        {
+                            "name": "Mia",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60"
+                        },
+                        {
+                            "name": "Save_Me",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60"
+                        },
+                        {
+                            "name": "Police",
+                            "efficiency": "23",
+                        "accuracy": "82",
+                        "score": "60"
+                        },
+                        {
+                            "name": "Police",
+                            "efficiency": "23",
+                            "accuracy": "82",
+                            "score": "60"
+                        },
+                        {
+                            "name": "Police",
+                            "efficiency": "23",
+                            "accuracy": "82",
+                            "score": "60"
+                        }
+                        ]
+                },
                 {
                     "title": "Api in Nodejs(Javascript)",
                     "description": "Write a Nodejs script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
@@ -200,6 +306,47 @@
                         "name": "Police",
                         "submitted_on": "10/02/24, 09:31 AM"
                     }
+                    ]
+                },
+                {
+                    "title": "Fibonnaci Series in Rust",
+                    "description": "Write a Rust script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy. Write a Rust script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.Write a Rust script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
+                    "due_date": "12/02/24",
+                    "difficulty": "hard",
+                    "aid": "123459",
+                    "submissions":[
+                        {
+                        "name": "Chandu",
+                        "submitted_on": "12/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Archana",
+                            "submitted_on": "11/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Akasnha",
+                            "submitted_on": "13/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Mia",
+                            "submitted_on": "12/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Save_Me",
+                            "submitted_on": "12/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Police",
+                            "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Police",
+                            "submitted_on": "10/02/24, 09:31 AM"
+                        },
+                        {
+                            "name": "Police",
+                            "submitted_on": "10/02/24, 09:31 AM"
+                        }
                     ]
                 },
                 {
@@ -246,49 +393,7 @@
                             "submitted_on": "10/02/24, 09:31 AM"
                         }
                         ]
-                },
-                {
-                    "title": "Fibonnaci Series in Rust",
-                    "description": "Write a Rust script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy. Write a Rust script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.Write a Rust script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.",
-                    "due_date": "12/02/24",
-                    "difficulty": "hard",
-                    "aid": "123459",
-                    "submissions":[
-                        {
-                        "name": "Chandu",
-                        "submitted_on": "12/02/24, 09:31 AM"
-                        },
-                        {
-                            "name": "Archana",
-                            "submitted_on": "11/02/24, 09:31 AM"
-                        },
-                        {
-                            "name": "Akasnha",
-                            "submitted_on": "13/02/24, 09:31 AM"
-                        },
-                        {
-                            "name": "Mia",
-                            "submitted_on": "12/02/24, 09:31 AM"
-                        },
-                        {
-                            "name": "Save_Me",
-                            "submitted_on": "12/02/24, 09:31 AM"
-                        },
-                        {
-                            "name": "Police",
-                            "submitted_on": "10/02/24, 09:31 AM"
-                        },
-                        {
-                            "name": "Police",
-                            "submitted_on": "10/02/24, 09:31 AM"
-                        },
-                        {
-                            "name": "Police",
-                            "submitted_on": "10/02/24, 09:31 AM"
-                        }
-                        ]
                 }
             ]
         }
-    }
 }

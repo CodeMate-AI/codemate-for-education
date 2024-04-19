@@ -4,35 +4,46 @@ const env = {
     "scripts": {
         "paths": {
             "dash": "./components/dash.js",
-            // "playground": "./components/playground.js",
-            "assignments": "./components/create.js",
-            "unchecked": "./components/unchecked.js",
-            "studentwise": "./components/studentwise.js"
+            "create": "./components/create.js",
+            "choose": "./components/choose.js",
+            "publish": "./components/create.js",
+            "submissions": "./components/submissions.js",
+            "studentwise": "./components/studentwise.js",
+            "reports": "./components/reports.js",
+            "assignments": "./components/assignments.js"
         },
         "elements": {
             "dash": null,
-            "assignments": null,
-            "unchecked": null,
+            "create": null,
+            "choose": null,
+            "publish": null,
+            "submissions": null,
             "studentwise": null,
+            "reports": null,
+            "assignments": null
         },
         "data": {
             "dash": null,
-            "assignments": null,
-            "unchecked" : null,
+            "create": null,
+            "choose": null,
+            "publish": null,
+            "submissions" : null,
             "studentwise": null,
+            "reports": null,
+            "assignments": null
         }
     },
     "messages": [],
     "init": () => {
         let url = new URL(window.location.href);
         env.active_page = url.searchParams.get('app');
-        if (env.active_page === null || env.active_page === undefined || env.active_page !== env.scripts.paths ) {
+        if (env.active_page === null || env.active_page === undefined ) {
             env.active_page = "dash";
         }
         if (document.querySelector(".nav_elm_active")) {
             document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");
         }
-        document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
+        // document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
         eval(`env.load.components.${env.active_page}()`);
 
 
@@ -57,6 +68,10 @@ const env = {
                     // newUrl.searchParams.set('language',"")
                     newUrl.searchParams.delete('id')
                     newUrl.searchParams.delete('language')
+                } else if (newUrl.searchParams.get("app") !== "create" || newUrl.searchParams.get("app") === null) {
+                    if(newUrl.searchParams.get("mode") !== null) {
+                        newUrl.searchParams.delete("mode")
+                    }
                 }
                 history.pushState({}, '', newUrl);
             }
@@ -72,7 +87,7 @@ const env = {
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp.teachers;
-                                console.log(env.scripts.data.dash.assignments.unchecked[0].submissions)
+                                // console.log(env.scripts.data.dash.assignments.unchecked[0].submissions)
                                 dash = dash.replace("{{teacher.students.count}}", resp.teachers.students);
                                 dash = dash.replace("{{teacher.assignments}}", resp.teachers.assignment_stats.created);
                                 dash = dash.replace("{{teacher.unchecked}}", resp.teachers.assignment_stats.unchecked);
@@ -87,8 +102,8 @@ const env = {
                             }).then(() => {
                                 setTimeout(() => {
                                     var assignments__sa = "";
-                                    var uncheckedLength = env.scripts.data.dash.assignments.unchecked.length
-                                    env.scripts.data.dash.assignments.unchecked.forEach((e,index) => {
+                                    var uncheckedLength = env.scripts.data.dash.assignments.length
+                                    env.scripts.data.dash.assignments.forEach((e,index) => {
                                         var temp = dash_elm_teachers.pending;
                                         temp = temp.replace("{{assignments.pending.title}}",e.title)
                                         temp = temp.replace("{{assignments.pending.description}}",e.description)
@@ -108,23 +123,13 @@ const env = {
                             })
                     })
             },
-            "playground": () => {
-                fetch("./components/playground.cmfe")
-                    .then((play) => play.text())
-                    .then((playground) => {
-                        env.app.innerHTML = playground;
-                        var script = document.createElement("script");
-                        script.src = env.scripts.paths.playground;
-                        document.body.appendChild(script);
-                    })
-            },
-            "assignments": () => {
+           
+            "create": () => {
                 const queryParams = new URL(window.location.href);
                 const mode = queryParams.searchParams.get('mode'); 
-                console.log(mode);
             
                 let createFile;
-                if (mode === 'self') {
+                if (mode === 'manual') {
                     createFile = "./components/create.cmfe";
                 } else if (mode === 'ai') {
                     createFile = "./components/create-2.cmfe";
@@ -135,54 +140,109 @@ const env = {
                 fetch(createFile)
                     .then((create) => create.text())
                     .then((create) => {
-                        env.scripts.elements.assignments = document.createElement("script");
-                        env.scripts.elements.assignments.src = env.scripts.paths.assignments;
+                        env.scripts.elements.create = document.createElement("script");
+                        env.scripts.elements.create.src = env.scripts.paths.create;
                         return create;
                     })
                     .then((create) => {
                         var elm = document.createElement("script");
-                        elm.src = env.scripts.paths.assignments
+                        elm.src = env.scripts.paths.create
                         document.body.appendChild(elm);
                         return create
                     })
                     .then((create) => {
                      
                             env.app.innerHTML = create;
-                            env.app.appendChild(env.scripts.elements.assignments);
+                            env.app.appendChild(env.scripts.elements.create);
                    
                     })
             },
-            "unchecked" : () => {
-                fetch("./components/unchecked.cmfe")
-                .then((unchecked) => unchecked.text())
-                .then((unchecked) => {
+            "choose": () => {
+                fetch("./components/choose.cmfe")
+                    .then((choose) => choose.text())
+                    .then((choose) => {
+                        env.scripts.elements.choose = document.createElement("script");
+                        env.scripts.elements.choose.src = env.scripts.paths.choose;
+                        return choose;
+                    })
+                    .then((choose) => {
+                        var elm = document.createElement("script");
+                        elm.src = env.scripts.paths.choose
+                        document.body.appendChild(elm);
+                        return choose
+                    })
+                    .then((choose) => {
+                     
+                            env.app.innerHTML = choose;
+                            env.app.appendChild(env.scripts.elements.choose);
+                   
+                    })
+            },
+            "publish": () => {
+                fetch("./components/publish-share.cmfe")
+                    .then((publish) => publish.text())
+                    .then((publish) => {
+                        env.scripts.elements.publish = document.createElement("script");
+                        env.scripts.elements.publish.src = env.scripts.paths.publish;
+                        return publish;
+                    })
+                    .then((publish) => {
+                        var elm = document.createElement("script");
+                        elm.src = env.scripts.paths.publish
+                        document.body.appendChild(elm);
+                        return publish
+                    })
+                    .then((publish) => {
+                     
+                            env.app.innerHTML = publish;
+                            env.app.appendChild(env.scripts.elements.publish);
+                   
+                    })
+            },
+            "submissions" : () => {
+                fetch("./components/submissions.cmfe")
+                .then((submissions) => submissions.text())
+                .then((submissions) => {
                     fetch("../db.json")
                     .then((res) => res.json())
                     .then((res) => {
-                        env.scripts.data.unchecked = res.teachers
-                        console.log(res.teachers)
+                        env.scripts.data.submissions = res.teachers
+                        let newUrl = new URL(window.location.href);
+                            newUrl.searchParams.get('aid');
+                          let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
+                        submissions = submissions.replace("{{assignment_title}}",filteredAssignments[0].title)
                     }).then(() => {
-                        env.scripts.elements.unchecked = document.createElement("script")
-                        env.scripts.elements.unchecked.src = env.scripts.paths.unchecked
+                        env.scripts.elements.submissions = document.createElement("script")
+                        env.scripts.elements.submissions.src = env.scripts.paths.submissions
                     })
                     .then(() => {
                         var elm = document.createElement("script");
-                        elm.src = env.scripts.paths.unchecked
+                        elm.src = env.scripts.paths.submissions
                         document.body.appendChild(elm);
                     }).then(() => {
                         setTimeout(() => {
                              let unchecked__ = "";
-                            //  let assignment__ = ""
-                          if(env.scripts.data.unchecked !== null) {
-                            env.scripts.data.unchecked.assignments.unchecked[0].submissions.forEach((e) => {
+
+                         
+                        if(env.scripts.data.submissions !== null) {
+                            let newUrl = new URL(window.location.href);
+                            newUrl.searchParams.get('aid');
+                          let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
+                          
+                          
+                            filteredAssignments[0].submissions.forEach((e) => {
                                 var temp2 = uncheck_assign.unchecked;
-                        
+                             
                                 temp2 = temp2.replace("{{students.name}}", e.name);
                                 temp2 = temp2.replace("{{students.submitted_on}}", e.submitted_on);
-                                if(e.submitted_on <= env.scripts.data.unchecked.assignments.unchecked[0].due_date) {
+                                if(e.submitted_on <= filteredAssignments[0].due_date) {
                                     temp2 = temp2.replace("{{students.ontime}}", "Ontime");
+                                    temp2 = temp2.replace("{{bg_color}}", "#2A9D8F");
                                 } else {
-                                    temp2 = temp2.replace("{{students.ontime}}", "Late");
+                                    
+                                    temp2 = temp2.replace("{{students.ontime}}", "Delayed");
+                                    temp2 = temp2.replace("{{bg_color}}", "#EF476F");
+                                    // studentEntries.classList.add('late');
                                 }
                                 temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
                                 temp2 = temp2.replace("{{assignments.pending.aid}}", e.aid);
@@ -191,10 +251,10 @@ const env = {
                           }
         
                             // env.app.innerHTML = assign+assignments_pending;
-                            env.app.appendChild(env.scripts.elements.unchecked);
+                            env.app.appendChild(env.scripts.elements.submissions);
                        
-                            unchecked = unchecked.replace("{{data}}", unchecked__);
-                            env.app.innerHTML = unchecked
+                            submissions = submissions.replace("{{data}}", unchecked__);
+                            env.app.innerHTML = submissions
                         }, 100);
                     })
                 })
@@ -266,6 +326,47 @@ const env = {
                             env.app.innerHTML = student
                         }, 100);
                     })
+                })
+            },
+            "assignments": () => {
+                fetch("./components/assignments.cmfe")
+                .then((assign) => assign.text())
+                .then((assign) => {
+                    fetch("../db.json")
+                        .then((resp) => resp.json())
+                        .then((resp) => {
+                            env.scripts.data.assignments = resp.teachers;
+                   
+                            return assign;
+                        }).then((assign) => {
+                            env.scripts.elements.assignments = document.createElement("script");
+                            env.scripts.elements.assignments.src = env.scripts.paths.assignments;
+                        }).then(() => {
+                            var elm = document.createElement("script");
+                            elm.src = env.scripts.paths.assignments;
+                            document.body.appendChild(elm);
+                        }).then(() => {
+                            setTimeout(() => {
+                                var assignments__sa = "";
+                              
+                                env.scripts.data.assignments.assignments.forEach((e) => {
+                                    var temp = assign_teachers.pending;
+                                    temp = temp.replace("{{assignments.pending.title}}",e.title)
+                                    temp = temp.replace("{{assignments.pending.description}}",e.description)
+                                    temp = temp.replace("{{assignments.pending.due_date}}",e.due_date)
+                                    temp = temp.replace("{{assignments.pending.difficulty}}",e.difficulty)
+                                    temp = temp.replace("{{assignments.pending.submissions}}",e.submissions.length)
+                                    temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.assignments.students - e.submissions.length)
+                                    temp = temp.replace("{{assignment_id}}",e.aid)
+                                    assignments__sa += temp;
+                                });
+
+                                assign = assign.replace("{{data}}", assignments__sa);
+                                
+                                env.app.innerHTML = assign;
+                                env.app.appendChild(env.scripts.elements.assignments);
+                            }, 100);
+                        })
                 })
             }
         }

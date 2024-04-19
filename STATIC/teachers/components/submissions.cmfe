@@ -91,7 +91,7 @@ img {
 }
 
 .ontime {
-    background: #2A9D8F;
+    /* background: #2A9D8F; */
     border-radius: 30px;
     padding: 10px;
     border: none;
@@ -99,6 +99,10 @@ img {
     color: white;
     width: 50% !important;
 }
+
+/* .late {
+    background: red !important;
+} */
 
 .view {
     color:#48AEF3;
@@ -150,6 +154,35 @@ img {
 .assignment > p {
     color:#48AEF3;
 }
+
+.btn {
+        display: flex;
+        flex-direction: row;
+        padding-top:50px;
+        padding-bottom:50px;
+        justify-content: center;
+        align-items: center;
+        padding-right: 0;
+        margin:0;
+    }
+
+    /* .btn-inside {
+        padding-left: 200px
+    } */
+
+   .btn button{
+        width: Fixed (200px)px;
+        height: Hug (10px)px;
+        padding: 14px 60px 14px 60px;
+        gap: 10px;
+        border-radius: 5px;
+        opacity: 0px;
+        background: #2CA3F2;
+        border-color: #d1d1d1;
+        color: white;
+        outline: none;
+        border: none;
+    }
  
 </style>
 
@@ -159,15 +192,18 @@ img {
 </div>
 <div class="assignment">
     <div class="submissions-arrow">
-        <button style="outline: none; border: none; background: none;">
+        <button id="backButton" style="outline: none; border: none; background: none;">
             <svg width="30" height="30" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M16.5 13.5L12 18M12 18L16.5 22.5M12 18H24M31.5 18C31.5 25.4559 25.4559 31.5 18 31.5C10.5442 31.5 4.5 25.4559 4.5 18C4.5 10.5442 10.5442 4.5 18 4.5C25.4559 4.5 31.5 10.5442 31.5 18Z" stroke="#011936" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <p><span>Assignment 4</span> / Submissions </p>
+          <p><span>{{assignment_title}}</span> / Submissions </p>
     </div>
     <p>Select All</p>
     </div>
 {{data}} 
+<div class="btn">
+    <button >ReEvaluate</button>
+    </div>
 
 

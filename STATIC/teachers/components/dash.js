@@ -19,3 +19,21 @@ dash_elm_teachers = {
     </div>
     `
     };
+
+    function clickHandler() {
+        let buttons = document.querySelectorAll('button[assignment_id]');
+    
+    // Iterate over each button and attach click event listener
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Get the assignment ID from the button attribute
+            let assignmentId = this.getAttribute('assignment_id');
+    
+            // Update the URL to include the assignment ID
+            history.pushState({}, '', `?app=submissions&aid=${assignmentId}`);
+            window.location.reload()
+        });
+    });
+    }
+    
+    clickHandler()
