@@ -83,16 +83,28 @@ const env = {
                 fetch("./components/dash.cmfe")
                     .then((dash) => dash.text())
                     .then((dash) => {
-                        fetch("http://localhost:8000/teacher", {
-                            method: "POST"
-                        })
+                        fetch("../database.json")
                             .then((resp) => resp.json())
                             .then((resp) => {
-                                env.scripts.data.dash = resp.teachers;
+                
+                                let newUrl = new URL(window.location.href);
+                                let institute_id = newUrl.searchParams.get("institute_id")
+                                let teacher_id = newUrl.searchParams.get('teacher_id');
+                               
+                                env.scripts.data.dash = resp.filter(institute => institute.id === institute_id)
+                                // console.log(institute_response[0].teachers);
+                                // console.log(institute_response[0].teachers.filter(teacher => teacher.id === teacher_id))
+                                console.log(resp);
+                                console.log(env.scripts.data.dash);
+                               let assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
+                               
+                               
+                            //   let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
+                                ;
                                 // console.log(env.scripts.data.dash.assignments.unchecked[0].submissions)
-                                dash = dash.replace("{{teacher.students.count}}", resp.teachers.students);
-                                dash = dash.replace("{{teacher.assignments}}", resp.teachers.assignment_stats.created);
-                                dash = dash.replace("{{teacher.unchecked}}", resp.teachers.assignment_stats.unchecked);
+                                dash = dash.replace("{{teacher.students.count}}", "2");
+                                dash = dash.replace("{{teacher.assignments}}", assignments_of_teachers.length);
+                                dash = dash.replace("{{teacher.unchecked}}", "03");
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -103,15 +115,28 @@ const env = {
                                 document.body.appendChild(elm);
                             }).then(() => {
                                 setTimeout(() => {
+
+                                    let newUrl = new URL(window.location.href);
+                                
+                                    let teacher_id = newUrl.searchParams.get('teacher_id');
+                                    let assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
+                                    let teacherData = env.scripts.data.dash[0].teachers.filter(teacher => teacher.id === teacher_id)
+                                    var uncheckedLength = assignments_of_teachers.length
+                                    let submissions = env.scripts.data.dash[0].submissions.filter(submission =>  submission.id === assignments_of_teachers[uncheckedLength -1].submisssions_id)
+                                 
                                     var assignments__sa = "";
-                                    var uncheckedLength = env.scripts.data.dash.assignments.length
-                                    env.scripts.data.dash.assignments.forEach((e,index) => {
+                                 
+                                    console.log(env.scripts.data.dash[0].students.forEach((e) => {
+                                        console.log(e.submissions.filter(submission => submission.aid === assignments_of_teachers[uncheckedLength -1].id ))
+                                    }))
+
+                                    assignments_of_teachers.forEach((e,index) => {
                                         var temp = dash_elm_teachers.pending;
                                         temp = temp.replace("{{assignments.pending.title}}",e.title)
                                         temp = temp.replace("{{assignments.pending.description}}",e.description)
-                                        temp = temp.replace("{{assignments.pending.submissions}}",e.submissions.length)
-                                        temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.dash.students - e.submissions.length)
-                                        temp = temp.replace("{{assignment_id}}",e.aid)
+                                        temp = temp.replace("{{assignments.pending.submissions}}",submissions.length)
+                                        temp = temp.replace("{{assignments.pending.yet}}",teacherData[0].students - submissions.length)
+                                        temp = temp.replace("{{assignment_id}}",e.id)
                                         if(index === uncheckedLength - 1) {
                                             assignments__sa += temp;
                                         }
@@ -205,13 +230,22 @@ const env = {
                 fetch("./components/submissions.cmfe")
                 .then((submissions) => submissions.text())
                 .then((submissions) => {
-                    fetch("../db.json")
+                    fetch("../database.json")
                     .then((res) => res.json())
                     .then((res) => {
-                        env.scripts.data.submissions = res.teachers
-                        let newUrl = new URL(window.location.href);
-                            newUrl.searchParams.get('aid');
-                          let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
+                                let newUrl = new URL(window.location.href);
+                                let institute_id = newUrl.searchParams.get("institute_id")
+                                let teacher_id = newUrl.searchParams.get('teacher_id');
+                                let aid = newUrl.searchParams.get('aid');
+                               let students = []
+                                env.scripts.data.submissions = res.filter(institute => institute.id === institute_id)
+                               console.log(env.scripts.data.submissions);
+                                // console.log(env.scripts.data.submissions[0].students.forEach((e) => {
+                                //     console.log(e.submissions.filter(submission => submission.aid === aid))
+                                // }))
+                        // let newUrl = new URL(window.location.href);
+                        //     newUrl.searchParams.get('aid');
+                        //   let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
                         submissions = submissions.replace("{{assignment_title}}",filteredAssignments[0].title)
                     }).then(() => {
                         env.scripts.elements.submissions = document.createElement("script")
