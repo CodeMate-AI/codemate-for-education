@@ -159,8 +159,7 @@
 <div id="main">
     <div class="ia" id="task_manager">
         <div id="task___">
-            <p>
-                Write a Python script to scrape a website and extract specific information (e.g., headlines, prices, etc.) using libraries like BeautifulSoup or Scrapy.
+            <p id="task_______">
             </p>
         </div>
         <div id="editor"></div>

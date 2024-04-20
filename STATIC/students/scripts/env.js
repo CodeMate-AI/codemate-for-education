@@ -44,7 +44,7 @@ const env = {
                 let newUrl = new URL(window.location.href);
                 newUrl.searchParams.set('app', env.active_page);
                 if (newUrl.searchParams.get('app') === "playground" && newUrl.searchParams.get('id') === null && newUrl.searchParams.get('language') === null) {
-                    newUrl.searchParams.set('id', "123456")
+                    // newUrl.searchParams.set('id', "123456")
                     newUrl.searchParams.set('language', "text")
                 } else if (newUrl.searchParams.get('app') !== "playground" && newUrl.searchParams.get('id') !== null && newUrl.searchParams.get('language') !== null) {
                     // newUrl.searchParams.set('id',"")
@@ -291,6 +291,7 @@ const env = {
                                
                                     assign = assign.replace("{{assignments.pending}}", assignments_pending);
                                     env.app.innerHTML = assign
+                                    activate_task_elms();
                                 }, 100);
                             })
                     })

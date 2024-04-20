@@ -38,7 +38,7 @@ pa_elm = {
           </div>
           <div class="btn">
           <div class="btn-inside">
-          <button assignment_id="{{assignments.pending.aid}}">START</button>
+          <button assignment_id="{{assignments.pending.aid}}" class="task_elm" nav="task">START</button>
           </div>
           </div>
           </div>
@@ -52,3 +52,25 @@ pa_elm = {
 //     temp = temp.replace("{{assignment.desc}}", e.desc);
 //     temp = temp.replace("{{aid}}", e.id);
 // });
+
+
+
+
+function activate_task_elms(){
+    console.log("HERE!");
+    document.querySelectorAll(".task_elm").forEach((e)=>{
+        e.onclick = ()=>{
+            task_id = e.getAttribute("assignment_id");
+            var mode = "text";
+            fetch("http://localhost:8000/get_mode/pending?task="+task_id)
+            .then((resp)=>resp.text())
+            .then((resp)=>{
+                mode = resp;
+            })
+            .then(()=>{
+
+            window.location.href = `?app=playground&id=${task_id}&language=${mode.split('"')[1]}`;
+            });
+        }
+    })
+}

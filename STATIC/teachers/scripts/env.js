@@ -10,7 +10,7 @@ const env = {
             "submissions": "./components/submissions.js",
             "studentwise": "./components/studentwise.js",
             "reports": "./components/reports.js",
-            "assignments": "./components/assignments.js"
+            "assignments": "./components/assignments.js",
         },
         "elements": {
             "dash": null,
@@ -83,7 +83,9 @@ const env = {
                 fetch("./components/dash.cmfe")
                     .then((dash) => dash.text())
                     .then((dash) => {
-                        fetch("../db.json")
+                        fetch("http://localhost:8000/teacher", {
+                            method: "POST"
+                        })
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp.teachers;
@@ -255,6 +257,7 @@ const env = {
                        
                             submissions = submissions.replace("{{data}}", unchecked__);
                             env.app.innerHTML = submissions
+                            activate_task_elms();
                         }, 100);
                     })
                 })
@@ -372,6 +375,14 @@ const env = {
         }
     }
 }
+
+
+
+
+
+
+
+
 
 
 

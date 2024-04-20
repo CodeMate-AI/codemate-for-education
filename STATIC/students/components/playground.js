@@ -22,7 +22,27 @@ var editor = ace.edit("editor");
 
 
 
-ex = {
+
+setTimeout(()=>{
+    if(search_params.id != "" && search_params.id != undefined){
+        fetch("http://localhost:8000/get_task?task_id="+search_params.id)
+        .then(resp => resp.json())
+        .then((resp)=>{
+            if(resp.task != null){
+                document.getElementById("task_______").innerText = resp.task;
+            }else{
+                document.getElementById("task___").remove();
+            }
+        })
+    }else{
+        document.getElementById("task___").remove();
+    }
+});
+
+
+
+
+    ex = {
     "enhanced_context": {
         "status": false,
         "element": document.getElementById("enhanced_context_toggle"),
@@ -61,7 +81,7 @@ document.getElementById("send_button").onclick = ()=>{
     let current_code = editor.getValue();
     current_message += "\nCODE:\n";
     current_message += current_code;
-    current_message += "\n\nFLAGS: [--resources]"
+    // current_message += "\n\nFLAGS: [--resources]"
 
     env.messages.push({
         "role": "user",
@@ -69,7 +89,14 @@ document.getElementById("send_button").onclick = ()=>{
     });
     let user_message = ex.message.user;
     user_message = user_message.replace("{{message}}", kjsdf);
-    ex.chatbox.innerHTML += user_message
+    ex.chatbox.innerHTML += user_message;
+    var task = "";
+    if(document.getElementById("task___") != null){
+        console.log(document.getElementById("task___"));
+        task = document.getElementById("task___").getElementsByTagName("p")[0].innerText;
+    }else{
+        task = "THERE IS NOT TASK :: FREE STYLE CODEING SESSION.";
+    }
     fetch("http://localhost:8000/chat", {
         method: "POST",
         headers: {
@@ -77,8 +104,9 @@ document.getElementById("send_button").onclick = ()=>{
         },
         body: JSON.stringify({
             "enhanced_context": true,
-            "task": document.getElementById("task___").getElementsByTagName("p")[0].innerText,
-            "messages": env.messages
+            "task": task,
+            "messages": env.messages,
+            "resources": false
         })
     }).then((resp)=>resp.json())
     .then((resp)=>{

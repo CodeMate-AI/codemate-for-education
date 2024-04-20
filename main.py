@@ -14,7 +14,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -27,13 +27,131 @@ client = AzureOpenAI(
 
 
 
+database = {}
+with open("./STATIC/db.json", "r", encoding="utf-8") as e:
+    database = json.load(e)
+
+
+
 def references(query):
     pass
+
+
+
+
+
+
+
+
+
+
+@app.post("/evaluate")
+async def evaluate_asignment(request: Request):
+    data = await request.json()
+    response = client.chat.completions.create(
+        model="gpt4-turbo",
+        messages=[{
+            "role": "system",
+            "content": "Evaluate the student's code below for the mentioned task. Strictly use only the evauation metrices mentioned below and none other.\nGenerate an in-depth report of the same. You must only return the evaluation report in Markdown and nothing else."
+        },{
+            "role": "user",
+            "content": "TASK: "+data["task"]+"\n==========================================\n\nCODE OF THE STUDENT:\n"+data["code"]+"\n\n===============================================\n\nEVALUATION METRICS:\n"+data["evaluation_metrics"]
+        }],
+        temperature=0.3,
+        stream=False,
+        max_tokens=2000
+    )
+
+
+
+
+
+
+
+
+
+# ============================================= #
+
+@app.post("/student")
+async def student(request: Request):
+    global database
+    return database["students"]
+
+
+@app.post("/teacher")
+async def teacher(request: Request):
+    global database
+    return database
+
+
+
+@app.get("/get_task")
+def get_task(task_id: str):
+    global database
+    tasks = database["students"]["assignments"]["pending"]
+    for t in tasks:
+        if t["aid"] == task_id:
+            return {
+                "task": t["description"]
+            }
+    return {
+        "task": None
+    }
+
+
+@app.get("/get_mode/pending")
+def get_mode(task: str):
+    global database
+    tasks = database["students"]["assignments"]["pending"]
+    for t in tasks:
+        print(t)
+        if t["aid"] == task:
+            return t["language"]
+        
+
+
+
+
+@app.post("/create_assignment")
+async def create_assignment(request: Request):
+    global database
+    data = await request.json()
+    database["students"]["assignments"]["pending"].append({
+        "title": data["title"],
+        "language": data["language"],
+        "description": data["description"],
+        "due_date": data["due_date"],
+        "difficulty": data["difficulty"]
+    })
+
+
+
+
+"""
+ENDPOINTS REQUIRED:
+1. Chat :: /chat
+2. Get assignments -> Teachers :: /teacher/get_assignments -> returns all assignments ever created
+3. Get assignments -> Students :: /student/get_assignments -> returns all assignments :: completed and pending
+4. Submit assignment :: /student/submit -> returns true on successful submission
+5. Get assignment information -> Students :: /student/get_assignment -> returns a json with assignment infomation
+6. Get assignment information -> Teachers :: /teacher/get_assignment -> returns a json with assignment information
+7. Delete assignment :: /teacher/delete_assignment -> returns true on successfully deleting the assignment
+8. Upload text files -> NO PDFs :: /teacher/upload/text -> one file at a time + max size of the file should be 10mb. + returns true once the embeddings for it are saved.
+"""
+
+with open("./database.json", "r", encoding="utf-8") as e:
+    database = json.load(e)
+
+def references(assignment_id, query):
+    global database
+
+
 
 
 @app.post("/chat")
 async def chat(request: Request):
     data = await request.json()
+    # print(data)
 
     messages = [
         {"role": "system", "content": "You are CodeMate by CodeMate for Education. You help individuals to learn programming languages. Your task is to explain the concepts to the user rather than providing the code. Don't ever provide the code to the user. You are allowed to provide sudo code to the users but never complete code. Help them in learning the language rather than just handing them over the code.\n\nRESPONSE FORMAT: STRICT MARKDOWN"},
@@ -41,22 +159,23 @@ async def chat(request: Request):
         {"role": "assistant", "content": "Understood! I will help the user accomplish the task and will not provide the complete code to them. However, as per the instructions, I will provide the user with sudo code whenever necessary."}
     ]
 
-    messages = messages.extend(data["messages"])
+    messages.extend(data["messages"])
+    print(messages)
     
     while True:
         response = client.chat.completions.create(
-            model="gpt4-turbo",
+            model="gpt-35-turbo-16k",
             messages=messages,
             temperature=0.3,
             functions=[{
                 "name": "references",
-                "description": "This function is called to fetch results from the internet to find appropriate resources for the user's query. The function returns an array of top-3 links.",
+                "description": "This function is to be called for references related to the query of the user only and only if the last message of the user contains the --resources FLAG.",
                 "parameters":{
                     "type": "object",
                     "properties": {
                         "q": {
                             "type": "string",
-                            "description": "the query for which we need to search the internet."
+                            "description": "topic for which we need to fetch references."
                         }
                     },
                     "required": ["q"]
@@ -84,20 +203,3 @@ async def chat(request: Request):
                 "name": "references",
                 "content": str(function_response)
             })
-
-
-
-
-
-
-
-@app.post("/evaluate")
-async def evaluate_asignment(request: Request):
-    data = await request.json()
-    response = client.chat.completions.create(
-        model="gpt4-turbo",
-        messages=[{
-            "role": "system",
-            "content": "On the basis of the following evaluation benchmarks:\n=== EVAL BENCHMARKS START ===\n"+str(data["benchmarks"])+"\n=== EVAL BENCHMARKS END ===\n\nEvaluate the code provided below for the mentioned task.\n\nTASK"+data["task"]["description"]+"\n\n=====\nCODE:\n"+data["code"]
-        }]
-    )
