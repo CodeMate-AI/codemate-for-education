@@ -221,6 +221,37 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
     }
 
 
+def read_database():
+    with open("database.json", "r") as f:
+        return json.load(f)
+
+
+@app.get("/share")
+def get_assignment(institute_id: str = Query(..., description="Institute ID"), assignment_id: str = Query(..., description="Assignment ID")):
+    # Load the database
+  data = load_database()
+  print(institute_id)
+    
+  institute_index = None
+  for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+  if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
+
+  assignments = data[institute_index]["assignments"]
+    # Find the assignment by its ID
+  for assignment in assignments:
+        if assignment["id"] == assignment_id:
+            return {"assignment": assignment}
+
+    # If no assignment is found, return a 404 error
+  raise HTTPException(status_code=404, detail="Assignment not found")
 
 
 """

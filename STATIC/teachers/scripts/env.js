@@ -6,11 +6,12 @@ const env = {
             "dash": "./components/dash.js",
             "create": "./components/create.js",
             "choose": "./components/choose.js",
-            "publish": "./components/create.js",
+            "publish": "./components/share.js",
             "submissions": "./components/submissions.js",
             "studentwise": "./components/studentwise.js",
             "reports": "./components/reports.js",
             "assignments": "./components/assignments.js",
+            "view": "./components/share.js"
         },
         "elements": {
             "dash": null,
@@ -20,7 +21,8 @@ const env = {
             "submissions": null,
             "studentwise": null,
             "reports": null,
-            "assignments": null
+            "assignments": null,
+            "view": null
         },
         "data": {
             "dash": null,
@@ -30,7 +32,8 @@ const env = {
             "submissions" : null,
             "studentwise": null,
             "reports": null,
-            "assignments": null
+            "assignments": null,
+            "view": null
         }
     },
     "messages": [],
@@ -213,21 +216,31 @@ const env = {
                 fetch("./components/publish-share.cmfe")
                     .then((publish) => publish.text())
                     .then((publish) => {
-                        env.scripts.elements.publish = document.createElement("script");
-                        env.scripts.elements.publish.src = env.scripts.paths.publish;
-                        return publish;
-                    })
-                    .then((publish) => {
-                        var elm = document.createElement("script");
-                        elm.src = env.scripts.paths.publish
-                        document.body.appendChild(elm);
-                        return publish
-                    })
-                    .then((publish) => {
-                     
-                            env.app.innerHTML = publish;
-                            env.app.appendChild(env.scripts.elements.publish);
-                   
+                            const queryParams = new URL(window.location.href);
+                            const institute_id = queryParams.searchParams.get('institute_id');
+                            const assignment_id = queryParams.searchParams.get('assignment_id') 
+                            fetch(`http://localhost:8002/share/?institute_id=${institute_id}&assignment_id=${assignment_id}`)
+                            .then((res) => res.json())
+                            .then ((res) => {
+                                console.log(res.assignment.problem_statement);
+                                publish = publish.replace("{{problem.description}}", res.assignment.problem_statement);
+                                publish = publish.replace("{{problem.difficulty}}", res.assignment.difficulty);
+                                publish = publish.replace("{{assignment_id}}", assignment_id);
+                                return publish
+                            }).then((dash) => {
+                                env.scripts.elements.publish = document.createElement("script");
+                                env.scripts.elements.publish.src = env.scripts.paths.publish;
+                            }).then(() => {
+                                var elm = document.createElement("script");
+                                elm.src = env.scripts.paths.publish;
+                                document.body.appendChild(elm);
+                            })
+                             .then(() => {
+                                setTimeout(() => {
+                                    env.app.innerHTML = publish;
+                                    env.app.appendChild(env.scripts.elements.publish);
+                                },100)
+                             })
                     })
             },
             "submissions" : () => {
@@ -408,6 +421,37 @@ const env = {
                                 env.app.appendChild(env.scripts.elements.assignments);
                             }, 100);
                         })
+                })
+            },
+            "view" : () => {
+                fetch("./components/view.cmfe")
+                .then((view) => view.text())
+                .then((view) => {
+                        const queryParams = new URL(window.location.href);
+                        const institute_id = queryParams.searchParams.get('institute_id');
+                        const assignment_id = queryParams.searchParams.get('assignment_id') 
+                        fetch(`http://localhost:8002/share/?institute_id=${institute_id}&assignment_id=${assignment_id}`)
+                        .then((res) => res.json())
+                        .then ((res) => {
+                            console.log(res.assignment.problem_statement);
+                            view = view.replace("{{problem.description}}", res.assignment.problem_statement);
+                            view = view.replace("{{problem.sample_output}}", res.assignment.sample_output);
+                            view = view.replace("{{problem.sample_input}}", res.assignment.sample_input);
+                            return view
+                        }).then((view) => {
+                            env.scripts.elements.view = document.createElement("script");
+                            env.scripts.elements.view.src = env.scripts.paths.view;
+                        }).then(() => {
+                            var elm = document.createElement("script");
+                            elm.src = env.scripts.paths.view;
+                            document.body.appendChild(elm);
+                        })
+                         .then(() => {
+                            setTimeout(() => {
+                                env.app.innerHTML = view;
+                                env.app.appendChild(env.scripts.elements.view);
+                            },100)
+                         })
                 })
             }
         }

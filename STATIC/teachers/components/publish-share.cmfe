@@ -367,10 +367,6 @@ text-decoration: underline;
  <p>Generate</p>
 </div>
 <div class="progress-content">
- <span class="dot completed"></span>
- <p>Choose</p>
-</div>
-<div class="progress-content">
  <span class="dot active"></span>
  <p>Publish and Share</p>
 </div>
@@ -400,15 +396,15 @@ text-decoration: underline;
      <div class="content">
      <p class="title">Problem Statement</p>
      <!-- <p class="description">{{problem.statement}}</p> -->
-     <p class="description">Create a snake game in Python and store the highest score of the user. Update the highest score every time the player beats the record. The highest score shall be saved locally and not in-memory, so that it can be reloaded when the game is started again after being closed.</p>
+     <p class="description">{{problem.description}}</p>
      </div>
      <div class="date-diff">
-  <span class="easy">Easy</span>
+  <span class="easy">{{problem.difficulty}}</span>
   <span >Difficulty Level</span>
      </div>
      <div class="bton">
      <div class="btn-inside">
-     <button assignment_id={{assignment_id}}>View</button>
+     <button id="view-assignment" assignment_id={{assignment_id}}>View</button>
      </div>
      </div>
      <div>

@@ -99,6 +99,102 @@
         "attachment": "project_requirements.pdf",
         "sample_input": "input",
         "sample_output": "output"
+      },
+      {
+        "id": "97",
+        "teacherId": "001",
+        "title": "title",
+        "description": "description",
+        "problem_statement": "problem",
+        "due_date": 1713877080,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output"
+      },
+      {
+        "id": "263",
+        "teacherId": "001",
+        "title": "title",
+        "description": "description",
+        "problem_statement": "statement in is the problem is the fast",
+        "due_date": 1713963840,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "output"
+      },
+      {
+        "id": "722",
+        "teacherId": "001",
+        "title": "Teach Machine Leanrning",
+        "description": "Machine learning in Big data and Deep Learning ",
+        "problem_statement": "Whatever",
+        "due_date": 1714136700,
+        "difficulty": "Easy",
+        "attachment": "",
+        "sample_input": "Vexaa",
+        "sample_output": "Output"
+      },
+      {
+        "id": "550",
+        "teacherId": "001",
+        "title": "Golang ",
+        "description": "Anthony ",
+        "problem_statement": "Build a redis clone using golang .",
+        "due_date": 1713966480,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "err!=nil"
+      },
+      {
+        "id": "276",
+        "teacherId": "001",
+        "title": "Title  testing",
+        "description": "Description testing",
+        "problem_statement": "problem ",
+        "due_date": 1713967260,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output"
+      },
+      {
+        "id": "46",
+        "teacherId": "001",
+        "title": "Rust Complier in Golang ",
+        "description": "Aise hi random",
+        "problem_statement": "Build a rust compiler in golang and share the video . ",
+        "due_date": 1714053900,
+        "difficulty": "Easy",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output "
+      },
+      {
+        "id": "214",
+        "teacherId": "001",
+        "title": "Title ",
+        "description": "Description",
+        "problem_statement": "Statement hai ji",
+        "due_date": 1713967740,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output "
+      },
+      {
+        "id": "636",
+        "teacherId": "001",
+        "title": "Title ",
+        "description": "Description",
+        "problem_statement": "Statement hai ji",
+        "due_date": 1713967740,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output "
       }
     ],
     "submissions": [
@@ -164,6 +260,14 @@
       {
         "id": "001",
         "name": "Tushar Bansal",
+        "assigned": [
+          {
+            "aid": "005"
+          },
+          {
+            "aid": "007"
+          }
+        ],
         "submissions": [
           {
             "aid": "001"
@@ -176,6 +280,14 @@
       {
         "id": "002",
         "name": "Bhanu Pratap Thakur",
+        "assigned": [
+          {
+            "aid": "005"
+          },
+          {
+            "aid": "007"
+          }
+        ],
         "submissions": [
           {
             "aid": "002"
@@ -188,6 +300,14 @@
       {
         "id": "003",
         "name": "BAchha ",
+        "assigned": [
+          {
+            "aid": "005"
+          },
+          {
+            "aid": "007"
+          }
+        ],
         "submissions": [
           {
             "aid": "001"

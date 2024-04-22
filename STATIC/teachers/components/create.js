@@ -34,21 +34,7 @@ checking()
 setInterval(checking, 1000);
 
 // Open the modal when the assignments button is clicked
-document.getElementById("assignments-btn").addEventListener("click", function () {
-  document.getElementById("assignments-modal").style.display = "block";
-});
 
-// Close the modal when the close button or outside the modal is clicked
-document.querySelectorAll(".close, .modal").forEach(function (element) {
-  element.addEventListener("click", function () {
-    document.getElementById("assignments-modal").style.display = "none";
-  });
-});
-
-// Prevent modal from closing when modal content is clicked
-document.querySelector(".modal-content").addEventListener("click", function (event) {
-  event.stopPropagation();
-});
 
 // Handle manual button click
 document.getElementById("manual-btn").addEventListener("click", function () {
@@ -155,13 +141,18 @@ function formSubmission() {
     const title = document.getElementById("title").value
     const description = document.getElementById("description").value
     const problem_statement = document.getElementById("problem").value
-    const due_date = document.getElementById("date-time").value
+    const dateString = document.getElementById("date-time").value;
+
+// Parse the date string into a JavaScript Date object
+    const date = new Date(dateString);
+
+// Convert the Date object to a Unix timestamp (in seconds)
+    const due_date = Math.floor(date.getTime() / 1000);
     const difficulty = document.getElementById("difficulty-input").value
     let attachment = document.getElementById("file-upload").value
     const sample_input = document.getElementById("input").value
     const sample_output = document.getElementById("output").value
-    const id = Math.floor(Math.random() * 100) + 1; // Random integer from 1 to 100
-
+    const id = String(Math.floor(Math.random() * 1000) + 1); // Random integer from 1 to 100
 
     console.log(JSON.stringify({
       id,
@@ -183,6 +174,7 @@ function formSubmission() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          id, 
           teacherId,
           title,
           description,
@@ -194,7 +186,13 @@ function formSubmission() {
           sample_output,
         }),
       })
-      console.log(data)
+     const response = await data.json()
+
+     let newUrl = new URL(window.location.href);
+     newUrl.searchParams.set('assignment_id',await response.task_id);
+     newUrl.searchParams.set('app', "publish");
+     history.pushState({}, '', newUrl)
+     
     } catch (error) {
       console.log(error)
       alert(error)
