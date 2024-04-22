@@ -227,10 +227,10 @@ span.active {
     <span class="dot active"></span>
     <p>Generate</p>
   </div>
-  <div class="progress-content">
+  <!-- <div class="progress-content">
     <span class="dot"></span>
     <p>Choose</p>
-  </div>
+  </div> -->
   <div class="progress-content">
     <span class="dot"></span>
     <p>Publish and Share</p>
@@ -247,13 +247,13 @@ span.active {
   <div class="div2">
   <label for="" class="headings">Attachment</label>
   <div class="upload-area">
-    <label for="file-upload" class="upload-btn">
+    <label for="file-upload" class="upload-btn" id="upload-label">
       <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.5 24C4.5 14.5719 4.5 9.85786 7.42894 6.92894C10.3579 4 15.0719 4 24.5 4C33.928 4 38.6422 4 41.571 6.92894C44.5 9.85786 44.5 14.5719 44.5 24C44.5 33.428 44.5 38.1422 41.571 41.071C38.6422 44 33.928 44 24.5 44C15.0719 44 10.3579 44 7.42894 41.071C4.5 38.1422 4.5 33.428 4.5 24ZM24.5 35.5C25.3284 35.5 26 34.8284 26 34V23.6214L29.4394 27.0606C30.0252 27.6464 30.9748 27.6464 31.5606 27.0606C32.1464 26.4748 32.1464 25.5252 31.5606 24.9394L25.5606 18.9393C25.2794 18.658 24.8978 18.5 24.5 18.5C24.1022 18.5 23.7206 18.658 23.4394 18.9393L17.4393 24.9394C16.8536 25.5252 16.8536 26.4748 17.4393 27.0606C18.0251 27.6464 18.9749 27.6464 19.5607 27.0606L23 23.6214V34C23 34.8284 23.6716 35.5 24.5 35.5ZM16.5 15.5C15.6716 15.5 15 14.8284 15 14C15 13.1716 15.6716 12.5 16.5 12.5H32.5C33.3284 12.5 34 13.1716 34 14C34 14.8284 33.3284 15.5 32.5 15.5H16.5Z" fill="#48AEF3"/>
       </svg>        
       <span>Browse or Upload File</span>
     </label>
-    <input type="file" id="file-upload" style="display: none;">
+    <input type="file" id="file-upload" accept=".pdf,.docx" style="display: none;">
   </div>
   </div>
   </div>
@@ -270,13 +270,29 @@ span.active {
    </div>
   </div>
     <div class="text-area input-output">
-      <label for="output" class="headings">Sample Output</label>
+  <label for="output" class="headings">Sample Output</label>
    <div class="input_button">
     <input type="text"  >
     <button>Or Generate using AI</button>
    </div>
     </div>
   </div>
+    <div class="title-wali-div">
+  <div class="text-area">
+    <label for="difficulty" class="headings">Difficulty</label>
+    <input class="common-input"  list="difficulty" placeholder="Choose Difficulty">
+   <datalist id="difficulty">
+     <option value="Easy">
+     <option value="Medium">
+     <option value="Hard">
+   </datalist>
+  </div>
+ <div class="text-area">
+  <label for="difficulty" class="headings">Due Date</label>
+  <input class="common-input" type="datetime-local">
+ </div>
+    </div>
+
   <button id="create-publish" class="publish_button" type="submit">
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M18.4296 11.8442C18.5061 12.5945 18.55 13.3206 18.55 14.0002C18.55 15.2724 18.3962 16.7089 18.161 18.1613C16.7086 18.3965 15.2721 18.5502 14 18.5502C12.7336 18.5502 11.2975 18.3969 9.83877 18.1609C9.6037 16.7085 9.44995 15.2722 9.44995 14.0002C9.44995 13.3209 9.4938 12.5946 9.57047 11.8442C11.1014 12.0893 12.6286 12.2502 14 12.2502C15.3714 12.2502 16.8986 12.0893 18.4296 11.8442Z" fill="white"/>

@@ -96,7 +96,10 @@ const env = {
                                 // console.log(institute_response[0].teachers.filter(teacher => teacher.id === teacher_id))
                                 console.log(resp);
                                 console.log(env.scripts.data.dash);
-                               let assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
+                                let assignments_of_teachers
+                                if (env.scripts.data.dash !== null) {
+                                     assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
+                                }
                                
                                
                             //   let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
@@ -120,6 +123,7 @@ const env = {
                                 
                                     let teacher_id = newUrl.searchParams.get('teacher_id');
                                     let assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
+                                    console.log(assignments_of_teachers);
                                     let teacherData = env.scripts.data.dash[0].teachers.filter(teacher => teacher.id === teacher_id)
                                     var uncheckedLength = assignments_of_teachers.length
                                     let submissions = env.scripts.data.dash[0].submissions.filter(submission =>  submission.id === assignments_of_teachers[uncheckedLength -1].submisssions_id)

@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AzureOpenAI
@@ -7,6 +8,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import requests
 import json
+from pydantic import BaseModel
+from typing import Optional
 # from transcription_pipeline import pipe
 
 load_dotenv(override=True)
@@ -28,7 +31,7 @@ client = AzureOpenAI(
 
 
 database = {}
-with open("./STATIC/db.json", "r", encoding="utf-8") as e:
+with open("./STATIC/database.json", "r", encoding="utf-8") as e:
     database = json.load(e)
 
 
@@ -112,17 +115,70 @@ def get_mode(task: str):
 
 
 
-@app.post("/create_assignment")
-async def create_assignment(request: Request):
-    global database
-    data = await request.json()
-    database["students"]["assignments"]["pending"].append({
-        "title": data["title"],
-        "language": data["language"],
-        "description": data["description"],
-        "due_date": data["due_date"],
-        "difficulty": data["difficulty"]
-    })
+# @app.post("/create_assignment")
+# async def create_assignment(request: Request):
+#     global database
+#     data = await request.json()
+#     database["students"]["assignments"]["pending"].append({
+#         "title": data["title"],
+#         "language": data["language"],
+#         "description": data["description"],
+#         "due_date": data["due_date"],
+#         "difficulty": data["difficulty"]
+#     })
+
+database_path = "./STATIC/database.json"
+
+class Assignment(BaseModel):
+    id: str
+    title: str
+    description: str
+    problem_statement: str # Optional problem statement
+    due_date: int  # Integer representation of a due date (e.g., a timestamp)
+    difficulty: str  # String representation of difficulty level
+    attachment: Optional[str] = None
+
+
+def load_database():
+    if os.path.exists(database_path):
+        with open(database_path, "r") as f:
+            return json.load(f)
+    else:
+        # If the file doesn't exist, return a default structure
+        return {"assignments": []}
+
+# Helper function to save data to the JSON file
+def save_database(data):
+    with open(database_path, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+@app.post("/add_task")
+def add_task(assignment: Assignment):
+    # Load the current data from the JSON file
+    data = load_database()
+    print(data[0])
+
+    # Check if assignment with same 'aid' already exists
+    # if isinstance(data["assignments"], list):
+    for existing_assignment in data[0]["assignments"]:
+        if existing_assignment["id"] == assignment.id:
+            return {
+                "status": "failure",
+                "message" : "Assignment not added",
+            }
+
+    # Add the new assignment to the 'assignments' array
+    data["assignments"].append(assignment.model_dump())
+
+    # Save the updated data back to the JSON file
+    save_database(data)
+
+    return {
+        "status": "success",
+        "message": "Assignment added successfully",
+        "task_id": assignment.id
+    }
 
 
 
