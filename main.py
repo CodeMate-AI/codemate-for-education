@@ -161,7 +161,7 @@ def add_task(assignment: Assignment):
 
     # Check if assignment with same 'aid' already exists
     # if isinstance(data["assignments"], list):
-    for existing_assignment in data[0]["assignments"]:
+       for existing_assignment in data[0]["assignments"]:
         if existing_assignment["id"] == assignment.id:
             return {
                 "status": "failure",

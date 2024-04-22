@@ -1,161 +1,170 @@
 [
-    {
-        "id": "123456",
-        "institute_name": "IIT Kanpur",
-        "assignments": [
-            {
-                "id": "001",
-                "teacherId": "001",
-                "title": "Python Web Scrapper",
-                "description": "Create a web-scrapper in python that scrapes the content of a given web-page and then cleans the collected content.",
-                "problem_statement": "",
-                "benchmark_instructions": "",
-                "attachment": "",
-                "samples": {
-                    "input": "",
-                    "output": ""
-                },
-                "submisssions_id": "001"
-            },
-            {
-                "id": "002",
-                "teacherId": "002",
-                "title": "C++ Web Scraper",
-                "description": "Create a web-scrapper in C++ that scrapes the content of a given web-page and then cleans the collected content.",
-                "problem_statement": "",
-                "benchmark_instructions": "",
-                "attachment": "",
-                "samples": {
-                    "input": "",
-                    "output": ""
-                },
-                "submisssions_id": "002"
-            },
-            {
-                "id": "003",
-                "teacherId": "002",
-                "title": "Python Web Scrapper",
-                "description": "Create a web-scrapper in Zig that scrapes the content of a given web-page and then cleans the collected content.",
-                "problem_statement": "",
-                "benchmark_instructions": "",
-                "attachment": "",
-                "samples": {
-                    "input": "",
-                    "output": ""
-                },
-                "submisssions_id": "003"
-            },
-            {
-                "id": "004",
-                "teacherId": "003",
-                "title": "Python Web Scrapper",
-                "description": "Create a web-scrapper in python that scrapes the content of a given web-page and then cleans the collected content.",
-                "problem_statement": "",
-                "benchmark_instructions": "",
-                "attachment": "",
-                "samples": {
-                    "input": "",
-                    "output": ""
-                },
-                "submisssions_id": "003"
-            }
-        ],
+  {
+    "id": "123456",
+    "institute_name": "IIT Kanpur",
+    "assignments": [
+      {
+        "id": "001",
+        "teacherId": "001",
+        "title": "Python Web Scrapper",
+        "description": "Create a web-scrapper in python that scrapes the content of a given web-page and then cleans the collected content.",
+        "problem_statement": "",
+        "benchmark_instructions": "",
+        "attachment": "",
+        "samples": {
+          "input": "",
+          "output": ""
+        },
+        "submisssions_id": "001"
+      },
+      {
+        "id": "002",
+        "teacherId": "002",
+        "title": "C++ Web Scraper",
+        "description": "Create a web-scrapper in C++ that scrapes the content of a given web-page and then cleans the collected content.",
+        "problem_statement": "",
+        "benchmark_instructions": "",
+        "attachment": "",
+        "samples": {
+          "input": "",
+          "output": ""
+        },
+        "submisssions_id": "002"
+      },
+      {
+        "id": "003",
+        "teacherId": "002",
+        "title": "Python Web Scrapper",
+        "description": "Create a web-scrapper in Zig that scrapes the content of a given web-page and then cleans the collected content.",
+        "problem_statement": "",
+        "benchmark_instructions": "",
+        "attachment": "",
+        "samples": {
+          "input": "",
+          "output": ""
+        },
+        "submisssions_id": "003"
+      },
+      {
+        "id": "004",
+        "teacherId": "003",
+        "title": "Python Web Scrapper",
+        "description": "Create a web-scrapper in python that scrapes the content of a given web-page and then cleans the collected content.",
+        "problem_statement": "",
+        "benchmark_instructions": "",
+        "attachment": "",
+        "samples": {
+          "input": "",
+          "output": ""
+        },
+        "submisssions_id": "003"
+      },
+      {
+        "id": "005",
+        "title": "Python Project",
+        "description": "Develop a Python project.",
+        "problem_statement": "Implement a specific set of features.",
+        "due_date": 1712441600,
+        "difficulty": "Medium",
+        "attachment": "project_requirements.pdf"
+      }
+    ],
+    "submissions": [
+      {
+        "id": "001",
+        "student_id": "001",
+        "aid": "001",
+        "submission": "",
+        "evaluation": {
+          "accuracy": 92,
+          "efficiency": 85,
+          "score": 52,
+          "notes": ""
+        },
+        "date_time": "10/02/24, 9:31 AM"
+      },
+      {
+        "id": "002",
+        "student_id": "002",
+        "aid": "002",
+        "submission": "",
+        "evaluation": {
+          "accuracy": 23,
+          "efficiency": 12,
+          "score": 16
+        },
+        "date_time": "13/02/24, 9:54 AM"
+      },
+      {
+        "id": "003",
+        "student_id": "003",
+        "aid": "003",
+        "submission": "",
+        "evaluation": {
+          "accuracy": 23,
+          "efficiency": 12,
+          "score": 16
+        },
+        "date_time": "26/02/24, 9:54 AM"
+      }
+    ],
+    "teachers": [
+      {
+        "id": "001",
+        "name": "Sumita Mukharjee",
+        "email": "smukh@institute.com",
+        "students": 42
+      },
+      {
+        "id": "002",
+        "name": "Master Saleem",
+        "email": "saleem@master.com",
+        "students": 42
+      },
+      {
+        "id": "003",
+        "name": "Narendra Modi",
+        "email": "modi@narendra.com",
+        "students": 42
+      }
+    ],
+    "students": [
+      {
+        "id": "001",
+        "name": "Tushar Bansal",
         "submissions": [
-            {
-                "id": "001",
-                "student_id": "001",
-                "aid": "001",
-                "submission": "",
-                "evaluation": {
-                    "accuracy": 92,
-                    "efficiency": 85,
-                    "score": 52,
-                    "notes": ""
-                },
-                "date_time": "10/02/24, 9:31 AM"
-            },
-            {
-                "id": "002",
-                "student_id": "002",
-                "aid": "002",
-                "submission": "",
-                "evaluation": {
-                    "accuracy": 23,
-                    "efficiency": 12,
-                    "score": 16
-                },
-                "date_time": "13/02/24, 9:54 AM"
-            },
-            {
-                "id": "003",
-                "student_id": "003",
-                "aid": "003",
-                "submission": "",
-                "evaluation": {
-                    "accuracy": 23,
-                    "efficiency": 12,
-                    "score": 16
-                },
-                "date_time": "26/02/24, 9:54 AM"
-            }
-        ],
-        "teachers": [
-           {
-            "id": "001",
-            "name": "Sumita Mukharjee",
-            "email": "smukh@institute.com",
-            "students": 42
-           },
-           {
-            "id": "002",
-            "name": "Master Saleem",
-            "email": "saleem@master.com",
-            "students": 42
-           },
-           {
-            "id": "003",
-            "name": "Narendra Modi",
-            "email": "modi@narendra.com",
-            "students": 42
-           }
-        ],
-        "students": [
-            {
-                "id": "001",
-                "name": "Tushar Bansal",
-                "submissions": [
-                    {
-                        "aid": "001"
-                    },
-                    {
-                        "aid": "003"
-                    }
-                ]
-            },
-            {
-                "id": "002",
-                "name": "Bhanu Pratap Thakur",
-                "submissions": [
-                    {
-                        "aid": "002"
-                    },
-                    {
-                        "aid": "003"
-                    }
-                ]
-            },
-            {
-                "id": "003",
-                "name": "BAchha ",
-                "submissions": [
-                    {
-                        "aid": "001"
-                    },
-                    {
-                        "aid": "003"
-                    }
-                ]
-            }
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "003"
+          }
         ]
-    }
+      },
+      {
+        "id": "002",
+        "name": "Bhanu Pratap Thakur",
+        "submissions": [
+          {
+            "aid": "002"
+          },
+          {
+            "aid": "003"
+          }
+        ]
+      },
+      {
+        "id": "003",
+        "name": "BAchha ",
+        "submissions": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "003"
+          }
+        ]
+      }
+    ]
+  }
 ]
