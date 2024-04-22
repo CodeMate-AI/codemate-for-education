@@ -138,6 +138,8 @@ class Assignment(BaseModel):
     due_date: int  # Integer representation of a due date (e.g., a timestamp)
     difficulty: str  # String representation of difficulty level
     attachment: Optional[str] = None
+    sample_input: str
+    sample_output: str
 
 
 def load_database():
@@ -203,7 +205,7 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
     # else proceed
     
     assignment_data = assignment.model_dump()
-    assignment_data["teacherId"] = teacher_id  # Add teacher_id to the assignment
+    assignment_data["teacherId"] = teacher_id
 
     print(assignment_data)
     # Add the assignment to the 'assignments' list for this institute

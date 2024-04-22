@@ -219,7 +219,19 @@
         document.getElementById("manual-btn").addEventListener("click", function() {
           console.log("Manual option clicked");
           let newUrl = new URL(window.location.href);
-          newUrl.search = '';
+          let retainedParams = new URLSearchParams();
+          let paramsToKeep = ['teacher_id', 'institute_id'];
+    
+    // Iterate over current search parameters and keep only specified ones
+        newUrl.searchParams.forEach((value, key) => {
+        if (paramsToKeep.includes(key)) {
+            retainedParams.set(key, value);
+        }
+       });
+
+    // Set retained parameters
+          newUrl.search = retainedParams.toString();
+     
           newUrl.searchParams.set('app', "create");
           newUrl.searchParams.set('mode', "manual");
           history.pushState({}, '', newUrl)

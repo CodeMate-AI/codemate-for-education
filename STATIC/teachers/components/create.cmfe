@@ -236,7 +236,7 @@ span.active {
     <p>Publish and Share</p>
   </div>
 </div>
-<form>
+<form id="create-form">
   <div class="title-wali-div">
     <div class="div1">
       <label for="title" class="headings">Enter Title</label>

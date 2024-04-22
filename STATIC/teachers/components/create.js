@@ -76,23 +76,23 @@ setInterval(checking, 1000);
       });
 
 
-      function clickHandler() {
-        let button = document.getElementById("create-publish")
+    //   function clickHandler() {
+    //     let button = document.getElementById("create-publish")
     
-       if(button) {
-        button.addEventListener('click', function(event) {
-            event.preventDefault()
-            // Get the assignment ID from the button attribute
-            // let assignmentId = this.getAttribute('assignment_id');
+    //    if(button) {
+    //     button.addEventListener('click', function(event) {
+    //         event.preventDefault()
+    //         // Get the assignment ID from the button attribute
+    //         // let assignmentId = this.getAttribute('assignment_id');
     
-            // Update the URL to include the assignment ID
-            history.pushState({}, '', `?app=choose`);
-            window.location.reload()
-        });
-       }
-    }
+    //         // Update the URL to include the assignment ID
+    //         history.pushState({}, '', `?app=choose`);
+    //         window.location.reload()
+    //     });
+    //    }
+    // }
     
-    clickHandler()
+    // clickHandler()
 
 
     function docsUploadHandler () {
@@ -141,3 +141,41 @@ setInterval(checking, 1000);
     }
 
     docsUploadHandler()
+
+
+    function formSubmission () {
+      //create-form
+      let newUrl = new URL(window.location.href);
+      let institute_id = newUrl.searchParams.get('institute_id');                          
+      let teacher_id = newUrl.searchParams.get('teacher_id');
+      const form =  document.getElementById("create-form")
+      console.log("form before adding submission",form);
+      if(form) {
+        form.addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent the form from refreshing the page
+          console.log(form);
+         
+          const formData = new FormData(form);
+          formData.append("teacherId",teacher_id)
+          const randomId = Math.floor(Math.random() * 100) + 1; // Random integer from 1 to 100
+          formData.append("id", randomId);
+          console.log(formData);
+          // Send the form data to the FastAPI backend
+          fetch(`http://localhost:8002/add_task/?teacher_id=${teacher_id}&institute_id=${institute_id}`, { // Modify the endpoint as needed
+            method: "POST",
+            body: JSON.stringify(formData),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log("Success:", data); // Handle success
+            alert("Form submitted successfully!");
+          })
+          .catch((error) => {
+            console.error("Error:", error); // Handle errors
+            alert("An error occurred while submitting the form.");
+          });
+        });
+      }
+    }
+
+    formSubmission()
