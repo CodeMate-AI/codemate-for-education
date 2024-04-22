@@ -169,6 +169,12 @@ def add_task(assignment: Assignment):
             }
 
     # Add the new assignment to the 'assignments' array
+    # while iterating through the JSON object, check for the institute id.
+    # when the institute ID matches the provided institute id... that is when we add the assignment in the array of the JSON Object.
+    # We tag the asignment with the teacher's ID.
+    # prior to tagging the teacher's ID in the assignment, make sure to check if the teacher with that ID exists.
+    # if the teacher with that ID doesn't exists, return `error`.
+    # else proceed
     data["assignments"].append(assignment.model_dump())
 
     # Save the updated data back to the JSON file
