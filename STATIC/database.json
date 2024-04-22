@@ -87,6 +87,18 @@
         "due_date": 1712441600,
         "difficulty": "Medium",
         "attachment": "project_requirements.pdf"
+      },
+      {
+        "id": "008",
+        "teacherId": "001",
+        "title": "Python Project testing",
+        "description": "Develop a Python project.",
+        "problem_statement": "Implement a specific set of features.",
+        "due_date": 1712441600,
+        "difficulty": "Medium",
+        "attachment": "project_requirements.pdf",
+        "sample_input": "input",
+        "sample_output": "output"
       }
     ],
     "submissions": [

@@ -240,9 +240,9 @@ span.active {
   <div class="title-wali-div">
     <div class="div1">
       <label for="title" class="headings">Enter Title</label>
-      <input type="text"  class="common-input" style="width: 99% !important; height: 23px;">
+      <input type="text" id="title"  class="common-input" style="width: 99% !important; height: 23px;">
       <label for="description" class="headings label2">Brief Description</label>
-      <textarea name="" id="" cols="35" rows="4"></textarea>
+      <textarea name="" id="description" cols="35" rows="4"></textarea>
   </div>
   <div class="div2">
   <label for="" class="headings">Attachment</label>
@@ -259,20 +259,20 @@ span.active {
   </div>
   <div class="text-area">
     <label for="name" class="headings">Problem Statement</label>
-    <textarea name="" id="" cols="30" rows="4"></textarea>
+    <textarea name="" id="problem" cols="30" rows="4"></textarea>
   </div>
   <div class=" title-wali-div">
    <div class="text-area input-output">
     <label for="input" class="headings">Sample Input</label>
    <div class="input_button">
-    <input type="text" >  
+    <input type="text" id="input" >  
     <button>Or Generate using AI</button>
    </div>
   </div>
     <div class="text-area input-output">
   <label for="output" class="headings">Sample Output</label>
    <div class="input_button">
-    <input type="text"  >
+    <input type="text" id="output" >
     <button>Or Generate using AI</button>
    </div>
     </div>
@@ -280,7 +280,7 @@ span.active {
     <div class="title-wali-div">
   <div class="text-area">
     <label for="difficulty" class="headings">Difficulty</label>
-    <input class="common-input"  list="difficulty" placeholder="Choose Difficulty">
+    <input class="common-input" id="difficulty-input"  list="difficulty" placeholder="Choose Difficulty">
    <datalist id="difficulty">
      <option value="Easy">
      <option value="Medium">
@@ -289,7 +289,7 @@ span.active {
   </div>
  <div class="text-area">
   <label for="difficulty" class="headings">Due Date</label>
-  <input class="common-input" type="datetime-local">
+  <input class="common-input" type="datetime-local" id="date-time">
  </div>
     </div>
 
