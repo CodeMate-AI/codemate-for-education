@@ -1,5 +1,5 @@
 from http.client import HTTPException
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AzureOpenAI
 import os
@@ -131,6 +131,7 @@ database_path = "./STATIC/database.json"
 
 class Assignment(BaseModel):
     id: str
+    teacherId: str
     title: str
     description: str
     problem_statement: str # Optional problem statement
@@ -153,15 +154,40 @@ def save_database(data):
         json.dump(data, f, indent=2)
 
 
-@app.post("/add_task")
-def add_task(assignment: Assignment):
-    # Load the current data from the JSON file
+@app.post("/add_task/")
+def add_task(assignment: Assignment, institute_id: str = Query(..., description="Institute ID"), teacher_id: str = Query(..., description="Teacher ID")):
+ 
     data = load_database()
-    print(data[0])
+    print(institute_id)
+    print(teacher_id)
+    
+    institute_index = None
+    for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+    if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
 
-    # Check if assignment with same 'aid' already exists
-    # if isinstance(data["assignments"], list):
-       for existing_assignment in data[0]["assignments"]:
+    print(institute_index)
+    # Check if the teacher with the provided 'teacher_id' exists
+    teacher_exists = False
+    for teacher in data[institute_index]["teachers"]:
+        if teacher["id"] == teacher_id:
+            teacher_exists = True
+            break
+
+    if not teacher_exists:
+        return {
+            "status": "failure",
+            "message": "Teacher not found.",
+        }
+
+    for existing_assignment in data[institute_index]["assignments"]:
         if existing_assignment["id"] == assignment.id:
             return {
                 "status": "failure",
@@ -175,7 +201,13 @@ def add_task(assignment: Assignment):
     # prior to tagging the teacher's ID in the assignment, make sure to check if the teacher with that ID exists.
     # if the teacher with that ID doesn't exists, return `error`.
     # else proceed
-    data["assignments"].append(assignment.model_dump())
+    
+    assignment_data = assignment.model_dump()
+    assignment_data["teacherId"] = teacher_id  # Add teacher_id to the assignment
+
+    print(assignment_data)
+    # Add the assignment to the 'assignments' list for this institute
+    data[institute_index]["assignments"].append(assignment_data)
 
     # Save the updated data back to the JSON file
     save_database(data)
