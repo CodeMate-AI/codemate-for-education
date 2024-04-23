@@ -211,6 +211,11 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
     # Add the assignment to the 'assignments' list for this institute
     data[institute_index]["assignments"].append(assignment_data)
 
+    for student in data[institute_index]["students"]:
+        if "assigned" not in student:
+          student["assigned"] = []
+          student["assigned"].append(assignment.id)
+
     # Save the updated data back to the JSON file
     save_database(data)
 
@@ -252,6 +257,163 @@ def get_assignment(institute_id: str = Query(..., description="Institute ID"), a
 
     # If no assignment is found, return a 404 error
   raise HTTPException(status_code=404, detail="Assignment not found")
+
+
+@app.get("/student/get_assignments")
+def get_assignment(institute_id: str = Query(..., description="Institute ID")):
+    # Load the database
+  data = load_database()
+  print(institute_id)
+    
+  institute_index = None
+  for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+  if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
+
+  assignments = data[institute_index]["assignments"]
+    
+  return {
+        "status": "success",
+        "assignments": assignments,
+    }
+
+    # If no assignment is found, return a 404 error
+  raise HTTPException(status_code=404, detail="Assignment not found")
+
+
+@app.get("/teacher/get_assignments")
+def get_assignments_teacher(  institute_id: str = Query(..., description="Institute ID"),teacher_id: str = Query(..., description="Teacher ID")):
+    data = load_database()
+
+    # Find all assignments associated with the specified teacher
+    assignments = []
+    for institute in data:
+        for assignment in institute["assignments"]:
+            if assignment["teacherId"] == teacher_id:
+                assignments.append(assignment)
+
+    return {"status": "success", "assignments": assignments}
+
+
+# Endpoint to get all assignments for students
+@app.get("/student/get_assignment")
+def get_assignments_student(  institute_id: str = Query(..., description="Institute ID"), assignment_id: str = Query(..., description="Assignment ID"),student_id: str = Query(..., description="Student ID")):
+     data = load_database()
+
+     data = load_database()
+     print(institute_id)
+    
+     institute_index = None
+     for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+     if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
+
+     assignments = data[institute_index]["assignments"]
+    # Find the assignment by its ID
+     for assignment in assignments:
+        if assignment["id"] == assignment_id:
+            return {"assignment": assignment}
+
+    # If no assignment is found, return a 404 error
+     raise HTTPException(status_code=404, detail="Assignment not found")
+
+
+# Endpoint for students to submit assignments
+
+class Submissions(BaseModel):
+    id: str
+    teacherId: str
+    student_id: str
+    aid: str
+    submission: str
+
+@app.post("/student/submit")
+def submit_assignment(
+    submission: Submissions,
+    institute_id: str = Query(..., description="Institute ID"),
+    student_id: str = Query(..., description="Student ID"), 
+    assignment_id: str = Query(..., description="Assignment ID")
+):
+    data = load_database()
+
+    institute_index = None
+    for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+    if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
+
+    # Find the student in the database
+    for institute in data:
+        for student in institute["students"]:
+            if student["id"] == student_id:
+                # If not completed yet, add assignment_id to completed assignments
+                if "completed" not in student:
+                    data[institute_index]["students"]["completed"] = []
+
+                if assignment_id not in data[institute_index]["students"]["completed"]:
+                    data[institute_index]["students"]["completed"].append(assignment_id)
+                
+    submission_data = submission.model_dump()
+
+    data[institute_index]["submissions"].append(submission_data)
+    save_database(data)
+    return {"status": "success", "message": "Assignment submitted successfully."}
+
+    raise HTTPException(status_code=404, detail="Student or assignment not found.")
+
+
+# Endpoint to get assignment information for students
+@app.get("/student/get_assignment")
+def get_assignment_student(
+    assignment_id: str = Query(..., description="Assignment ID"), 
+    student_id: str = Query(..., description="Student ID")
+):
+    data = load_database()
+
+    # Find the specific assignment in the correct institute
+    for institute in data:
+        for assignment in institute["assignments"]:
+            if assignment["id"] == assignment_id:
+                return {"status": "success", "assignment": assignment}
+
+    raise HTTPException(status_code=404, detail="Assignment not found.")
+
+
+# Endpoint to get assignment information for teachers
+@app.get("/teacher/get_assignment")
+def get_assignment_teacher(
+    assignment_id: str = Query(..., description="Assignment ID"), 
+    teacher_id: str = Query(..., description="Teacher ID")
+):
+    data = load_database()
+
+    # Find the specific assignment for the correct teacher
+    for institute in data:
+        for assignment in institute["assignments"]:
+            if assignment["id"] == assignment_id and assignment["teacherId"] == teacher_id:
+                return {"status": "success", "assignment": assignment}
+
+    raise HTTPException(status_code=404, detail="Assignment not found for the given teacher.")
 
 
 """

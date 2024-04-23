@@ -151,17 +151,10 @@
         border-radius: 10px;
         max-width: 90%;
     }
-    /* .submit_button {
-
-    } */
 </style>
 <div id="header">
     <span>Student Portal</span>
     <h1>Playground</h1>
-</div>
-<div id="header">
-    <h3 style="text-decoration: underline;">{{title}}</h3>
-    <span>{{description}}</span>
 </div>
 <div id="main">
     <div class="ia" id="task_manager">
@@ -188,8 +181,4 @@
             <i id="send_button" class="ph ph-paper-plane-right"></i>
         </div>
     </div>
-</div>
-
-<div class="submit_button">
-   <button>Submit</button>
 </div>

@@ -30,7 +30,7 @@ pa_elm = {
           <div id="container-inside">
           <div class="content">
           <p class="title">{{assignments.pending.title}}</p>
-          <p class="description">{{assignments.pending.description}}</p>
+          <p class="description" id="description">{{assignments.pending.description}}</p>
           <div class="date-diff">
           <p class="date">Due Date : <span>{{assignments.pending.due_date}}</span></p>
           <p class="difficulty">Difficulty : <span>{{assignments.pending.difficulty}}</span></p>
@@ -38,12 +38,13 @@ pa_elm = {
           </div>
           <div class="btn">
           <div class="btn-inside">
-          <button assignment_id="{{assignments.pending.aid}}" class="task_elm" nav="task">START</button>
+          <button assignment_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="start">START</button>
           </div>
           </div>
           </div>
 `
 };
+
 // let temp = "";
 // x = []
 // x.forEach((e)=>{
@@ -56,21 +57,79 @@ pa_elm = {
 
 
 
-function activate_task_elms(){
-    console.log("HERE!");
-    document.querySelectorAll(".task_elm").forEach((e)=>{
-        e.onclick = ()=>{
-            task_id = e.getAttribute("assignment_id");
-            var mode = "text";
-            fetch("http://localhost:8000/get_mode/pending?task="+task_id)
-            .then((resp)=>resp.text())
-            .then((resp)=>{
-                mode = resp;
-            })
-            .then(()=>{
+// function activate_task_elms(){
+//     console.log("HERE!");
+//     document.querySelectorAll(".task_elm").forEach((e)=>{
+//         e.onclick = ()=>{
+//             task_id = e.getAttribute("assignment_id");
+//             var mode = "text";
+//             fetch("http://localhost:8000/get_mode/pending?task="+task_id)
+//             .then((resp)=>resp.text())
+//             .then((resp)=>{
+//                 mode = resp;
+//             })
+//             .then(()=>{
 
-            window.location.href = `?app=playground&id=${task_id}&language=${mode.split('"')[1]}`;
-            });
+//             window.location.href = `?app=playground&id=${task_id}&language=${mode.split('"')[1]}`;
+//             });
+//         }
+//     })
+// }
+
+function extractLanguage(description) {
+    const languages = [
+      'Python',
+      'JavaScript',
+      'Java',
+      'C++',
+      'C#',
+      'Ruby',
+      'PHP',
+      'Swift',
+      'Go',
+      'Kotlin',
+      'R',
+      'Objective-C',
+      'Perl',
+      'Scala',
+      'TypeScript'
+    ];
+    const lowerCaseDescription = description.toLowerCase();
+    for (const language of languages) {
+      if (lowerCaseDescription.includes(language.toLowerCase())) {
+        return language;
+      }
+    }
+    return 'text';
+  }
+
+
+function clickHandler() {
+    let buttons = document.querySelectorAll('button[assignment_id]');
+
+// Iterate over each button and attach click event listener
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Get the assignment ID from the button attribute
+        let assignmentId = this.getAttribute('assignment_id');
+
+        let descriptionSample = document.getElementById("description");
+  
+    // Define the extractLanguage function (as mentioned in your provided code)
+   
+  
+    // Extract the language from the description
+        let extractedLanguage ="text"
+        console.log(descriptionSample);
+        if(descriptionSample && descriptionSample.value) {
+        extractedLanguage =  extractLanguage(descriptionSample.value) ;
         }
-    })
+
+        // Update the URL to include the assignment ID
+        history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${extractedLanguage}&institute_id=123456&student_id=001`);
+        window.location.reload()
+    });
+});
 }
+
+clickHandler()

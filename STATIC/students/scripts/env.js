@@ -9,11 +9,11 @@ const env = {
         },
         "elements": {
             "dash": null,
-            "assignments": null,
+            "assignments": null
         },
         "data": {
             "dash": null,
-            "assignments": null,
+            "assignments": null
         }
     },
     "messages": [],
@@ -26,7 +26,7 @@ const env = {
         if (document.querySelector(".nav_elm_active")) {
             document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");
         }
-        document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
+        // document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
         eval(`env.load.components.${env.active_page}()`);
 
 
@@ -240,11 +240,54 @@ const env = {
             "playground": () => {
                 fetch("./components/playground.cmfe")
                     .then((play) => play.text())
+                    // .then((playground) => {
+                    //     env.app.innerHTML = playground;
+                    //     var script = document.createElement("script");
+                    //     script.src = env.scripts.paths.playground;
+                    //     document.body.appendChild(script);
+                    // })
                     .then((playground) => {
-                        env.app.innerHTML = playground;
-                        var script = document.createElement("script");
-                        script.src = env.scripts.paths.playground;
-                        document.body.appendChild(script);
+                        let newUrl = new URL(window.location.href);
+                        let assignment_id = newUrl.searchParams.get('assignment_id');
+                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=001`)
+                        .then((res) => res.json())
+                        .then((res) => {
+                                env.scripts.data.playground = res;
+                                console.log(res);
+                                playground = playground.replace("{{title}}", res.assignment.title);
+                                playground = playground.replace("{{description}}", res.assignment.description);
+                                // return assign
+                            }).then((solve) => {
+                                env.scripts.elements.playground = document.createElement("script");
+                                env.scripts.elements.playground.src = env.scripts.paths.playground;
+                            }).then(() => {
+                                var elm = document.createElement("script");
+                                elm.src = env.scripts.paths.playground;
+                                document.body.appendChild(elm);
+                            }).then(() => {
+                                setTimeout(() => {
+                                    //  let assignments_pending = "";
+                    
+                                    // env.scripts.data.playground.assignments.forEach((e) => {
+                                    //     var temp2 = pa_elm.pending;
+                                
+                                    //     temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
+                                    //     temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
+                                    //     temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
+                                    //     temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                    //     temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                    
+                                    //     assignments_pending += temp2;
+                                    // });
+                
+                                    // env.app.innerHTML = assign+assignments_pending;
+                                    env.app.appendChild(env.scripts.elements.playground);
+                               
+                                    // playground = playground.replace("{{assignments.pending}}", assignments_pending);
+                                    env.app.innerHTML = playground
+                                    
+                                }, 100);
+                            })
                     })
             },
             "assignments": () => {
@@ -257,12 +300,12 @@ const env = {
                     //     document.body.appendChild(script);
                     // })
                     .then((assign) => {
-                        fetch("../db.json")
-                            .then((resp) => resp.json())
-                            .then((resp) => {
-                                env.scripts.data.assignments = resp.students;
+                        fetch("http://localhost:8002/student/get_assignments/?institute_id=123456")
+                        .then((res) => res.json())
+                        .then((res) => {
+                                env.scripts.data.assignments = res;
                                 // assign = assign.replace("{{assignments.pending}}", resp.assignments.pending);
-                            
+                                
                                 // return assign
                             }).then((assign) => {
                                 env.scripts.elements.assignments = document.createElement("script");
@@ -275,14 +318,15 @@ const env = {
                                 setTimeout(() => {
                                      let assignments_pending = "";
                     
-                                    env.scripts.data.assignments.assignments.pending.forEach((e) => {
+                                    env.scripts.data.assignments.assignments.forEach((e) => {
                                         var temp2 = pa_elm.pending;
                                 
                                         temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
                                         temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
                                         temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
                                         temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
-                                        temp2 = temp2.replace("{{assignments.pending.aid}}", e.aid);
+                                        temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                    
                                         assignments_pending += temp2;
                                     });
                 
@@ -291,7 +335,60 @@ const env = {
                                
                                     assign = assign.replace("{{assignments.pending}}", assignments_pending);
                                     env.app.innerHTML = assign
-                                    activate_task_elms();
+                                    
+                                }, 100);
+                            })
+                    })
+            },
+            "solve": () => {
+                fetch("./components/solve.cmfe")
+                    .then((solve) => solve.text())
+                    // .then((assign) => {
+                    //     env.app.innerHTML = assign;
+                    //     var script = document.createElement("script");
+                    //     script.src = env.scripts.paths.assignments;
+                    //     document.body.appendChild(script);
+                    // })
+                    .then((solve) => {
+                        let newUrl = new URL(window.location.href);
+                        let assignment_id = newUrl.searchParams.get('assignment_id');
+                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=001`)
+                        .then((res) => res.json())
+                        .then((res) => {
+                                env.scripts.data.solve = res;
+                                console.log(res);
+                                // assign = assign.replace("{{assignments.pending}}", resp.assignments.pending);
+                                
+                                // return assign
+                            }).then((solve) => {
+                                env.scripts.elements.solve = document.createElement("script");
+                                env.scripts.elements.solve.src = env.scripts.paths.solve;
+                            }).then(() => {
+                                var elm = document.createElement("script");
+                                elm.src = env.scripts.paths.solve;
+                                document.body.appendChild(elm);
+                            }).then(() => {
+                                setTimeout(() => {
+                                     let assignments_pending = "";
+                    
+                                    env.scripts.data.solve.assignments.forEach((e) => {
+                                        var temp2 = pa_elm.pending;
+                                
+                                        temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
+                                        temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
+                                        temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
+                                        temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                        temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                    
+                                        assignments_pending += temp2;
+                                    });
+                
+                                    // env.app.innerHTML = assign+assignments_pending;
+                                    env.app.appendChild(env.scripts.elements.solve);
+                               
+                                    solve = solve.replace("{{assignments.pending}}", assignments_pending);
+                                    env.app.innerHTML = solve
+                                    
                                 }, 100);
                             })
                     })

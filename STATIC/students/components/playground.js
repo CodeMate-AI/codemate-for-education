@@ -25,7 +25,7 @@ var editor = ace.edit("editor");
 
 setTimeout(()=>{
     if(search_params.id != "" && search_params.id != undefined){
-        fetch("http://localhost:8000/get_task?task_id="+search_params.id)
+        fetch("http://localhost:8002/get_task?task_id="+search_params.id)
         .then(resp => resp.json())
         .then((resp)=>{
             if(resp.task != null){
@@ -97,7 +97,7 @@ document.getElementById("send_button").onclick = ()=>{
     }else{
         task = "THERE IS NOT TASK :: FREE STYLE CODEING SESSION.";
     }
-    fetch("http://localhost:8000/chat", {
+    fetch("http://localhost:8002/chat", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -122,3 +122,35 @@ document.getElementById("send_button").onclick = ()=>{
         hljs.highlightAll();
     })
 }
+
+document.querySelector(".submit_button button").addEventListener("click", function() {
+    let submission = document.getElementById("editor").innerText;
+    console.log(submission.innerText);
+    const id = String(Math.floor(Math.random() * 1000) + 1);
+    const teacherId = "001"
+    const student_id = "001"
+    let newUrl = new URL(window.location.href);
+    let aid = newUrl.searchParams.get('assignment_id');
+  
+    fetch(`http://localhost:8002/student/submit/?institute_id=123456&student_id=001&assignment_id=${aid}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id,
+        teacherId,
+        student_id,
+        aid,
+        submission
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Submission Successful:", data);
+    })
+    .catch(error => {
+      console.error("Submission Error:", error);
+    });
+  });
+  
