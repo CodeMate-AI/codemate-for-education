@@ -382,22 +382,6 @@ def submit_assignment(
     raise HTTPException(status_code=404, detail="Student or assignment not found.")
 
 
-# Endpoint to get assignment information for students
-@app.get("/student/get_assignment")
-def get_assignment_student(
-    assignment_id: str = Query(..., description="Assignment ID"), 
-    student_id: str = Query(..., description="Student ID")
-):
-    data = load_database()
-
-    # Find the specific assignment in the correct institute
-    for institute in data:
-        for assignment in institute["assignments"]:
-            if assignment["id"] == assignment_id:
-                return {"status": "success", "assignment": assignment}
-
-    raise HTTPException(status_code=404, detail="Assignment not found.")
-
 
 # Endpoint to get assignment information for teachers
 @app.get("/teacher/get_assignment")
@@ -414,6 +398,58 @@ def get_assignment_teacher(
                 return {"status": "success", "assignment": assignment}
 
     raise HTTPException(status_code=404, detail="Assignment not found for the given teacher.")
+
+
+@app.get("/teacher/get_submissions")
+def get_submissions(
+    institute_id: str = Query(..., description="Institute ID"),
+    teacher_id: str = Query(..., description="Teacher ID"), 
+    assignment_id: str = Query(..., description="Assignment ID")
+):
+    data = load_database()
+
+    # Find the institute in the database
+    institute_index = None
+    for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+    if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
+
+    # Check if the teacher exists in this institute
+    teacher_exists = any(
+        teacher for teacher in data[institute_index]["teachers"] if teacher["id"] == teacher_id
+    )
+
+    if not teacher_exists:
+        return {
+            "status": "failure",
+            "message": "Teacher not found.",
+        }
+
+    # Find the submissions related to the specified assignment
+    submissions = [
+        submission
+        for submission in data[institute_index]["submissions"]
+        if submission["aid"] == assignment_id and submission["teacher_id"] == teacher_id
+    ]
+
+    assignment_data = [
+        assignment
+        for assignment in data[institute_index]["assignments"]
+        if assignment["id"] == assignment_id
+    ]
+
+    return {
+        "status": "success",
+        "submissions": submissions,
+        "assignment_data": assignment_data
+    }
 
 
 """

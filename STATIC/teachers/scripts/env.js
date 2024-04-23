@@ -247,15 +247,15 @@ const env = {
                 fetch("./components/submissions.cmfe")
                 .then((submissions) => submissions.text())
                 .then((submissions) => {
-                    fetch("../database.json")
+                    let newUrl = new URL(window.location.href);
+                    let institute_id = newUrl.searchParams.get("institute_id")
+                    let teacher_id = newUrl.searchParams.get('teacher_id');
+                    let aid = newUrl.searchParams.get('aid');
+                    fetch(`http://localhost:8002/teacher/get_submissions/?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${aid}`)
                     .then((res) => res.json())
                     .then((res) => {
-                                let newUrl = new URL(window.location.href);
-                                let institute_id = newUrl.searchParams.get("institute_id")
-                                let teacher_id = newUrl.searchParams.get('teacher_id');
-                                let aid = newUrl.searchParams.get('aid');
-                               let students = []
-                                env.scripts.data.submissions = res.filter(institute => institute.id === institute_id)
+                             
+                               env.scripts.data.submissions = res
                                console.log(env.scripts.data.submissions);
                                 // console.log(env.scripts.data.submissions[0].students.forEach((e) => {
                                 //     console.log(e.submissions.filter(submission => submission.aid === aid))
@@ -263,7 +263,7 @@ const env = {
                         // let newUrl = new URL(window.location.href);
                         //     newUrl.searchParams.get('aid');
                         //   let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
-                        submissions = submissions.replace("{{assignment_title}}",filteredAssignments[0].title)
+                        submissions = submissions.replace("{{assignment_title}}",env.scripts.data.submissions.assignment_data[0].title)
                     }).then(() => {
                         env.scripts.elements.submissions = document.createElement("script")
                         env.scripts.elements.submissions.src = env.scripts.paths.submissions
@@ -278,12 +278,14 @@ const env = {
 
                          
                         if(env.scripts.data.submissions !== null) {
-                            let newUrl = new URL(window.location.href);
-                            newUrl.searchParams.get('aid');
-                          let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
-                          
-                          
-                            filteredAssignments[0].submissions.forEach((e) => {
+                          if(env.scripts.data.submissions.submissions === null) {
+                            env.app.appendChild(env.scripts.elements.submissions);
+                       
+                            submissions = submissions.replace("{{data}}", "No Submissions yet :)");
+                            env.app.innerHTML = submissions
+                          } else {
+                            
+                            env.scripts.data.submissions.submissions.forEach((e) => {
                                 var temp2 = uncheck_assign.unchecked;
                              
                                 temp2 = temp2.replace("{{students.name}}", e.name);
@@ -292,7 +294,6 @@ const env = {
                                     temp2 = temp2.replace("{{students.ontime}}", "Ontime");
                                     temp2 = temp2.replace("{{bg_color}}", "#2A9D8F");
                                 } else {
-                                    
                                     temp2 = temp2.replace("{{students.ontime}}", "Delayed");
                                     temp2 = temp2.replace("{{bg_color}}", "#EF476F");
                                     // studentEntries.classList.add('late');
@@ -308,7 +309,8 @@ const env = {
                        
                             submissions = submissions.replace("{{data}}", unchecked__);
                             env.app.innerHTML = submissions
-                            activate_task_elms();
+                            // activate_task_elms();
+                          }
                         }, 100);
                     })
                 })
