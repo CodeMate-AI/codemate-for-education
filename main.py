@@ -290,16 +290,42 @@ def get_assignment(institute_id: str = Query(..., description="Institute ID")):
 
 @app.get("/teacher/get_assignments")
 def get_assignments_teacher(  institute_id: str = Query(..., description="Institute ID"),teacher_id: str = Query(..., description="Teacher ID")):
-    data = load_database()
+  data = load_database()
+  print(institute_id)
+    
+  institute_index = None
+  for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+  if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
 
-    # Find all assignments associated with the specified teacher
-    assignments = []
-    for institute in data:
-        for assignment in institute["assignments"]:
-            if assignment["teacherId"] == teacher_id:
-                assignments.append(assignment)
+  assignment_data = [
+        assignment
+        for assignment in data[institute_index]["assignments"]
+          if assignment["teacherId"] == teacher_id
+    ]
+  
+  submission_data = [
+        submission
+        for submission in data[institute_index]["submissions"]
+            if submission["teacher_id"] == teacher_id
+    ]
+  
+  students = data[institute_index]["students"]
 
-    return {"status": "success", "assignments": assignments}
+    
+  return {
+        "status": "success",
+        "assignments": assignment_data,
+        "submissions": submission_data,
+        "students": students
+    }
 
 
 # Endpoint to get all assignments for students

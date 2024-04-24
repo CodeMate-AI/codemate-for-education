@@ -388,11 +388,15 @@ const env = {
                 fetch("./components/assignments.cmfe")
                 .then((assign) => assign.text())
                 .then((assign) => {
-                    fetch("../db.json")
+                    let newUrl = new URL(window.location.href);
+                    let institute_id = newUrl.searchParams.get("institute_id")
+                    let teacher_id = newUrl.searchParams.get('teacher_id');
+                    // let aid = newUrl.searchParams.get('aid');
+                    fetch(`http://localhost:8002/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                         .then((resp) => resp.json())
                         .then((resp) => {
-                            env.scripts.data.assignments = resp.teachers;
-                   
+                            env.scripts.data.assignments = resp;
+                            console.log(resp);
                             return assign;
                         }).then((assign) => {
                             env.scripts.elements.assignments = document.createElement("script");
