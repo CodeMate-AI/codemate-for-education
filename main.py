@@ -322,26 +322,26 @@ def get_assignments_teacher(  institute_id: str = Query(..., description="Instit
             institute_index = i
             break
     
-  if institute_index is None:
-        return {
-            "status": "failure",
-            "message": "Institute not found.",
-        }
-
-  assignment_data = [
-        assignment
-        for assignment in data[institute_index]["assignments"]
-          if assignment["teacherId"] == teacher_id
-    ]
+        if institute_index is None:
+            return {
+                "status": "failure",
+                "message": "Institute not found.",
+            }
+  assignment_data = []
+  for assign__ in data[institute_index]["assignments"]:
+    if "teacherId" in assign__:
+        print(type(assign__))
+    if assign__["teacherId"] == teacher_id:
+        assignment_data.append(assign__)
   
   submission_data = [
         submission
         for submission in data[institute_index]["submissions"]
             if submission["teacher_id"] == teacher_id
     ]
-  
+    
   students = data[institute_index]["students"]
-
+  
     
   return {
         "status": "success",
@@ -354,28 +354,28 @@ def get_assignments_teacher(  institute_id: str = Query(..., description="Instit
 # Endpoint to get all assignments for students
 @app.get("/student/get_assignment")
 def get_assignments_student(  institute_id: str, assignment_id: str):
-     data = load_database()
+    data = load_database()
     
-     institute_index = None
-     for i, institute in enumerate(data):
+    institute_index = None
+    for i, institute in enumerate(data):
         if institute["id"] == institute_id:
             institute_index = i
             break
     
-     if institute_index is None:
+    if institute_index is None:
         return {
             "status": "failure",
             "message": "Institute not found.",
         }
 
-     assignments = data[institute_index]["assignments"]
+    assignments = data[institute_index]["assignments"]
     # Find the assignment by its ID
-     for assignment in assignments:
+    for assignment in assignments:
         if assignment["id"] == assignment_id:
             return {"assignment": assignment}
 
     # If no assignment is found, return a 404 error
-     raise HTTPException(status_code=404, detail="Assignment not found")
+    raise HTTPException(status_code=404, detail="Assignment not found")
 
 
 # Endpoint for students to submit assignments
@@ -411,24 +411,24 @@ async def submit_assignment(
         }
 
     # Find the student in the database
-    # for institute in data:
-    #     for student in institute["students"]:
-    #         if student["id"] == student_id:
+    for institute in data:
+        for student in institute["students"]:
+            if student["id"] == student_id:
 
-    #             # If not completed yet, add assignment_id to completed assignments
-    #             if "completed" not in student:
-    #                 data[institute_index]["students"]["completed"] = []
+                # If not completed yet, add assignment_id to completed assignments
+                if "completed" not in student:
+                    data[institute_index]["students"]["completed"] = []
 
-    #             if assignment_id not in data[institute_index]["students"]["completed"]:
-    #                 data[institute_index]["students"]["completed"].append(assignment_id)
+                if assignment_id not in data[institute_index]["students"]["completed"]:
+                    data[institute_index]["students"]["completed"].append(assignment_id)
                 
-    # submission_data = submission.model_dump()
+    submission_data = submission.model_dump()
 
     data[institute_index]["submissions"].append(submission_data)
     save_database(data)
     return {"status": "success", "message": "Assignment submitted successfully."}
 
-    raise HTTPException(status_code=404, detail="Student or assignment not found.")
+    # raise HTTPException(status_code=404, detail="Student or assignment not found.")
 
 
 
