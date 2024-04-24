@@ -1,4 +1,5 @@
 // var task_lang = "";
+console.log("her#")
 var temp = String(window.location.search).split("?")[1];
 temp = temp.split("&");
 var search_params = {}
@@ -24,10 +25,12 @@ var editor = ace.edit("editor");
 
 
 setTimeout(()=>{
-    if(search_params.id != "" && search_params.id != undefined){
-        fetch("http://localhost:8002/get_task?task_id="+search_params.id)
+    console.log("jhsgkjer");
+    if(search_params.assignment_id != "" && search_params.assignment_id != undefined){
+        fetch("http://localhost:8002/get_task?institute_id=123456&task_id="+search_params.assignment_id)
         .then(resp => resp.json())
         .then((resp)=>{
+            console.log(resp);
             if(resp.task != null){
                 document.getElementById("task_______").innerText = resp.task;
             }else{
@@ -37,7 +40,7 @@ setTimeout(()=>{
     }else{
         document.getElementById("task___").remove();
     }
-});
+}, 500);
 
 
 
@@ -81,7 +84,7 @@ document.getElementById("send_button").onclick = ()=>{
     let current_code = editor.getValue();
     current_message += "\nCODE:\n";
     current_message += current_code;
-    // current_message += "\n\nFLAGS: [--resources]"
+    current_message += "\n\nENABLED FLAGS: [--resources]"
 
     env.messages.push({
         "role": "user",
@@ -93,7 +96,7 @@ document.getElementById("send_button").onclick = ()=>{
     var task = "";
     if(document.getElementById("task___") != null){
         console.log(document.getElementById("task___"));
-        task = document.getElementById("task___").getElementsByTagName("p")[0].innerText;
+        task = document.getElementById("task___").innerText;
     }else{
         task = "THERE IS NOT TASK :: FREE STYLE CODEING SESSION.";
     }
@@ -124,7 +127,10 @@ document.getElementById("send_button").onclick = ()=>{
 }
 
 document.querySelector(".submit_button button").addEventListener("click", function() {
-    let submission = document.getElementById("editor").innerText;
+    var confirmation = confirm("Are you sure you want to submit?");
+    console.log(confirmation);
+    if(confirmation){
+        let submission = document.getElementById("editor").innerText;
     console.log(submission.innerText);
     const id = String(Math.floor(Math.random() * 1000) + 1);
     const teacherId = "001"
@@ -152,5 +158,6 @@ document.querySelector(".submit_button button").addEventListener("click", functi
     .catch(error => {
       console.error("Submission Error:", error);
     });
+    }
   });
   

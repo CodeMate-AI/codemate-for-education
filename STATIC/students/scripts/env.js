@@ -254,8 +254,8 @@ const env = {
                         .then((res) => {
                                 env.scripts.data.playground = res;
                                 console.log(res);
-                                playground = playground.replace("{{title}}", res.assignment.title);
-                                playground = playground.replace("{{description}}", res.assignment.description);
+                                // playground = playground.replace("{{title}}", res.assignment.title);
+                                // playground = playground.replace("{{description}}", res.assignment.description);
                                 // return assign
                             }).then((solve) => {
                                 env.scripts.elements.playground = document.createElement("script");
@@ -281,11 +281,11 @@ const env = {
                                     // });
                 
                                     // env.app.innerHTML = assign+assignments_pending;
-                                    env.app.appendChild(env.scripts.elements.playground);
-                               
+                                    env.app.innerHTML = playground;
+                                    setTimeout(()=>{
+                                        env.app.appendChild(env.scripts.elements.playground);
+                                    }, 100);
                                     // playground = playground.replace("{{assignments.pending}}", assignments_pending);
-                                    env.app.innerHTML = playground
-                                    
                                 }, 100);
                             })
                     })

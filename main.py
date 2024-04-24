@@ -10,7 +10,9 @@ import requests
 import json
 from pydantic import BaseModel
 from typing import Optional
+from uuid import uuid4
 # from transcription_pipeline import pipe
+from serpapi import GoogleSearch
 
 load_dotenv(override=True)
 app = FastAPI()
@@ -36,8 +38,16 @@ with open("./STATIC/database.json", "r", encoding="utf-8") as e:
 
 
 
-def references(query):
-    pass
+def references(query, assignment_id=""):
+    params = {
+        "api_key": "dc04d437e8e83d594f3344b2928644d8a6dcce2164d26012fe0944ddc82ee2fa",
+        "engine": "youtube",
+        "search_query": query
+    }
+
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    return results["video_results"]
 
 
 
@@ -49,7 +59,7 @@ def references(query):
 
 
 @app.post("/evaluate")
-async def evaluate_asignment(request: Request):
+async def evaluate_asignment(request: Request, submission_id: str):
     data = await request.json()
     response = client.chat.completions.create(
         model="gpt4-turbo",
@@ -64,6 +74,9 @@ async def evaluate_asignment(request: Request):
         stream=False,
         max_tokens=2000
     )
+
+    with open(f"./evaluations/{submission_id}.md", "w", encoding="utf-8") as e:
+        e.write(response.choices[0].message.content)
 
 
 
@@ -89,11 +102,21 @@ async def teacher(request: Request):
 
 
 @app.get("/get_task")
-def get_task(task_id: str):
-    global database
-    tasks = database["students"]["assignments"]["pending"]
+def get_task(task_id: str, institute_id: str):
+    database = load_database()
+    index = None
+    for i, db in enumerate(database):
+        if db["id"] == institute_id:
+            index = i
+
+    # student_index__ = None
+    # for e, student in enumerate(database[i]["students"]):
+    #     if student["id"] == student_id:
+    #         student_index__ = e
+
+    tasks = database[i]["assignments"]
     for t in tasks:
-        if t["aid"] == task_id:
+        if t["id"] == task_id:
             return {
                 "task": t["description"]
             }
@@ -304,11 +327,8 @@ def get_assignments_teacher(  institute_id: str = Query(..., description="Instit
 
 # Endpoint to get all assignments for students
 @app.get("/student/get_assignment")
-def get_assignments_student(  institute_id: str = Query(..., description="Institute ID"), assignment_id: str = Query(..., description="Assignment ID"),student_id: str = Query(..., description="Student ID")):
+def get_assignments_student(  institute_id: str, assignment_id: str):
      data = load_database()
-
-     data = load_database()
-     print(institute_id)
     
      institute_index = None
      for i, institute in enumerate(data):
@@ -342,12 +362,14 @@ class Submissions(BaseModel):
     submission: str
 
 @app.post("/student/submit")
-def submit_assignment(
+async def submit_assignment(
+    request: Request,
     submission: Submissions,
     institute_id: str = Query(..., description="Institute ID"),
     student_id: str = Query(..., description="Student ID"), 
     assignment_id: str = Query(..., description="Assignment ID")
 ):
+    incoming_data = await request.json()
     data = load_database()
 
     institute_index = None
@@ -363,25 +385,31 @@ def submit_assignment(
         }
 
     # Find the student in the database
-    for institute in data:
-        for student in institute["students"]:
-            if student["id"] == student_id:
-                # If not completed yet, add assignment_id to completed assignments
-                if "completed" not in student:
-                    data[institute_index]["students"]["completed"] = []
+    # for institute in data:
+    #     for student in institute["students"]:
+    #         if student["id"] == student_id:
 
-                if assignment_id not in data[institute_index]["students"]["completed"]:
-                    data[institute_index]["students"]["completed"].append(assignment_id)
+    #             # If not completed yet, add assignment_id to completed assignments
+    #             if "completed" not in student:
+    #                 data[institute_index]["students"]["completed"] = []
+
+    #             if assignment_id not in data[institute_index]["students"]["completed"]:
+    #                 data[institute_index]["students"]["completed"].append(assignment_id)
                 
-    submission_data = submission.model_dump()
+    # submission_data = submission.model_dump()
 
-    data[institute_index]["submissions"].append(submission_data)
-    save_database(data)
-    return {"status": "success", "message": "Assignment submitted successfully."}
+    # data[institute_index]["submissions"].append(submission_data)
+    # save_database(data)
+    # return {"status": "success", "message": "Assignment submitted successfully."}
+    for student in institute["students"]:
+        if student["id"] == student_id:
+            student["submissions"].append({
+                "aid": assignment_id
+            })
+        
+    institute["submissions"].append({
 
-    raise HTTPException(status_code=404, detail="Student or assignment not found.")
-
-
+    })
 # Endpoint to get assignment information for students
 @app.get("/student/get_assignment")
 def get_assignment_student(
@@ -431,9 +459,6 @@ ENDPOINTS REQUIRED:
 with open("./database.json", "r", encoding="utf-8") as e:
     database = json.load(e)
 
-def references(assignment_id, query):
-    global database
-
 
 
 
@@ -445,9 +470,35 @@ async def chat(request: Request):
     messages = [
         {"role": "system", "content": "You are CodeMate by CodeMate for Education. You help individuals to learn programming languages. Your task is to explain the concepts to the user rather than providing the code. Don't ever provide the code to the user. You are allowed to provide sudo code to the users but never complete code. Help them in learning the language rather than just handing them over the code.\n\nRESPONSE FORMAT: STRICT MARKDOWN"},
         {"role": "user", "content": "THE TASK GIVEN TO THE USER RELATED TO WHICH HE/SHE WILL BE ASKING QUESTIONS POSSIBLY IS: "+data["task"]},
-        {"role": "assistant", "content": "Understood! I will help the user accomplish the task and will not provide the complete code to them. However, as per the instructions, I will provide the user with sudo code whenever necessary."}
+        {"role": "assistant", "content": "Understood! I will help the user accomplish the task and will not provide any code to them. However, as per the instructions, I will provide the user with sudo code if it is very necessary."}
     ]
 
+    tems = [
+        {
+            "role": "system",
+            "content": "Based on the provided context, conver the last query of the user to a youtube search query. ONLY RETURN THE YOUTUBE SEARCH QUERY and nothing else."
+        },
+        {
+            "role": "user",
+            "content": "TASK TO COMPLETE: "+data["task"]
+        }
+    ]
+
+
+    tems.extend(data["messages"])
+    print(tems)
+
+    
+
+    response = client.chat.completions.create(
+        model="gpt-35-turbo-16k",
+        messages=tems,
+    )
+
+    function_response = references(query=response.choices[0].message.content, assignment_id="")
+    print(function_response)
+
+    data["messages"][-1]["content"] += "\n\n\nREFERENCE VIDEOS TO SHARE WITH THE STUDENT. ADD THE FOLLOWING LINKS IN YOUR RESPONSE.:\n"+json.dumps(function_response)
     messages.extend(data["messages"])
     print(messages)
     
@@ -455,23 +506,10 @@ async def chat(request: Request):
         response = client.chat.completions.create(
             model="gpt-35-turbo-16k",
             messages=messages,
-            temperature=0.3,
-            functions=[{
-                "name": "references",
-                "description": "This function is to be called for references related to the query of the user only and only if the last message of the user contains the --resources FLAG.",
-                "parameters":{
-                    "type": "object",
-                    "properties": {
-                        "q": {
-                            "type": "string",
-                            "description": "topic for which we need to fetch references."
-                        }
-                    },
-                    "required": ["q"]
-                }
-            }],
-            function_call="auto"
+            temperature=0.7
         )
+
+        print(response.choices[0].model_dump())
 
         if response.choices[0].message.content != None:
             return {
@@ -486,7 +524,7 @@ async def chat(request: Request):
                 }
             })
 
-            function_response = references(query="")
+            function_response = references(query=json.loads(response.choices[0].message.function_call.arguments)["q"], assignment_id="")
             messages.append({
                 "role": "function",
                 "name": "references",
