@@ -113,21 +113,12 @@ buttons.forEach(button => {
         // Get the assignment ID from the button attribute
         let assignmentId = this.getAttribute('assignment_id');
 
-        let descriptionSample = document.getElementById("description");
-  
-    // Define the extractLanguage function (as mentioned in your provided code)
-   
-  
-    // Extract the language from the description
-        let extractedLanguage ="text"
-        console.log(descriptionSample);
-        if(descriptionSample && descriptionSample.value) {
-        extractedLanguage =  extractLanguage(descriptionSample.value) ;
-        }
-
-        // Update the URL to include the assignment ID
-        history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${extractedLanguage}&institute_id=123456&student_id=001`);
-        window.location.reload()
+        fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
+        .then(resp=>resp.json())
+        .then((resp)=>{
+          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${String(resp.assignment.language).toLowerCase()}&institute_id=123456&student_id=001`);
+          window.location.reload()
+        })
     });
 });
 }

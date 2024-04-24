@@ -1,6 +1,6 @@
 <style>
     #main{
-        height: 100%;
+        height: calc(100% - 50px);
         width: 100%;
         flex: 1;
         display: flex;
@@ -124,7 +124,6 @@
     } #task___{
         /* flex: 1; */
         width: 100%;
-        margin-bottom: 50px;
         overflow-y: auto;
         max-height: 200px;
     } #task___ h2{
@@ -159,10 +158,10 @@
     <span>Student Portal</span>
     <h1>Playground</h1>
 </div>
-<div id="header">
+<!--<div id="header">
     <h3 style="text-decoration: underline;">{{title}}</h3>
-    <span>{{description}}</span>
-</div>
+    <span id="task___">{{description}}</span>
+</div>-->
 <div id="main">
     <div class="ia" id="task_manager">
         <div id="task___">
@@ -170,6 +169,9 @@
             </p>
         </div>
         <div id="editor"></div>
+        <div class="submit_button">
+            <button>Submit</button>
+        </div>
     </div>
     <div class="ia" id="container">
         <div id="chat_box">
@@ -188,8 +190,4 @@
             <i id="send_button" class="ph ph-paper-plane-right"></i>
         </div>
     </div>
-</div>
-
-<div class="submit_button">
-   <button>Submit</button>
 </div>

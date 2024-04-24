@@ -319,11 +319,15 @@ const env = {
                 fetch("./components/student-wise.cmfe")
                 .then((student) => student.text())
                 .then((student) => {
-                    fetch("../db.json")
+                    let newUrl = new URL(window.location.href);
+                    let institute_id = newUrl.searchParams.get("institute_id")
+                    let teacher_id = newUrl.searchParams.get('teacher_id');
+                    // let aid = newUrl.searchParams.get('aid');
+                    fetch(`http://localhost:8002/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                     .then((res) => res.json())
                     .then((res) => {
-                        env.scripts.data.studentwise = res.teachers
-                        console.log(res.teachers)
+                        env.scripts.data.studentwise = res
+                       
                     }).then(() => {
                         env.scripts.elements.studentwise = document.createElement("script")
                         env.scripts.elements.studentwise.src = env.scripts.paths.studentwise
@@ -336,9 +340,9 @@ const env = {
                         setTimeout(() => {
                              let checked__ = "";
                             //  let assignment__ = ""
-                            console.log(env.scripts.data.studentwise.assignments.checked[0]);
-                            if(env.scripts.data.studentwise !== null) {
-                                env.scripts.data.studentwise.assignments.checked[0].submissions.forEach((e) => {
+                        
+                            if(env.scripts.data.studentwise.submissions !== null) {
+                                env.scripts.data.studentwise.submissions.forEach((e) => {
                                     var temp2 = check_assign.checked_status;
                                     temp2 = temp2.replace("{{students.name}}", e.name);
                                     temp2 = temp2.replace("{{student.accuracy}}", `  <div class="pie-wrapper">
@@ -415,8 +419,8 @@ const env = {
                                     temp = temp.replace("{{assignments.pending.description}}",e.description)
                                     temp = temp.replace("{{assignments.pending.due_date}}",e.due_date)
                                     temp = temp.replace("{{assignments.pending.difficulty}}",e.difficulty)
-                                    temp = temp.replace("{{assignments.pending.submissions}}",e.submissions.length)
-                                    temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.assignments.students - e.submissions.length)
+                                    temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.paths.assignments.submissions.length)
+                                    temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.assignments.students.length - env.scripts.paths.assignments.submissions.length)
                                     temp = temp.replace("{{assignment_id}}",e.aid)
                                     assignments__sa += temp;
                                 });
