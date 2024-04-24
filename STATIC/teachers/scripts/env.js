@@ -375,6 +375,7 @@ const env = {
                                     </div>
                                     <div class="shadow"></div>
                                   </div>`);
+                                  temp2 = temp2.replace("{{submission_id}}",e.id)
                                     checked__ += temp2;
                                 });
                               }
