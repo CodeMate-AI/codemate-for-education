@@ -331,15 +331,15 @@ def get_assignments_teacher(  institute_id: str = Query(..., description="Instit
   for assign__ in data[institute_index]["assignments"]:
     if "teacherId" in assign__:
         print(type(assign__))
-    if assign__["teacherId"] == teacher_id:
+    if assign__["teacher_id"] == teacher_id:
         assignment_data.append(assign__)
   
   submission_data = [
         submission
         for submission in data[institute_index]["submissions"]
-            if submission["teacher_id"] == teacher_id
+            if submission["teacher_id"] == teacher_id and submission["aid"] == "001"
     ]
-    
+  
   students = data[institute_index]["students"]
   
     

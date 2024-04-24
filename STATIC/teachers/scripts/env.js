@@ -288,9 +288,9 @@ const env = {
                             env.scripts.data.submissions.submissions.forEach((e) => {
                                 var temp2 = uncheck_assign.unchecked;
                              
-                                temp2 = temp2.replace("{{students.name}}", e.name);
-                                temp2 = temp2.replace("{{students.submitted_on}}", e.submitted_on);
-                                if(e.submitted_on <= filteredAssignments[0].due_date) {
+                                temp2 = temp2.replace("{{students.name}}", "Srishti");
+                                temp2 = temp2.replace("{{students.submitted_on}}", "12-04-24");
+                                if(e.date_time <= env.scripts.data.submissions.assignment_data.due_date) {
                                     temp2 = temp2.replace("{{students.ontime}}", "Ontime");
                                     temp2 = temp2.replace("{{bg_color}}", "#2A9D8F");
                                 } else {
@@ -300,6 +300,8 @@ const env = {
                                 }
                                 temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
                                 temp2 = temp2.replace("{{assignments.pending.aid}}", e.aid);
+                                temp2 = temp2.replace("{{submission_id}}",e.id)
+                        
                                 unchecked__ += temp2;
                             });
                           }
@@ -413,16 +415,16 @@ const env = {
                         }).then(() => {
                             setTimeout(() => {
                                 var assignments__sa = "";
-                              
+                              console.log(env.scripts.pat);
                                 env.scripts.data.assignments.assignments.forEach((e) => {
                                     var temp = assign_teachers.pending;
                                     temp = temp.replace("{{assignments.pending.title}}",e.title)
                                     temp = temp.replace("{{assignments.pending.description}}",e.description)
                                     temp = temp.replace("{{assignments.pending.due_date}}",e.due_date)
                                     temp = temp.replace("{{assignments.pending.difficulty}}",e.difficulty)
-                                    temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.paths.assignments.submissions.length)
-                                    temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.assignments.students.length - env.scripts.paths.assignments.submissions.length)
-                                    temp = temp.replace("{{assignment_id}}",e.aid)
+                                    temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.data.assignments.submissions.length)
+                                    temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.assignments.students.length - env.scripts.data.assignments.submissions.length)
+                                    temp = temp.replace("{{assignment_id}}",e.id)
                                     assignments__sa += temp;
                                 });
 

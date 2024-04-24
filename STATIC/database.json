@@ -5,7 +5,7 @@
     "assignments": [
       {
         "id": "001",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Python Web Scrapper",
         "due_date" : "25/04/24",
         "difficulty" : "Hard",
@@ -22,7 +22,7 @@
       },
       {
         "id": "002",
-        "teacherId": "002",
+        "teacher_id": "002",
         "title": "C++ Web Scraper",
         "description": "Create a web-scrapper in C++ that scrapes the content of a given web-page and then cleans the collected content.",
         "problem_statement": "",
@@ -36,7 +36,7 @@
       },
       {
         "id": "003",
-        "teacherId": "002",
+        "teacher_id": "002",
         "title": "Python Web Scrapper",
         "description": "Create a web-scrapper in Zig that scrapes the content of a given web-page and then cleans the collected content.",
         "problem_statement": "",
@@ -50,7 +50,7 @@
       },
       {
         "id": "004",
-        "teacherId": "003",
+        "teacher_id": "003",
         "title": "Python Web Scrapper",
         "description": "Create a web-scrapper in python that scrapes the content of a given web-page and then cleans the collected content.",
         "problem_statement": "",
@@ -64,6 +64,7 @@
       },
       {
         "id": "005",
+        "teacher_id": "001",
         "title": "Python Project",
         "description": "Develop a Python project.",
         "problem_statement": "Implement a specific set of features.",
@@ -73,7 +74,7 @@
       },
       {
         "id": "006",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Python Project testing",
         "description": "Develop a Python project.",
         "problem_statement": "Implement a specific set of features.",
@@ -83,7 +84,7 @@
       },
       {
         "id": "007",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Python Project testing",
         "description": "Develop a Python project.",
         "problem_statement": "Implement a specific set of features.",
@@ -93,7 +94,7 @@
       },
       {
         "id": "008",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Python Project testing",
         "description": "Develop a Python project.",
         "problem_statement": "Implement a specific set of features.",
@@ -105,7 +106,7 @@
       },
       {
         "id": "97",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "title",
         "description": "description",
         "problem_statement": "problem",
@@ -117,7 +118,7 @@
       },
       {
         "id": "263",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "title",
         "description": "description",
         "problem_statement": "statement in is the problem is the fast",
@@ -129,7 +130,7 @@
       },
       {
         "id": "722",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Teach Machine Leanrning",
         "description": "Machine learning in Big data and Deep Learning ",
         "problem_statement": "Whatever",
@@ -141,7 +142,7 @@
       },
       {
         "id": "550",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Golang ",
         "description": "Anthony ",
         "problem_statement": "Build a redis clone using golang .",
@@ -153,7 +154,7 @@
       },
       {
         "id": "276",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Title  testing",
         "description": "Description testing",
         "problem_statement": "problem ",
@@ -165,7 +166,7 @@
       },
       {
         "id": "46",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Rust Complier in Golang ",
         "description": "Aise hi random",
         "problem_statement": "Build a rust compiler in golang and share the video . ",
@@ -177,7 +178,7 @@
       },
       {
         "id": "214",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Title ",
         "description": "Description",
         "problem_statement": "Statement hai ji",
@@ -189,7 +190,7 @@
       },
       {
         "id": "636",
-        "teacherId": "001",
+        "teacher_id": "001",
         "title": "Title ",
         "description": "Description",
         "problem_statement": "Statement hai ji",
@@ -206,7 +207,7 @@
         "student_id": "001",
         "aid": "001",
         "teacher_id": "001",
-        "submission": "",
+        "submission": "print(`Hello World`)",
         "evaluation": {
           "accuracy": 92,
           "efficiency": 85,

@@ -188,7 +188,7 @@ img {
 
 <div id="header">
   <span>User/Assignments</span>
-  <h1>Unchecked Assignment</h1>
+  <h1>Submissions</h1>
 </div>
 <div class="assignment">
     <div class="submissions-arrow">
