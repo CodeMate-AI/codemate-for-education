@@ -77,6 +77,7 @@ const env = {
                     }
                 }
                 history.pushState({}, '', newUrl);
+                window.location.reload()
             }
         })
     },

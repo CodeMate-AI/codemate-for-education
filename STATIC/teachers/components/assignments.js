@@ -24,21 +24,35 @@ assign_teachers = {
     `
     };
 
-function clickHandler() {
-    let buttons = document.querySelectorAll('button[assignment_id]');
-
-// Iterate over each button and attach click event listener
-buttons.forEach(button => {
-    button.addEventListener('click', function() {
-        // Get the assignment ID from the button attribute
-        let assignmentId = this.getAttribute('assignment_id');
-
-        // Update the URL to include the assignment ID
-        history.pushState({}, '', `?app=submissions&aid=${assignmentId}`);
-        window.location.reload()
-    });
-});
-}
+    function clickHandler() {
+        let buttons = document.querySelectorAll('button[assignment_id]');
+    
+        // Iterate over each button and attach click event listener
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Get the assignment ID from the button attribute
+                let assignmentId = this.getAttribute('assignment_id');
+    
+                // Get the current URL
+                const currentUrl = new URL(window.location.href);
+    
+                // Set or update the 'app' parameter to 'submissions'
+                currentUrl.searchParams.set('app', 'submissions');
+    
+                // Also set the 'aid' parameter to the current assignment ID
+                currentUrl.searchParams.set('aid', assignmentId);
+    
+                // Push the updated URL with existing parameters to the history
+                history.pushState({}, '', currentUrl.toString());
+    
+                // Optionally reload the page
+                window.location.reload();
+            });
+        });
+    }
+    
+    clickHandler(); // Call the function to initialize the event listeners
+    
 
 clickHandler()
 

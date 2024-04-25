@@ -26,21 +26,20 @@ uncheck_assign = {
     `
 };
 
-function backButton() {
-   // Get the button element by its ID
-const backButton = document.getElementById('backButton');
+function goBack() {
+  const button = document.getElementById("backButton")
+  if(button) {
+      button.addEventListener("click" , (event) => {
+          event.preventDefault()
+          history.back();
+          // window.location.reload();
+      })
+  }
 
-// Attach a click event listener to the button
-if(backButton) {
-  backButton.addEventListener('click', () => {
-    // When the button is clicked, log a message to the console
-    history.pushState({}, '', `?app=assignments`);
-    window.location.reload()
-    console.log('Button clicked');
-})
 }
-}
-backButton()
+
+goBack()
+
 
 
 document.querySelectorAll(`.view__button____`).forEach((e)=>{
