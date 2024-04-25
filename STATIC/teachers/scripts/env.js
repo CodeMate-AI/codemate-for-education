@@ -98,9 +98,10 @@ const env = {
                                 // console.log(institute_response[0].teachers);
                                 // console.log(institute_response[0].teachers.filter(teacher => teacher.id === teacher_id))
                                 console.log(resp);
-                                console.log(env.scripts.data.dash);
+                                let tempx = env.scripts.data.dash;
                                 let assignments_of_teachers
-                                if (env.scripts.data.dash !== null) {
+                                if (tempx.length !== 0) {
+                                    console.log(tempx);
                                      assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
                                 }
                                
@@ -125,7 +126,7 @@ const env = {
                                     let newUrl = new URL(window.location.href);
                                 
                                     let teacher_id = newUrl.searchParams.get('teacher_id');
-                                    let assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
+                                    let assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacher_id === teacher_id)
                                     console.log(assignments_of_teachers);
                                     let teacherData = env.scripts.data.dash[0].teachers.filter(teacher => teacher.id === teacher_id)
                                     var uncheckedLength = assignments_of_teachers.length
@@ -139,14 +140,14 @@ const env = {
 
                                     assignments_of_teachers.forEach((e,index) => {
                                         var temp = dash_elm_teachers.pending;
+                                        console.log(e);
                                         temp = temp.replace("{{assignments.pending.title}}",e.title)
                                         temp = temp.replace("{{assignments.pending.description}}",e.description)
                                         temp = temp.replace("{{assignments.pending.submissions}}",submissions.length)
                                         temp = temp.replace("{{assignments.pending.yet}}",teacherData[0].students - submissions.length)
                                         temp = temp.replace("{{assignment_id}}",e.id)
-                                        if(index === uncheckedLength - 1) {
-                                            assignments__sa += temp;
-                                        }
+                                        // console.log(assignments__sa);
+                                        assignments__sa += temp;
                                     });
 
                                     dash = dash.replace("{{data}}", assignments__sa);

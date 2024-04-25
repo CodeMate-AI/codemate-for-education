@@ -494,6 +494,9 @@ def get_submissions(
         if assignment["id"] == assignment_id
     ]
 
+    print("SUBMISSIONS: ", submissions, "\n\n")
+    print("ASSIGNMENTS: ", assignment_id, "\n\n")
+
     return {
         "status": "success",
         "submissions": submissions,
