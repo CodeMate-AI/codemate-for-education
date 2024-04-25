@@ -1,18 +1,5 @@
-document.getElementById("assignments-btn").addEventListener("click", function () {
-    document.getElementById("assignments-modal").style.display = "block";
-  });
-  
-  // Close the modal when the close button or outside the modal is clicked
-  document.querySelectorAll(".close, .modal").forEach(function (element) {
-    element.addEventListener("click", function () {
-      document.getElementById("assignments-modal").style.display = "none";
-    });
-  });
-  
-  // Prevent modal from closing when modal content is clicked
-  document.querySelector(".modal-content").addEventListener("click", function (event) {
-    event.stopPropagation();
-  });
+
+ 
 
   function viewStatement() {
     const button = document.getElementById("view-assignment")
@@ -34,11 +21,36 @@ document.getElementById("assignments-btn").addEventListener("click", function ()
     if(button) {
         button.addEventListener("click" , (event) => {
             event.preventDefault()
-            history.back();
             window.location.reload();
+            history.back();
         })
     }
  
   }
 
   goBack()
+
+  function Share() {
+    const whatsapp = document.getElementById("share-whatsapp")
+    const copy = document.getElementById("copy")
+    if(whatsapp) {
+// Add a click event listener to the button
+      whatsapp.addEventListener('click', () => {
+ // Define the content you want to share
+      const shareText = document.getElementById("assignment_link").innerText;
+     
+// Create the WhatsApp share URL
+      const whatsappUrl = `whatsapp://send?text=${encodeURIComponent(shareText)}`;
+// Open WhatsApp with the share URL
+      window.location.href = whatsappUrl;
+});
+    }
+
+    if(copy) {
+      navigator.clipboard.writeText(document.getElementById("assignment_link").innerText)
+    }
+  }
+
+  Share()
+
+ 

@@ -11,7 +11,8 @@ const env = {
             "studentwise": "./components/studentwise.js",
             "reports": "./components/reports.js",
             "assignments": "./components/assignments.js",
-            "view": "./components/share.js"
+            "view": "./components/share.js",
+            "profile": "./components/profile.js"
         },
         "elements": {
             "dash": null,
@@ -22,7 +23,8 @@ const env = {
             "studentwise": null,
             "reports": null,
             "assignments": null,
-            "view": null
+            "view": null,
+            "profile": null
         },
         "data": {
             "dash": null,
@@ -33,7 +35,8 @@ const env = {
             "studentwise": null,
             "reports": null,
             "assignments": null,
-            "view": null
+            "view": null,
+            "profile": null
         }
     },
     "messages": [],
@@ -87,31 +90,35 @@ const env = {
                 fetch("./components/dash.cmfe")
                     .then((dash) => dash.text())
                     .then((dash) => {
-                        fetch("../database.json")
+                        let newUrl = new URL(window.location.href);
+                        let institute_id = newUrl.searchParams.get("institute_id")
+                        let teacher_id = newUrl.searchParams.get('teacher_id');
+                        // let aid = newUrl.searchParams.get('aid');
+                        fetch(`http://localhost:8002/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                             .then((resp) => resp.json())
                             .then((resp) => {
-                
+                                console.log(resp);
                                 let newUrl = new URL(window.location.href);
                                 let institute_id = newUrl.searchParams.get("institute_id")
                                 let teacher_id = newUrl.searchParams.get('teacher_id');
                                
-                                env.scripts.data.dash = resp.filter(institute => institute.id === institute_id)
+                                env.scripts.data.dash = resp
                                 // console.log(institute_response[0].teachers);
                                 // console.log(institute_response[0].teachers.filter(teacher => teacher.id === teacher_id))
                                 console.log(resp);
-                                let tempx = env.scripts.data.dash;
-                                let assignments_of_teachers
-                                if (tempx.length !== 0) {
-                                    console.log(tempx);
-                                     assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
-                                }
+                                // let tempx = env.scripts.data.dash;
+                                // let assignments_of_teachers
+                                // if (tempx.length !== 0) {
+                                //     console.log(tempx);
+                                //      assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacherId === teacher_id)
+                                // }
                                
                                
                             //   let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
                                 ;
                                 // console.log(env.scripts.data.dash.assignments.unchecked[0].submissions)
                                 dash = dash.replace("{{teacher.students.count}}", "2");
-                                dash = dash.replace("{{teacher.assignments}}", assignments_of_teachers.length);
+                                dash = dash.replace("{{teacher.assignments}}", env.scripts.data.dash.students.length);
                                 dash = dash.replace("{{teacher.unchecked}}", "03");
                                 return dash;
                             }).then((dash) => {
@@ -124,31 +131,29 @@ const env = {
                             }).then(() => {
                                 setTimeout(() => {
 
-                                    let newUrl = new URL(window.location.href);
-                                
-                                    let teacher_id = newUrl.searchParams.get('teacher_id');
-                                    let assignments_of_teachers = env.scripts.data.dash[0].assignments.filter(assignment => assignment.teacher_id === teacher_id)
-                                    console.log(assignments_of_teachers);
-                                    let teacherData = env.scripts.data.dash[0].teachers.filter(teacher => teacher.id === teacher_id)
-                                    var uncheckedLength = assignments_of_teachers.length
-                                    let submissions = env.scripts.data.dash[0].submissions.filter(submission =>  submission.id === assignments_of_teachers[uncheckedLength -1].submisssions_id)
+                                   
+                                    var uncheckedLength = env.scripts.data.dash.assignments.length
+                                   
                                  
                                     var assignments__sa = "";
                                  
-                                    console.log(env.scripts.data.dash[0].students.forEach((e) => {
-                                        console.log(e.submissions.filter(submission => submission.aid === assignments_of_teachers[uncheckedLength -1].id ))
-                                    }))
+                                    // console.log(env.scripts.data.dash[0].students.forEach((e) => {
+                                    //     console.log(e.submissions.filter(submission => submission.aid === assignments_of_teachers[uncheckedLength -1].id ))
+                                    // }))
 
-                                    assignments_of_teachers.forEach((e,index) => {
+                                    env.scripts.data.dash.assignments.forEach((e,index) => {
                                         var temp = dash_elm_teachers.pending;
-                                        console.log(e);
-                                        temp = temp.replace("{{assignments.pending.title}}",e.title)
-                                        temp = temp.replace("{{assignments.pending.description}}",e.description)
-                                        temp = temp.replace("{{assignments.pending.submissions}}",submissions.length)
-                                        temp = temp.replace("{{assignments.pending.yet}}",teacherData[0].students - submissions.length)
-                                        temp = temp.replace("{{assignment_id}}",e.id)
-                                        // console.log(assignments__sa);
-                                        assignments__sa += temp;
+                                        if(dash_elm_teachers !== undefined) {
+                                            temp = temp.replace("{{assignments.pending.title}}",e.title)
+                                            temp = temp.replace("{{assignments.pending.description}}",e.description)
+                                            temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.data.dash.submissions.length)
+                                            temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.dash.students.length - env.scripts.data.dash.submissions.length)
+                                            temp = temp.replace("{{assignment_id}}",e.id)
+    
+                                            if(index === uncheckedLength-1) {
+                                                assignments__sa += temp;
+                                            }
+                                        }
                                     });
 
                                     dash = dash.replace("{{data}}", assignments__sa);
@@ -280,7 +285,7 @@ const env = {
 
                          
                         if(env.scripts.data.submissions !== null) {
-                          if(env.scripts.data.submissions.submissions === null) {
+                          if(env.scripts.data.submissions.submissions.length === 0) {
                             env.app.appendChild(env.scripts.elements.submissions);
                        
                             submissions = submissions.replace("{{data}}", "No Submissions yet :)");
@@ -468,6 +473,27 @@ const env = {
                             },100)
                          })
                 })
+            },
+            "profile" : () => {
+                fetch("./components/profile.cmfe")
+                    .then((profile) => profile.text())
+                    .then((profile) => {
+                        env.scripts.elements.profile = document.createElement("script");
+                        env.scripts.elements.profile.src = env.scripts.paths.profile;
+                        return profile;
+                    })
+                    .then((profile) => {
+                        var elm = document.createElement("script");
+                        elm.src = env.scripts.paths.profile
+                        document.body.appendChild(elm);
+                        return profile
+                    })
+                    .then((profile) => {
+                     
+                            env.app.innerHTML = profile;
+                            env.app.appendChild(env.scripts.elements.profile);
+                   
+                    })
             }
         }
     }

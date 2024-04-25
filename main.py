@@ -154,7 +154,7 @@ database_path = "./STATIC/database.json"
 
 class Assignment(BaseModel):
     id: str
-    teacherId: str
+    teacher_id: str
     title: str
     description: str
     problem_statement: str # Optional problem statement

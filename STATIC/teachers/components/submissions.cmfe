@@ -199,11 +199,11 @@ img {
           </button>
           <p><span>{{assignment_title}}</span> / Submissions </p>
     </div>
-    <p>Select All</p>
+    <button id="select_all" style="border: none; outline: none; background: none;   color:#48AEF3;">Select All</button>
     </div>
 {{data}} 
 <div class="btn">
-    <button >ReEvaluate</button>
+    <button id="re_evaluate">ReEvaluate</button>
     </div>
 
 
