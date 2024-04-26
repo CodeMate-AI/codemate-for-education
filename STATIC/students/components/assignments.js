@@ -116,6 +116,7 @@ function extractLanguage(description) {
       'Go',
       'Kotlin',
       'R',
+      'Rust',
       'Objective-C',
       'Perl',
       'Scala',
@@ -140,10 +141,40 @@ buttons.forEach(button => {
         // Get the assignment ID from the button attribute
         let assignmentId = this.getAttribute('assignment_id');
 
+        const languages = [
+          'Python',
+          'JavaScript',
+          'Java',
+          'C++',
+          'C#',
+          'Ruby',
+          'PHP',
+          'Swift',
+          'Go',
+          'Kotlin',
+          'R',
+          'Rust',
+          'Objective-C',
+          'Perl',
+          'Scala',
+          'TypeScript'
+        ];
+
+
+
         fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
         .then(resp=>resp.json())
         .then((resp)=>{
-          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${String(resp.assignment.language).toLowerCase()}&institute_id=123456&student_id=001`);
+          const description = resp.assignment.description.toLowerCase();
+          let assign_language = "python";
+
+          // Find the matching language from the list of known languages
+          languages.forEach((language) => {
+            if (description.includes(language.toLowerCase())) {
+              assign_language = language.toLowerCase();
+            }
+          });
+          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=123456&student_id=001`);
           window.location.reload()
         })
     });
