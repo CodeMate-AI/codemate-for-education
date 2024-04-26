@@ -184,7 +184,7 @@
     <h1>My Assignments</h1>
 </div>
 <div id="headings__">
-    <div class="assignment__ active">Pending</div>
+    <div class="assignment__">Pending</div>
     <div class="assignment__">Completed</div>
 </div>
 <div id="main">

@@ -117,8 +117,8 @@ const env = {
                             //   let filteredAssignments = env.scripts.data.submissions.assignments.filter(assignment => assignment.aid === newUrl.searchParams.get('aid'));
                                 ;
                                 // console.log(env.scripts.data.dash.assignments.unchecked[0].submissions)
-                                dash = dash.replace("{{teacher.students.count}}", "2");
-                                dash = dash.replace("{{teacher.assignments}}", env.scripts.data.dash.students.length);
+                                dash = dash.replace("{{teacher.students.count}}", env.scripts.data.dash.students.length);
+                                dash = dash.replace("{{teacher.assignments}}", env.scripts.data.dash.assignments.length);
                                 dash = dash.replace("{{teacher.unchecked}}", "03");
                                 return dash;
                             }).then((dash) => {

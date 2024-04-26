@@ -218,14 +218,6 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
                 "status": "failure",
                 "message" : "Assignment not added",
             }
-
-    # Add the new assignment to the 'assignments' array
-    # while iterating through the JSON object, check for the institute id.
-    # when the institute ID matches the provided institute id... that is when we add the assignment in the array of the JSON Object.
-    # We tag the asignment with the teacher's ID.
-    # prior to tagging the teacher's ID in the assignment, make sure to check if the teacher with that ID exists.
-    # if the teacher with that ID doesn't exists, return `error`.
-    # else proceed
     
     assignment_data = assignment.model_dump()
     assignment_data["teacherId"] = teacher_id
@@ -237,7 +229,9 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
     for student in data[institute_index]["students"]:
         if "assigned" not in student:
           student["assigned"] = []
-          student["assigned"].append(assignment.id)
+
+        if  teacher_id in student["teachers_ids"]:
+          student["assigned"].append({"aid": assignment.id}) 
 
     # Save the updated data back to the JSON file
     save_database(data)
@@ -283,32 +277,53 @@ def get_assignment(institute_id: str = Query(..., description="Institute ID"), a
 
 
 @app.get("/student/get_assignments")
-def get_assignment(institute_id: str = Query(..., description="Institute ID")):
-    # Load the database
-  data = load_database()
-  print(institute_id)
-    
-  institute_index = None
-  for i, institute in enumerate(data):
+def get_assignments(
+    institute_id: str = Query(..., description="Institute ID"),
+    student_id: str = Query(..., description="Student ID")
+):
+    data = load_database()
+
+    # Find the institute by its ID
+    institute_index = None
+    for i, institute in enumerate(data):
         if institute["id"] == institute_id:
             institute_index = i
             break
     
-  if institute_index is None:
-        return {
-            "status": "failure",
-            "message": "Institute not found.",
-        }
+    if institute_index is None:
+        raise HTTPException(status_code=404, detail="Institute not found.")
 
-  assignments = data[institute_index]["assignments"]
+    # Find the specific student by their ID
+    student = None
+    for s in data[institute_index]["students"]:
+        if s["id"] == student_id:
+            student = s
+            break
     
-  return {
+    if student is None:
+        raise HTTPException(status_code=404, detail="Student not found.")
+
+    # Retrieve the assignments for the institute
+    assignments = data[institute_index]["assignments"]
+
+    # Get the assignments the student has in 'assigned'
+    assigned_assignment_ids = [assigned["aid"] for assigned in student["assigned"]]
+
+    # Get the assignments the student has in 'submissions'
+    submitted_assignment_ids = [submission["aid"] for submission in student["submissions"]]
+
+    # Filter assignments based on 'assigned' and 'submissions'
+    assigned_assignments = [assignment for assignment in assignments if assignment["id"] in assigned_assignment_ids]
+    submitted_assignments = [assignment for assignment in assignments if assignment["id"] in submitted_assignment_ids]
+
+    # Return two lists: one for assigned assignments and one for submitted assignments
+    return {
         "status": "success",
-        "assignments": assignments,
+        "assigned": assigned_assignments,
+        "submitted": submitted_assignments,
     }
 
-    # If no assignment is found, return a 404 error
-  raise HTTPException(status_code=404, detail="Assignment not found")
+ 
 
 
 @app.get("/teacher/get_assignments")
@@ -340,8 +355,11 @@ def get_assignments_teacher(  institute_id: str = Query(..., description="Instit
             if submission["teacher_id"] == teacher_id and submission["aid"] == "001"
     ]
   
-  students = data[institute_index]["students"]
-  
+  students = [
+    student for student in data[institute_index]["students"]
+    if  teacher_id in student["teachers_ids"]
+]
+
     
   return {
         "status": "success",
@@ -392,6 +410,7 @@ async def submit_assignment(
     request: Request,
     submission: Submissions,
     institute_id: str = Query(..., description="Institute ID"),
+    teacher_id: str = Query(..., description="Teacher ID"),
     student_id: str = Query(..., description="Student ID"), 
     assignment_id: str = Query(..., description="Assignment ID")
 ):
@@ -409,18 +428,23 @@ async def submit_assignment(
             "status": "failure",
             "message": "Institute not found.",
         }
+      # Find the correct student and add the assignment to their submissions list
+    student_found = False
+    for student in data[institute_index]["students"]:
+        if student["id"] == student_id:
+            student_found = True
+            if "submissions" not in student:
+                student["submissions"] = []  # Create 'submissions' if it doesn't exist
 
-    # Find the student in the database
-    for institute in data:
-        for student in institute["students"]:
-            if student["id"] == student_id:
+            # Append the assignment_id to the student's 'submissions' list
+            if assignment_id not in student["submissions"]:
+                student["submissions"].append({"aid": assignment_id})
+                student["assigned"].remove({"aid": assignment_id})
 
-                # If not completed yet, add assignment_id to completed assignments
-                if "completed" not in student:
-                    data[institute_index]["students"]["completed"] = []
+            break
 
-                if assignment_id not in data[institute_index]["students"]["completed"]:
-                    data[institute_index]["students"]["completed"].append(assignment_id)
+    if not student_found:
+        raise HTTPException(status_code=404, detail="Student not found.")
                 
     submission_data = submission.model_dump()
 

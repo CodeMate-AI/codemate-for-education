@@ -397,6 +397,7 @@ text-decoration: underline;
 </div>
 <div class="headingupper">
  <h2>Share The Problem</h2>
+ <button onclick="window.location.replace(`/STATIC/teachers/?institute_id=123456&teacher_id=001`)" style="border: none; outline: none; background:none; padding: 0 !important; text-decoration: underline;">Return to home</button>
 </div>
 <div id="form_replacement">
  <div id="container-inside">

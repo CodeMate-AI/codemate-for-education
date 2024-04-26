@@ -98,7 +98,7 @@ document.getElementById("send_button").onclick = ()=>{
         console.log(document.getElementById("task___"));
         task = document.getElementById("task___").innerText;
     }else{
-        task = "THERE IS NOT TASK :: FREE STYLE CODEING SESSION.";
+        task = "THERE IS NOT TASK :: FREE STYLE CODING SESSION.";
     }
     fetch("http://localhost:8002/chat", {
         method: "POST",
@@ -130,10 +130,10 @@ document.querySelector(".submit_button button").addEventListener("click", functi
     var confirmation = confirm("Are you sure you want to submit?");
     console.log(confirmation);
     if(confirmation){
-        let submission = document.getElementById("editor").innerText;
+    let submission = document.getElementById("editor").innerText;
     console.log(submission.innerText);
     const id = String(Math.floor(Math.random() * 1000) + 1);
-    const teacherId = "001"
+    const teacher_id = "001"
     const student_id = "001"
     let newUrl = new URL(window.location.href);
     let aid = newUrl.searchParams.get('assignment_id');
@@ -145,7 +145,7 @@ document.querySelector(".submit_button button").addEventListener("click", functi
       },
       body: JSON.stringify({
         id,
-        teacherId,
+        teacher_id,
         student_id,
         aid,
         submission
@@ -153,7 +153,8 @@ document.querySelector(".submit_button button").addEventListener("click", functi
     })
     .then(response => response.json())
     .then(data => {
-      console.log("Submission Successful:", data);
+      confirm("Assignment Submitted successfully !!")
+      window.location.replace("STATIC/students/?institute_id=123456&student_id=001");
     })
     .catch(error => {
       console.error("Submission Error:", error);

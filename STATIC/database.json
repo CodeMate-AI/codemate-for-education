@@ -211,6 +211,32 @@
         "attachment": "",
         "sample_input": "input ",
         "sample_output": "output "
+      },
+      {
+        "id": "761",
+        "teacher_id": "001",
+        "title": "OS in Rust",
+        "description": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "problem_statement": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "due_date": 1714472400,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "output",
+        "teacherId": "001"
+      },
+      {
+        "id": "934",
+        "teacher_id": "001",
+        "title": "OS in Rust",
+        "description": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "problem_statement": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "due_date": 1714472400,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "output",
+        "teacherId": "001"
       }
     ],
     "submissions": [
@@ -253,6 +279,13 @@
           "score": 16
         },
         "date_time": "26/02/24, 9:54 AM"
+      },
+      {
+        "id": "582",
+        "teacher_id": "001",
+        "student_id": "001",
+        "aid": "001",
+        "submission": "1\nprint(\"Hello World !!\")"
       }
     ],
     "teachers": [
@@ -279,12 +312,22 @@
       {
         "id": "001",
         "name": "Tushar Bansal",
+        "teachers_ids": [
+          "001",
+          "003"
+        ],
         "assigned": [
           {
             "aid": "005"
           },
           {
             "aid": "007"
+          },
+          {
+            "aid": "761"
+          },
+          {
+            "aid": "934"
           }
         ],
         "submissions": [
@@ -293,12 +336,19 @@
           },
           {
             "aid": "003"
+          },
+          {
+            "aid": "001"
           }
         ]
       },
       {
         "id": "002",
         "name": "Bhanu Pratap Thakur",
+        "teachers_ids": [
+          "002",
+          "003"
+        ],
         "assigned": [
           {
             "aid": "005"
@@ -319,12 +369,22 @@
       {
         "id": "003",
         "name": "BAchha ",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
         "assigned": [
           {
             "aid": "005"
           },
           {
             "aid": "007"
+          },
+          {
+            "aid": "761"
+          },
+          {
+            "aid": "934"
           }
         ],
         "submissions": [

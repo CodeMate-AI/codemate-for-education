@@ -133,7 +133,7 @@ function formSubmission() {
   //create-form
   let newUrl = new URL(window.location.href);
   let institute_id = newUrl.searchParams.get('institute_id');
-  let teacherId = newUrl.searchParams.get('teacher_id');
+  const teacher_id = newUrl.searchParams.get('teacher_id');
   const form = document.getElementById("create-form")
 
   form.addEventListener("submit", async (e) => {
@@ -156,7 +156,7 @@ function formSubmission() {
 
     console.log(JSON.stringify({
       id,
-      teacherId,
+      teacher_id,
       title,
       description,
       problem_statement,
@@ -168,14 +168,14 @@ function formSubmission() {
     }));
 
     try {
-     const data =  await fetch(`http://localhost:8002/add_task/?teacher_id=${teacherId}&institute_id=${institute_id}`, { // Modify the endpoint as needed
+     const data =  await fetch(`http://localhost:8002/add_task/?teacher_id=${teacher_id}&institute_id=${institute_id}`, { // Modify the endpoint as needed
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           id, 
-          teacherId,
+          teacher_id,
           title,
           description,
           problem_statement,

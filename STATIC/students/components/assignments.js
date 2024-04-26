@@ -7,15 +7,38 @@
 //     search_params[`${e.split("=")[0]}`] = e.split("=")[1];
 // })
 
-document.querySelectorAll(".assignment__").forEach((e)=>{
-    console.log(e)
-    e.onclick = ()=>{
-        if(!e.classList.contains("active")){
-            document.querySelector(".assignment__.active").classList.remove("active");
-            e.classList.add("active");
-        }
+function setActiveBasedOnQuery() {
+  const currentUrl = new URL(window.location.href);
+  const assignment = currentUrl.searchParams.get("assignment");
+
+  // Default to "Pending" if there's no assignment parameter
+  const defaultAssignment = assignment ? assignment.trim() : "Pending";
+
+  document.querySelectorAll(".assignment__").forEach((e) => {
+    if (e.innerText.trim() === defaultAssignment) {
+      e.classList.add("active");
+    } else {
+      e.classList.remove("active");
     }
-})
+
+    // Onclick event to update the URL and reload the page when clicked
+    e.onclick = () => {
+      if (!e.classList.contains("active")) {
+        currentUrl.searchParams.set("assignment", e.innerText.trim());
+
+        // Update the URL with the new search parameter and reload the page
+        history.pushState({}, "", currentUrl.toString());
+        window.location.reload(); // Reload to ensure content changes
+      }
+    };
+  });
+}
+
+// Call the function to set the initial active class
+setActiveBasedOnQuery();
+
+// Optionally, you can listen for `popstate` to update active class if the user navigates back
+window.addEventListener("popstate", setActiveBasedOnQuery);
 
 // document.getElementById("btn1").onclick = () => {
 //     if(!document.getElementById("btn1").classList.contains("active")) {
@@ -23,6 +46,10 @@ document.querySelectorAll(".assignment__").forEach((e)=>{
 //         document.getElementById("btn2").classList.remove("active")
 //     }
 // }
+
+window.addEventListener("popstate", () => {
+  refreshAssignments(); // Update when the URL changes
+});
 
 
 pa_elm = {

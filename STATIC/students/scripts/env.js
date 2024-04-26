@@ -300,7 +300,7 @@ const env = {
                     //     document.body.appendChild(script);
                     // })
                     .then((assign) => {
-                        fetch("http://localhost:8002/student/get_assignments/?institute_id=123456")
+                        fetch("http://localhost:8002/student/get_assignments/?institute_id=123456&student_id=001")
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.assignments = res;
@@ -316,19 +316,35 @@ const env = {
                                 document.body.appendChild(elm);
                             }).then(() => {
                                 setTimeout(() => {
-                                     let assignments_pending = "";
-                    
-                                    env.scripts.data.assignments.assignments.forEach((e) => {
-                                        var temp2 = pa_elm.pending;
-                                
-                                        temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
-                                        temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
-                                        temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
-                                        temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
-                                        temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                    let assignments_pending = "";
+                                    console.log(env.scripts.data.assignments);
+                                    let newUrl = new URL(window.location.href);
+                                    let assignment = newUrl.searchParams.get('assignment');
+                                    if(assignment === "Completed"){
+                                        env.scripts.data.assignments.submitted.forEach((e) => {
+                                            var temp2 = pa_elm.pending;
                                     
-                                        assignments_pending += temp2;
-                                    });
+                                            temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
+                                            temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
+                                            temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                            temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                        
+                                            assignments_pending += temp2;
+                                        });
+                                    } else {
+                                        env.scripts.data.assignments.assigned.forEach((e) => {
+                                            var temp2 = pa_elm.pending;
+                                    
+                                            temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
+                                            temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
+                                            temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                            temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                        
+                                            assignments_pending += temp2;
+                                        });
+                                    }
                 
                                     // env.app.innerHTML = assign+assignments_pending;
                                     env.app.appendChild(env.scripts.elements.assignments);
