@@ -103,33 +103,7 @@ pa_elm = {
 //     })
 // }
 
-function extractLanguage(description) {
-    const languages = [
-      'Python',
-      'JavaScript',
-      'Java',
-      'C++',
-      'C#',
-      'Ruby',
-      'PHP',
-      'Swift',
-      'Go',
-      'Kotlin',
-      'R',
-      'Rust',
-      'Objective-C',
-      'Perl',
-      'Scala',
-      'TypeScript'
-    ];
-    const lowerCaseDescription = description.toLowerCase();
-    for (const language of languages) {
-      if (lowerCaseDescription.includes(language.toLowerCase())) {
-        return language;
-      }
-    }
-    return 'text';
-  }
+
 
 
 function clickHandler() {
@@ -145,19 +119,11 @@ buttons.forEach(button => {
           'Python',
           'JavaScript',
           'Java',
+           'C',
           'C++',
-          'C#',
-          'Ruby',
           'PHP',
-          'Swift',
-          'Go',
-          'Kotlin',
-          'R',
           'Rust',
-          'Objective-C',
-          'Perl',
-          'Scala',
-          'TypeScript'
+          'Golang'
         ];
 
 
@@ -165,16 +131,22 @@ buttons.forEach(button => {
         fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
         .then(resp=>resp.json())
         .then((resp)=>{
-          const description = resp.assignment.description.toLowerCase();
-          let assign_language = "python";
+          // Convert the description to lowercase and split into words
+          const descriptionWords = resp.assignment.description.toLowerCase().split(/\s+/); // Split by whitespace
 
-          // Find the matching language from the list of known languages
-          languages.forEach((language) => {
-            if (description.includes(language.toLowerCase())) {
-              assign_language = language.toLowerCase();
+          let assign_language = "python";
+          console.log(descriptionWords);
+          // Check if any known language matches a word in the description
+          for (let word of descriptionWords) {
+            if (languages.includes(word)) {
+              assign_language = word; // If a matching language is found
+              break; // Exit the loop if a match is found
             }
-          });
-          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=123456&student_id=001`);
+          }
+          let newUrl = new URL(window.location.href);
+          let institute_id = newUrl.searchParams.get('institute_id');
+          let student_id= newUrl.searchParams.get('student_id')
+          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
           window.location.reload()
         })
     });

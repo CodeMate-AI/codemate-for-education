@@ -119,7 +119,11 @@ const env = {
                                 // console.log(env.scripts.data.dash.assignments.unchecked[0].submissions)
                                 dash = dash.replace("{{teacher.students.count}}", env.scripts.data.dash.students.length);
                                 dash = dash.replace("{{teacher.assignments}}", env.scripts.data.dash.assignments.length);
-                                dash = dash.replace("{{teacher.unchecked}}", "03");
+                               if(env.scripts.data.dash.assignments.length === 0) {
+                                dash = dash.replace("{{teacher.unchecked}}", "0");
+                               } else {
+                                dash = dash.replace("{{teacher.unchecked}}", env.scripts.data.dash.assignments.length);
+                               }
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -140,26 +144,32 @@ const env = {
                                     // console.log(env.scripts.data.dash[0].students.forEach((e) => {
                                     //     console.log(e.submissions.filter(submission => submission.aid === assignments_of_teachers[uncheckedLength -1].id ))
                                     // }))
-
+                                    if(env.scripts.data.dash.assignments.length === 0){
+                                        dash = dash.replace("{{data}}", `<p>Nothing to Show Here :)</p>`);
+                                        // console.log(dash);
+                                        env.app.innerHTML = dash;
+                                        env.app.appendChild(env.scripts.elements.dash);
+                                    } else {
                                     env.scripts.data.dash.assignments.forEach((e,index) => {
                                         var temp = dash_elm_teachers.pending;
+                                        
                                         if(dash_elm_teachers !== undefined) {
-                                            temp = temp.replace("{{assignments.pending.title}}",e.title)
-                                            temp = temp.replace("{{assignments.pending.description}}",e.description)
-                                            temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.data.dash.submissions.length)
-                                            temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.dash.students.length - env.scripts.data.dash.submissions.length)
-                                            temp = temp.replace("{{assignment_id}}",e.id)
-    
-                                            if(index === uncheckedLength-1) {
-                                                assignments__sa += temp;
+                                          
+                                                temp = temp.replace("{{assignments.pending.title}}",e.title)
+                                                temp = temp.replace("{{assignments.pending.description}}",e.description)
+                                                temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.data.dash.submissions.length)
+                                                temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.dash.students.length - env.scripts.data.dash.submissions.length)
+                                                temp = temp.replace("{{assignment_id}}",e.id)
+        
+                                                if(index === uncheckedLength-1) {
+                                                    assignments__sa += temp;
+                                                }
+                                                dash = dash.replace("{{data}}", assignments__sa);
+                                                // console.log(dash);
+                                                env.app.innerHTML = dash;
+                                                env.app.appendChild(env.scripts.elements.dash);
                                             }
-                                        }
-                                    });
-
-                                    dash = dash.replace("{{data}}", assignments__sa);
-                                    // console.log(dash);
-                                    env.app.innerHTML = dash;
-                                    env.app.appendChild(env.scripts.elements.dash);
+                                        })}
                                 }, 100);
                             })
                     })

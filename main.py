@@ -1,16 +1,21 @@
 from http.client import HTTPException
-from fastapi import FastAPI, Request, Query, HTTPException
+import uuid
+from fastapi import FastAPI, Request, Query, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AzureOpenAI
 import os
 from dotenv import load_dotenv
+from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 import requests
 import json
 from pydantic import BaseModel
 from typing import Optional
 from uuid import uuid4
+from starlette.responses import RedirectResponse
+from starlette.middleware.sessions import SessionMiddleware
+from authlib.integrations.starlette_client import OAuth, OAuthError
 # from transcription_pipeline import pipe
 from serpapi import GoogleSearch
 
@@ -23,14 +28,25 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(SessionMiddleware,secret_key="thalaforareason")
 client = AzureOpenAI(
   api_key = os.environ.get("AOAI_KEY"),  
   api_version = os.environ.get("AOAI_VERSION"),
   azure_endpoint=os.environ.get("AOAI_ENDPOINT")
 )
 
+oauth = OAuth()
 
-
+oauth.register(
+    name= "google",
+    server_metadata_url = "https://accounts.google.com/.well-known/openid-configuration",
+    client_id = os.environ.get("CLIENT_ID"),
+    client_secret = os.environ.get("CLIENT_SECRET"),
+    client_kwargs= {
+        'scope': 'email openid profile',
+        "redirect_url": "http://localhost:8002/auth"
+    }
+)
 
 database = {}
 with open("./STATIC/database.json", "r", encoding="utf-8") as e:
@@ -50,13 +66,187 @@ def references(query, assignment_id=""):
     return results["video_results"]
 
 
+templates = Jinja2Templates(directory="STATIC")
+
+def load_database():
+    if os.path.exists(database_path):
+        with open(database_path, "r") as f:
+            return json.load(f)
+    else:
+        # If the file doesn't exist, return a default structure
+        return {"assignments": []}
+
+# Helper function to save data to the JSON file
+def save_database(data):
+    with open(database_path, "w") as f:
+        json.dump(data, f, indent=2)
+
+@app.get("/")
+def index(request: Request):
+    # Get user data from the session
+    user = request.session.get('user')
+    print(user)
+    if user:
+        # Extract the user's email from the session data
+        user_email = user.get("email", None)
+
+        if user_email is None:
+            return RedirectResponse(url="/welcome", status_code=302)
+
+        # Load the database
+        data = load_database()
+
+        # Check if the email exists in students or teachers
+        student = None
+        teacher = None
+
+        # Look for the user in the students array
+        for stu in data[0]["students"]:  # Assuming a single institute
+            if stu["email"] == user_email:
+                student = stu
+                break
+        
+        # Look for the user in the teachers array
+        if not student:  # Only check if no student was found
+            for tea in data[0]["teachers"]:
+                if tea["email"] == user_email:
+                    teacher = tea
+                    break
+
+        # Redirect based on role found
+        if student:
+            # Redirect to the student URL with the appropriate parameters
+            return RedirectResponse(
+                url=f"http://127.0.0.1:5500/STATIC/students/?institute_id=123456&student_id={student['id']}",
+                status_code=302,
+            )
+
+        if teacher:
+            # Redirect to the teacher URL with the appropriate parameters
+            return RedirectResponse(
+                url=f"http://127.0.0.1:5500/STATIC/teachers/?institute_id=123456&teacher_id={teacher['id']}",
+                status_code=302,
+            )
+
+        # If user is neither a student nor a teacher, redirect to welcome
+        return RedirectResponse(url="/welcome", status_code=302)
+
+    # If no user in session, render the default template
+    return templates.TemplateResponse(
+        name="index.html",
+        context={"request": request}
+    )
+
+@app.get("/login")
+async def login(request: Request):
+    url = request.url_for('auth')
+    return await oauth.google.authorize_redirect(request, url)
 
 
+@app.get("/auth")
+async def auth(request : Request):
+    try: 
+        token = await oauth.google.authorize_access_token(request)
+    except OAuthError as e:
+        return {
+            "message" : "Can't login right now , please try after some time"
+        }
+    user = token.get('userinfo')
+    if user:
+        request.session['user'] = dict(user)
+    return RedirectResponse(url="/welcome")
 
 
+@app.post("/onboarding")
+def add_user(
+    request_type: str = Form(...),  # Could be "Teacher" or "Student"
+    institute_id: str = Query(..., description="Institute ID"),
+    name: str = Form(...),
+    email: str = Form(...),
+    image_url: str = Form(...)
+):
+    data = load_database()
+
+    # Find the institute index
+    institute_index = None
+    for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+    if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
+
+    # Generate a unique user ID using uuid
+    user_id = str(uuid.uuid4())  # Generate a unique user ID
+
+    # Add to the appropriate list based on the request type
+    if request_type.lower() == "teacher":
+        user_data = {
+        "id": user_id,
+        "name": name,
+        "email": email,
+        "image_url": image_url,
+    }
+        data[institute_index]["teachers"].append(user_data)
+        # Redirect to the teacher-specific URL
+        save_database(data)
+        return {
+            "id": user_id,
+            "status": "ok"
+        }
+    elif request_type.lower() == "student":
+        user_data = {
+        "id": user_id,
+        "name": name,
+        "email": email,
+        "image_url": image_url,
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [],
+        "assigned": []
+    }
+        assignments_from_teachers = [
+        assignment
+        for assignment in institute["assignments"]
+        if assignment["teacher_id"] in user_data["teachers_ids"]
+    ]
+
+    # Add assignment IDs to `assigned` list in `user_data`
+    for assignment in assignments_from_teachers:
+        user_data["assigned"].append({"aid": assignment["id"]})
+        data[institute_index]["students"].append(user_data)
+        # Redirect to the student-specific URL
+        save_database(data)
+        return {
+            "id": user_id,
+            "status": "ok"
+        }
+    else:
+        raise HTTPException(status_code=400, detail="Invalid request type. Use 'Teacher' or 'Student'.")
 
 
+@app.get('/welcome')
+def welcome(request: Request):
+    user = request.session.get('user')
+    if not user:
+        return RedirectResponse('/')
+    return templates.TemplateResponse(
+        name='onboarding/index.html',
+        context={'request': request, 'user': user}
+    )
 
+
+@app.get('/logout')
+def logout(request: Request):
+    request.session.pop('user')
+    request.session.clear()
+    return RedirectResponse('/')
 
 @app.post("/evaluate")
 async def evaluate_asignment(request: Request, submission_id: str):
@@ -88,17 +278,46 @@ async def evaluate_asignment(request: Request, submission_id: str):
 
 # ============================================= #
 
-@app.post("/student")
-async def student(request: Request):
-    global database
-    return database["students"]
+@app.get("/students")
+async def student_redirect(request: Request, institute_id : str =Query(..., description="Institute ID"), student_id : str =Query(..., description="Student ID")):
+    user = await request.session.get("user")
+    if user:
+           return RedirectResponse(
+                url=f"http://127.0.0.1:5500/STATIC/students/?institute_id={institute_id}&student_id={student_id}"
+            )
 
+    return templates.TemplateResponse(
+        "/index.html",
+        {"request": request},
+    )
 
-@app.post("/teacher")
-async def teacher(request: Request):
-    global database
-    return database
+@app.get("/teachers")
+def teacher_redirect(request: Request):
+    user = request.session.get("user")
+    if user:
+        email = user.get("email")
 
+        # Load the database to find the teacher with the corresponding email
+        data = load_database()
+        institute = next((i for i in data if i["id"] == "123456"), None)  # Assuming institute_id is known
+
+        if not institute:
+            raise HTTPException(status_code=404, detail="Institute not found.")
+
+        # Find the teacher with the matching email
+        teacher = next((t for t in institute["teachers"] if t["email"] == email), None)
+
+        if teacher:
+            # Redirect to the teacher-specific page with the correct teacher_id
+            teacher_id = teacher["id"]
+            return RedirectResponse(
+                url=f"http://127.0.0.1:5500/STATIC/teachers/?institute_id=123456&teacher_id={teacher_id}"
+            )
+
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request},
+    )
 
 
 @app.get("/get_task")
@@ -163,28 +382,15 @@ class Assignment(BaseModel):
     attachment: Optional[str] = None
     sample_input: str
     sample_output: str
+    parameters: str
 
-
-def load_database():
-    if os.path.exists(database_path):
-        with open(database_path, "r") as f:
-            return json.load(f)
-    else:
-        # If the file doesn't exist, return a default structure
-        return {"assignments": []}
-
-# Helper function to save data to the JSON file
-def save_database(data):
-    with open(database_path, "w") as f:
-        json.dump(data, f, indent=2)
 
 
 @app.post("/add_task/")
 def add_task(assignment: Assignment, institute_id: str = Query(..., description="Institute ID"), teacher_id: str = Query(..., description="Teacher ID")):
  
     data = load_database()
-    print(institute_id)
-    print(teacher_id)
+
     
     institute_index = None
     for i, institute in enumerate(data):
@@ -219,8 +425,20 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
                 "message" : "Assignment not added",
             }
     
-    assignment_data = assignment.model_dump()
-    assignment_data["teacherId"] = teacher_id
+    assignment_data = {
+        "id": assignment.id,
+         "teacher_id": teacher_id,
+    "title": assignment.title,
+    "description": assignment.description,
+    "problem_statement": assignment.problem_statement, # Optional problem statement
+    "due_date": assignment.due_date,  # Integer representation of a due date (e.g., a timestamp)
+    "difficulty": assignment.difficulty,  # String representation of difficulty level
+    "attachment": assignment.attachment,
+    "sample_input": assignment.sample_input,
+    "sample_output": assignment.sample_output,
+    "parameters": assignment.parameters,
+    }
+    # assignment_data["teacherId"] = teacher_id
 
     print(assignment_data)
     # Add the assignment to the 'assignments' list for this institute
@@ -400,17 +618,17 @@ def get_assignments_student(  institute_id: str, assignment_id: str):
 
 class Submissions(BaseModel):
     id: str
-    teacherId: str
+    teacher_id: str
     student_id: str
     aid: str
     submission: str
+    date_time: str
 
 @app.post("/student/submit")
 async def submit_assignment(
     request: Request,
     submission: Submissions,
     institute_id: str = Query(..., description="Institute ID"),
-    teacher_id: str = Query(..., description="Teacher ID"),
     student_id: str = Query(..., description="Student ID"), 
     assignment_id: str = Query(..., description="Assignment ID")
 ):
@@ -439,14 +657,22 @@ async def submit_assignment(
             # Append the assignment_id to the student's 'submissions' list
             if assignment_id not in student["submissions"]:
                 student["submissions"].append({"aid": assignment_id})
-                student["assigned"].remove({"aid": assignment_id})
+              
 
             break
 
     if not student_found:
         raise HTTPException(status_code=404, detail="Student not found.")
-                
-    submission_data = submission.model_dump()
+
+               
+    submission_data = {
+    "id": submission.id,
+    "teacher_id": submission.teacher_id,
+    "student_id": submission.student_id,
+    "aid": submission.aid,
+    "submission": submission.submission,
+    "date_Time": submission.date_time
+}
 
     data[institute_index]["submissions"].append(submission_data)
     save_database(data)

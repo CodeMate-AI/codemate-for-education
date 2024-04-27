@@ -62,13 +62,21 @@ const env = {
                 fetch("./components/dash.cmfe")
                     .then((dash) => dash.text())
                     .then((dash) => {
-                        fetch("../db.json")
+                        let newUrl = new URL(window.location.href);
+                        let institute_id = newUrl.searchParams.get("institute_id")
+                        let student_id = newUrl.searchParams.get('student_id');
+                        fetch(`http://localhost:8002/student/get_assignments/?institute_id=${institute_id}&student_id=${student_id}`)
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp;
-                                dash = dash.replace("{{assignments.submitted}}", resp.students.assignment_stats.submitted);
-                                dash = dash.replace("{{assignments.pending}}", resp.students.assignment_stats.pending);
-                                dash = dash.replace("{{proficiency}}", resp.students.proficiency);
+                                console.log(resp);
+                                dash = dash.replace("{{assignments.submitted}}", resp.submitted.length);
+                                dash = dash.replace("{{assignments.pending}}", resp.assigned.length);
+                                if(env.scripts.data.dash.submitted.length === 0){
+                                    dash = dash.replace("{{proficiency}}", "0");
+                                } else {
+                                    dash = dash.replace("{{proficiency}}",resp.submitted.length)
+                                }
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -81,8 +89,9 @@ const env = {
                                 setTimeout(() => {
                                     var assignments__sa = "";
                                     
+                                   if(env.scripts.data.dash.submitted.length !== 0) {
                                     if(dash_elms !== undefined) {
-                                        env.scripts.data.dash.students.assignments.submitted.forEach((e) => {
+                                        env.scripts.data.dash.submitted.forEach((e) => {
                                             var temp = dash_elms.submitted_assignment;
                                             temp = temp.replace("{{sa.title}}", e.title);
                                             temp = temp.replace("{{sa.task}}", e.description);
@@ -99,9 +108,15 @@ const env = {
                                     }  
 
                                     dash = dash.replace("{{sa.stat}}", assignments__sa);
-                                    // console.log(dash);
                                     env.app.innerHTML = dash;
                                     env.app.appendChild(env.scripts.elements.dash);
+                                   } else {
+                                    dash = dash.replace("{{sa.stat}}", `<p>Nothing to show here :)</p>`);
+                                    env.app.innerHTML = dash;
+                                    env.app.appendChild(env.scripts.elements.dash);
+                                   }
+                                    // console.log(dash);
+                                   
                                     setTimeout(() => {
                                         fillContainerWithDivs('presenter');
                                     }, 100);
@@ -249,7 +264,8 @@ const env = {
                     .then((playground) => {
                         let newUrl = new URL(window.location.href);
                         let assignment_id = newUrl.searchParams.get('assignment_id');
-                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=001`)
+                        let student_id= newUrl.searchParams.get('student_id')
+                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=${student_id}`)
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.playground = res;
@@ -300,7 +316,10 @@ const env = {
                     //     document.body.appendChild(script);
                     // })
                     .then((assign) => {
-                        fetch("http://localhost:8002/student/get_assignments/?institute_id=123456&student_id=001")
+                        let newUrl = new URL(window.location.href);
+                        // let assignment_id = newUrl.searchParams.get('assignment_id');
+                        let student_id= newUrl.searchParams.get('student_id')
+                        fetch(`http://localhost:8002/student/get_assignments/?institute_id=123456&student_id=${student_id}`)
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.assignments = res;

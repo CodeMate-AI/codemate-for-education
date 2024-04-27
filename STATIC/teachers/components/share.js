@@ -21,7 +21,6 @@
     if(button) {
         button.addEventListener("click" , (event) => {
             event.preventDefault()
-            window.location.reload();
             history.back();
         })
     }

@@ -237,6 +237,19 @@
         "sample_input": "input",
         "sample_output": "output",
         "teacherId": "001"
+      },
+      {
+        "id": "504",
+        "teacher_id": "a411f050-8b4c-454d-a89c-d0f4beec908c",
+        "title": "Hello World in Python",
+        "description": "Description",
+        "problem_statement": "Description",
+        "due_date": 1714501740,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "output",
+        "parameters": "a >=100"
       }
     ],
     "submissions": [
@@ -286,6 +299,14 @@
         "student_id": "001",
         "aid": "001",
         "submission": "1\nprint(\"Hello World !!\")"
+      },
+      {
+        "id": "187",
+        "teacher_id": "001",
+        "student_id": "3071326f-cb5f-4de6-a2ed-aaf8cf4778a6",
+        "aid": "001",
+        "submission": "1\nprint(\"hello\")",
+        "date_Time": "4/27/2024, 11:36:31 PM"
       }
     ],
     "teachers": [
@@ -306,12 +327,19 @@
         "name": "Narendra Modi",
         "email": "modi@narendra.com",
         "students": 42
+      },
+      {
+        "id": "a411f050-8b4c-454d-a89c-d0f4beec908c",
+        "name": "Arrpit",
+        "email": "arrpit0@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocLdxqsDiUKsbFrAo8XxCYvHhhrHO7h8BeX1qIEM9q44DKfQHA=s96-c"
       }
     ],
     "students": [
       {
         "id": "001",
         "name": "Tushar Bansal",
+        "email": "tushar@gmail.com",
         "teachers_ids": [
           "001",
           "003"
@@ -345,6 +373,7 @@
       {
         "id": "002",
         "name": "Bhanu Pratap Thakur",
+        "email": "tushar@gmail.com",
         "teachers_ids": [
           "002",
           "003"
@@ -369,6 +398,7 @@
       {
         "id": "003",
         "name": "BAchha ",
+        "email": "tushar@gmail.com",
         "teachers_ids": [
           "001",
           "002"
@@ -393,6 +423,26 @@
           },
           {
             "aid": "003"
+          }
+        ]
+      },
+      {
+        "id": "3071326f-cb5f-4de6-a2ed-aaf8cf4778a6",
+        "name": "Arrpit Tiwari",
+        "email": "arrpittiwari@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocLhg1jBw3MNh3bXX4qHXjO38wg_L9fyPyCKtylYkYnILydvfg=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [
+          {
+            "aid": "001"
+          }
+        ],
+        "assigned": [
+          {
+            "aid": "001"
           }
         ]
       }
