@@ -27,7 +27,7 @@ var editor = ace.edit("editor");
 setTimeout(()=>{
     console.log("jhsgkjer");
     if(search_params.assignment_id != "" && search_params.assignment_id != undefined){
-        fetch("http://localhost:8002/get_task?institute_id=123456&task_id="+search_params.assignment_id)
+        fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id="+search_params.assignment_id)
         .then(resp => resp.json())
         .then((resp)=>{
             console.log(resp);
@@ -39,7 +39,7 @@ setTimeout(()=>{
         })
     }else if (search_params.mode === "Completed") {
          {
-            fetch(`http://localhost:8002/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
+            fetch(`https://backend.edu.codemate.ai/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
             .then(resp => resp.json())
             .then((submissionResp) => {
                 if (submissionResp.submission) {
@@ -114,7 +114,7 @@ document.getElementById("send_button").onclick = ()=>{
     }else{
         task = "THERE IS NOT TASK :: FREE STYLE CODING SESSION.";
     }
-    fetch("http://localhost:8002/chat", {
+    fetch("https://backend.edu.codemate.ai/chat", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -152,7 +152,7 @@ document.querySelector(".submit_button button").addEventListener("click", async 
             const date_time = new Date(Date.now()).toLocaleString();
 
             // Fetch evaluation data
-            const evaluation_response = await fetch(`http://localhost:8002/evaluate`, {
+            const evaluation_response = await fetch(`https://backend.edu.codemate.ai/evaluate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -178,7 +178,7 @@ document.querySelector(".submit_button button").addEventListener("click", async 
             };
             const id = evaluation_data.submission_id
 
-            const submit_response = await fetch(`http://localhost:8002/student/submit/?institute_id=123456&student_id=${student_id}&assignment_id=${aid}`, {
+            const submit_response = await fetch(`https://backend.edu.codemate.ai/student/submit/?institute_id=123456&student_id=${student_id}&assignment_id=${aid}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

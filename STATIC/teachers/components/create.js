@@ -168,7 +168,7 @@ function formSubmission() {
     }));
 
     try {
-     const data =  await fetch(`http://localhost:8002/add_task/?teacher_id=${teacher_id}&institute_id=${institute_id}`, { // Modify the endpoint as needed
+     const data =  await fetch(`https://backend.edu.codemate.ai/add_task/?teacher_id=${teacher_id}&institute_id=${institute_id}`, { // Modify the endpoint as needed
         method: "POST",
         headers: {
           "Content-Type": "application/json"

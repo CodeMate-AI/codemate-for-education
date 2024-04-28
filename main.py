@@ -46,7 +46,7 @@ oauth.register(
     client_secret = os.environ.get("CLIENT_SECRET"),
     client_kwargs= {
         'scope': 'email openid profile',
-        "redirect_url": "http://localhost:8002/auth"
+        "redirect_url": "https://backend.edu.codemate.ai/auth"
     }
 )
 

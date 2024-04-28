@@ -144,7 +144,7 @@ buttons.forEach(button => {
 
 
 
-        fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
+        fetch("https://backend.edu.codemate.ai/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
         .then(resp=>resp.json())
         .then((resp)=>{
           // Convert the description to lowercase and split into words
@@ -194,7 +194,7 @@ buttons.forEach(button => {
 
 
 
-      fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
+      fetch("https://backend.edu.codemate.ai/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
       .then(resp=>resp.json())
       .then((resp)=>{
         // Convert the description to lowercase and split into words

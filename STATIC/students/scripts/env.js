@@ -65,7 +65,7 @@ const env = {
                         let newUrl = new URL(window.location.href);
                         let institute_id = newUrl.searchParams.get("institute_id")
                         let student_id = newUrl.searchParams.get('student_id');
-                        fetch(`http://localhost:8002/student/get_assignments/?institute_id=${institute_id}&student_id=${student_id}`)
+                        fetch(`https://backend.edu.codemate.ai/student/get_assignments/?institute_id=${institute_id}&student_id=${student_id}`)
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp;
@@ -260,7 +260,7 @@ const env = {
                         let newUrl = new URL(window.location.href);
                         let assignment_id = newUrl.searchParams.get('assignment_id');
                         let student_id= newUrl.searchParams.get('student_id')
-                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=${student_id}`)
+                        fetch(`https://backend.edu.codemate.ai/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=${student_id}`)
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.playground = res;
@@ -314,7 +314,7 @@ const env = {
                         let newUrl = new URL(window.location.href);
                         // let assignment_id = newUrl.searchParams.get('assignment_id');
                         let student_id= newUrl.searchParams.get('student_id')
-                        fetch(`http://localhost:8002/student/get_assignments/?institute_id=123456&student_id=${student_id}`)
+                        fetch(`https://backend.edu.codemate.ai/student/get_assignments/?institute_id=123456&student_id=${student_id}`)
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.assignments = res;
@@ -381,7 +381,7 @@ const env = {
                     .then((solve) => {
                         let newUrl = new URL(window.location.href);
                         let assignment_id = newUrl.searchParams.get('assignment_id');
-                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=001`)
+                        fetch(`https://backend.edu.codemate.ai/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=001`)
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.solve = res;
