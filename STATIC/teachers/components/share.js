@@ -22,6 +22,7 @@
         button.addEventListener("click" , (event) => {
             event.preventDefault()
             history.back();
+            window.location.reload()
         })
     }
  
@@ -51,5 +52,19 @@
   }
 
   Share()
+
+  function ReturnToHome() {
+    const button = document.getElementById("home_button")
+    if(button) {
+        button.addEventListener("click" , (event) => {
+            event.preventDefault()
+            let newUrl = new URL(window.location.href)
+            let teacher_id = newUrl.searchParams.get("teacher_id")
+            window.location.replace(`/STATIC/teachers/?institute_id=123456&teacher_id=${teacher_id}`)
+        })
+    }
+  }
+
+  ReturnToHome()
 
  

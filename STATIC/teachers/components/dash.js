@@ -50,17 +50,17 @@ dash_elm_teachers = {
     clickHandler()
 
 
-    function viewStatement() {
-        const button = document.getElementsByClassName("content")
-        if(button) {
-            button.addEventListener("click" , (event) => {
-                event.preventDefault()
-                let newUrl = new URL(window.location.href);
-                newUrl.searchParams.set('app', "view");
-                history.pushState({}, '', newUrl)
-                window.location.reload()
-            })
-        }
-      }
+    // function viewStatement() {
+    //     const button = document.getElementsByClassName("content")
+    //     if(button) {
+    //         button.addEventListener("click" , (event) => {
+    //             event.preventDefault()
+    //             let newUrl = new URL(window.location.href);
+    //             newUrl.searchParams.set('app', "view");
+    //             history.pushState({}, '', newUrl)
+    //             window.location.reload()
+    //         })
+    //     }
+    //   }
     
-      viewStatement()
+    //   viewStatement()

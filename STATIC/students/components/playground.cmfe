@@ -50,9 +50,9 @@
     #input_box{
         height: 50px;
         width: 100%;
-        border: 2px solid #000;
+        border: 1px solid #46536240;
         outline: none;
-        border-radius: 10px;
+        border-radius: 42px;
         padding-left: 15px;
         padding-right: 15px;
         box-sizing: border-box;

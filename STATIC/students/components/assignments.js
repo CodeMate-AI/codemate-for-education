@@ -69,6 +69,22 @@ pa_elm = {
           </div>
           </div>
           </div>
+`,
+"completed": `     
+          <div id="container-inside">
+          <div class="content">
+          <p class="title">{{assignments.pending.title}}</p>
+          <p class="description" id="description">{{assignments.pending.description}}</p>
+          <div class="date-diff">
+          <p class="date">Submitted on : <span>{{assignments.pending.due_date}}</span></p>
+          </div>
+          </div>
+          <div class="btn">
+          <div class="btn-inside">
+          <button assignment_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="view">View Submission</button>
+          </div>
+          </div>
+          </div>
 `
 };
 
@@ -154,3 +170,53 @@ buttons.forEach(button => {
 }
 
 clickHandler()
+
+
+function viewSubmissionsHandler() {
+  let buttons = document.querySelectorAll('button[assignment_id]');
+
+// Iterate over each button and attach click event listener
+buttons.forEach(button => {
+  button.addEventListener('click', function() {
+      // Get the assignment ID from the button attribute
+      let assignmentId = this.getAttribute('assignment_id');
+
+      const languages = [
+        'Python',
+        'JavaScript',
+        'Java',
+         'C',
+        'C++',
+        'PHP',
+        'Rust',
+        'Golang'
+      ];
+
+
+
+      fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
+      .then(resp=>resp.json())
+      .then((resp)=>{
+        // Convert the description to lowercase and split into words
+        const descriptionWords = resp.assignment.description.toLowerCase().split(/\s+/); // Split by whitespace
+
+        let assign_language = "python";
+        console.log(descriptionWords);
+        // Check if any known language matches a word in the description
+        for (let word of descriptionWords) {
+          if (languages.includes(word)) {
+            assign_language = word; // If a matching language is found
+            break; // Exit the loop if a match is found
+          }
+        }
+        let newUrl = new URL(window.location.href);
+        let institute_id = newUrl.searchParams.get('institute_id');
+        let student_id= newUrl.searchParams.get('student_id')
+        history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+        window.location.reload()
+      })
+  });
+});
+}
+
+viewSubmissionsHandler()

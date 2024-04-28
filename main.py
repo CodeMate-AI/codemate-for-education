@@ -251,6 +251,7 @@ def logout(request: Request):
 @app.post("/evaluate")
 async def evaluate_asignment(request: Request, submission_id: str):
     data = await request.json()
+
     response = client.chat.completions.create(
         model="gpt4-turbo",
         messages=[{
@@ -279,17 +280,15 @@ async def evaluate_asignment(request: Request, submission_id: str):
 # ============================================= #
 
 @app.get("/students")
-async def student_redirect(request: Request, institute_id : str =Query(..., description="Institute ID"), student_id : str =Query(..., description="Student ID")):
-    user = await request.session.get("user")
+async def student_redirect(request: Request):
+    user = request.session.get("user")
     if user:
-           return RedirectResponse(
-                url=f"http://127.0.0.1:5500/STATIC/students/?institute_id={institute_id}&student_id={student_id}"
-            )
-
-    return templates.TemplateResponse(
-        "/index.html",
+           return templates.TemplateResponse(
+        "/students/index.html",
         {"request": request},
     )
+
+    
 
 @app.get("/teachers")
 def teacher_redirect(request: Request):
@@ -372,7 +371,6 @@ def get_mode(task: str):
 database_path = "./STATIC/database.json"
 
 class Assignment(BaseModel):
-    id: str
     teacher_id: str
     title: str
     description: str
@@ -417,16 +415,16 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
             "status": "failure",
             "message": "Teacher not found.",
         }
-
+    id = str(uuid.uuid4())
     for existing_assignment in data[institute_index]["assignments"]:
-        if existing_assignment["id"] == assignment.id:
+        if existing_assignment["id"] == id:
             return {
                 "status": "failure",
                 "message" : "Assignment not added",
             }
     
     assignment_data = {
-        "id": assignment.id,
+        "id": id,
          "teacher_id": teacher_id,
     "title": assignment.title,
     "description": assignment.description,
@@ -449,7 +447,7 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
           student["assigned"] = []
 
         if  teacher_id in student["teachers_ids"]:
-          student["assigned"].append({"aid": assignment.id}) 
+          student["assigned"].append({"aid": id}) 
 
     # Save the updated data back to the JSON file
     save_database(data)
@@ -457,7 +455,7 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
     return {
         "status": "success",
         "message": "Assignment added successfully",
-        "task_id": assignment.id
+        "task_id": id
     }
 
 
@@ -494,6 +492,34 @@ def get_assignment(institute_id: str = Query(..., description="Institute ID"), a
   raise HTTPException(status_code=404, detail="Assignment not found")
 
 
+@app.get("student/get_submission")
+def get_submission(institute_id: str = Query(..., description="Institute ID"),
+    submission_id: str = Query(..., description="Student ID")
+    ):
+        data = load_database()
+
+        institute_index = None
+        for i, institute in enumerate(data):
+            if institute["id"] == institute_id:
+                institute_index = i
+                break
+    
+        if institute_index is None:
+            raise HTTPException(status_code=404, detail="Institute not found.")
+
+        submission_data = None
+        for submission in data[institute_index]["submissions"]:
+            if submission["id"] == submission_id:
+                submission_data = submission
+            break
+    
+        if submission_data is None:
+            raise HTTPException(status_code=404, detail="Submission not found.")
+
+        return {
+            "submission_data": submission_data
+        }
+
 @app.get("/student/get_assignments")
 def get_assignments(
     institute_id: str = Query(..., description="Institute ID"),
@@ -521,25 +547,50 @@ def get_assignments(
     if student is None:
         raise HTTPException(status_code=404, detail="Student not found.")
 
-    # Retrieve the assignments for the institute
+    # Retrieve the institute's assignments
     assignments = data[institute_index]["assignments"]
 
     # Get the assignments the student has in 'assigned'
     assigned_assignment_ids = [assigned["aid"] for assigned in student["assigned"]]
 
-    # Get the assignments the student has in 'submissions'
-    submitted_assignment_ids = [submission["aid"] for submission in student["submissions"]]
+    # Get the submissions for the given student
+    student_submissions = [
+    submission for submission in data[institute_index]["submissions"]
+    if submission["student_id"] == student_id
+]
+
+# Get the assignment IDs from these submissions
+    submitted_assignment_ids = [
+    submission["aid"] for submission in student_submissions
+]
+    
+    for submission in student_submissions:
+        assignment_data = None  # Ensure assignment_data is always initialized
+    # Find the corresponding assignment in the list of all assignments
+        assignment_data = next(
+        (assignment for assignment in assignments if assignment["id"] == submission["aid"]),
+        None
+    )
+    
+        if assignment_data:  # Only append if there's a corresponding assignment
+            submission["assignment"] = assignment_data
 
     # Filter assignments based on 'assigned' and 'submissions'
-    assigned_assignments = [assignment for assignment in assignments if assignment["id"] in assigned_assignment_ids]
-    submitted_assignments = [assignment for assignment in assignments if assignment["id"] in submitted_assignment_ids]
+    assigned_assignments = [
+        assignment for assignment in assignments if assignment["id"] in assigned_assignment_ids
+    ]
+    submitted_assignments = [
+        assignment for assignment in assignments if assignment["id"] in submitted_assignment_ids
+    ]
 
-    # Return two lists: one for assigned assignments and one for submitted assignments
+    # Return assignments, submissions, and their associated assignment details
     return {
         "status": "success",
         "assigned": assigned_assignments,
         "submitted": submitted_assignments,
+        "submissions": student_submissions,
     }
+
 
  
 

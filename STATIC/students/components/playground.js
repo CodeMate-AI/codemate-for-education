@@ -36,6 +36,18 @@ setTimeout(()=>{
             }else{
                 document.getElementById("task___").remove();
             }
+            if (search_params.get("mode") === "completed") {
+                fetch(`http://localhost:8002/student/get_submission?assignment_id=${assignmentId}&institute_id=123456`)
+                .then(resp => resp.json())
+                .then((submissionResp) => {
+                    if (submissionResp.submission) {
+                        const editorDiv = document.getElementById("editor");
+                        if (editorDiv) {
+                            editorDiv.innerText = submissionResp.submission; // Set innerText to submission data
+                        }
+                    }
+                });
+            }
         })
     }else{
         document.getElementById("task___").remove();
@@ -51,8 +63,8 @@ setTimeout(()=>{
         "element": document.getElementById("enhanced_context_toggle"),
     },
     "message": {
-        "user": `<div class="msg msg-user">{{message}}</div>`,
-        "assistant": `<div class="msg msg-ai">{{message}}</div>`
+        "user": `<div class="msg msg-user" style="background: #F7F7F7 ; border-radius: 7px; font-size:0.9rem">{{message}}</div>`,
+        "assistant": `<div class="msg msg-ai" style="background: #48AEF326; font-size:0.9rem">{{message}}</div>`
     },
     "chatbox": document.getElementById("chat_box")
 }

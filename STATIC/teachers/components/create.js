@@ -152,10 +152,9 @@ function formSubmission() {
     let attachment = document.getElementById("file-upload").value
     const sample_input = document.getElementById("input").value
     const sample_output = document.getElementById("output").value
-    const id = String(Math.floor(Math.random() * 1000) + 1); // Random integer from 1 to 100
+    // const id = String(Math.floor(Math.random() * 1000) + 1); // Random integer from 1 to 100
     let parameters = document.getElementById("parameters").value
     console.log(JSON.stringify({
-      id,
       teacher_id,
       title,
       description,
@@ -175,7 +174,6 @@ function formSubmission() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id, 
           teacher_id,
           title,
           description,

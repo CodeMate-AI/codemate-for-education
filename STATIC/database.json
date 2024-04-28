@@ -250,6 +250,45 @@
         "sample_input": "input",
         "sample_output": "output",
         "parameters": "a >=100"
+      },
+      {
+        "id": "475",
+        "teacher_id": "df032db0-c31e-4ba5-b762-05d63200a330",
+        "title": "Create an Api endpoint in Python ",
+        "description": "Create an Api endpoint in Python ",
+        "problem_statement": "Create an Api endpoint in Python ",
+        "due_date": 1714455360,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output ",
+        "parameters": "a>=100; 100 < a < 200"
+      },
+      {
+        "id": "bbee9d81-4e47-4d91-ae87-1dfddb1ee95b",
+        "teacher_id": "df032db0-c31e-4ba5-b762-05d63200a330",
+        "title": "title ",
+        "description": "description",
+        "problem_statement": "statement",
+        "due_date": 1714456980,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output ",
+        "parameters": "a>=100; 100 < a < 200"
+      },
+      {
+        "id": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40",
+        "teacher_id": "001",
+        "title": "Os in Python",
+        "description": "Os in Python",
+        "problem_statement": "Os in Python",
+        "due_date": 1714472340,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output ",
+        "parameters": "a> 100"
       }
     ],
     "submissions": [
@@ -307,6 +346,14 @@
         "aid": "001",
         "submission": "1\nprint(\"hello\")",
         "date_Time": "4/27/2024, 11:36:31 PM"
+      },
+      {
+        "id": "115",
+        "teacher_id": "001",
+        "student_id": "71f929bc-e0f5-4737-9fd1-125c8567d163",
+        "aid": "001",
+        "submission": "1\nprint(\"Hello World !!\")",
+        "date_Time": "4/28/2024, 11:04:17 AM"
       }
     ],
     "teachers": [
@@ -333,6 +380,12 @@
         "name": "Arrpit",
         "email": "arrpit0@gmail.com",
         "image_url": "https://lh3.googleusercontent.com/a/ACg8ocLdxqsDiUKsbFrAo8XxCYvHhhrHO7h8BeX1qIEM9q44DKfQHA=s96-c"
+      },
+      {
+        "id": "df032db0-c31e-4ba5-b762-05d63200a330",
+        "name": "PromoGenie",
+        "email": "promogenie2@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocLl1rIn-kgpZnoAC8oxmuDyJ3lKsSeiQRALaXCimDKpJucTdg=s96-c"
       }
     ],
     "students": [
@@ -356,6 +409,9 @@
           },
           {
             "aid": "934"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
           }
         ],
         "submissions": [
@@ -415,6 +471,9 @@
           },
           {
             "aid": "934"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
           }
         ],
         "submissions": [
@@ -443,6 +502,70 @@
         "assigned": [
           {
             "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
+          }
+        ]
+      },
+      {
+        "id": "6b1a7fa9-5237-4725-aac2-3363d4597eac",
+        "name": "Arpit Tiwari",
+        "email": "atofficial2410@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocID3ZNQEb4BVQO95GAocrNI_rPjMoaOBsimlCC6niEGurRGPQ=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [],
+        "assigned": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
+          }
+        ]
+      },
+      {
+        "id": "71f929bc-e0f5-4737-9fd1-125c8567d163",
+        "name": "Chimpux",
+        "email": "chimpux2@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocJybmNHEJUrEM9O_O9fPX5tbLbwpraYQQGpzv_OGWYqJdNAsw=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [
+          {
+            "aid": "001"
+          }
+        ],
+        "assigned": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
+          }
+        ]
+      },
+      {
+        "id": "579fee85-eeef-46f1-ad71-fe1bd29f5140",
+        "name": "Arpit Tiwari",
+        "email": "atofficial2410@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocID3ZNQEb4BVQO95GAocrNI_rPjMoaOBsimlCC6niEGurRGPQ=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [],
+        "assigned": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
           }
         ]
       }

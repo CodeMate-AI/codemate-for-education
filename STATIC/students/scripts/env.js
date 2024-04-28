@@ -72,11 +72,7 @@ const env = {
                                 console.log(resp);
                                 dash = dash.replace("{{assignments.submitted}}", resp.submitted.length);
                                 dash = dash.replace("{{assignments.pending}}", resp.assigned.length);
-                                if(env.scripts.data.dash.submitted.length === 0){
-                                    dash = dash.replace("{{proficiency}}", "0");
-                                } else {
-                                    dash = dash.replace("{{proficiency}}",resp.submitted.length)
-                                }
+                                    dash = dash.replace("{{proficiency}}",(resp.submitted.length/resp.assigned.length)*100)
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -340,15 +336,14 @@ const env = {
                                     let newUrl = new URL(window.location.href);
                                     let assignment = newUrl.searchParams.get('assignment');
                                     if(assignment === "Completed"){
-                                        env.scripts.data.assignments.submitted.forEach((e) => {
-                                            var temp2 = pa_elm.pending;
+                                        env.scripts.data.assignments.submissions.forEach((e) => {
+                                            var temp2 = pa_elm.completed;
                                     
-                                            temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
-                                            temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
-                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
-                                            temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                            temp2 = temp2.replace("{{assignments.pending.title}}", e.assignment.title);
+                                            temp2 = temp2.replace("{{assignments.pending.description}}", e.assignment.description);
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.date_Time);
                                             temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
-                                        
+                                         
                                             assignments_pending += temp2;
                                         });
                                     } else {
