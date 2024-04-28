@@ -1,16 +1,23 @@
 from http.client import HTTPException
-from fastapi import FastAPI, Request, Query, HTTPException
+import uuid
+import re
+from fastapi import FastAPI, Request, Query, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AzureOpenAI
 import os
+import random
 from dotenv import load_dotenv
+from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 import requests
 import json
 from pydantic import BaseModel
 from typing import Optional
 from uuid import uuid4
+from starlette.responses import RedirectResponse
+from starlette.middleware.sessions import SessionMiddleware
+from authlib.integrations.starlette_client import OAuth, OAuthError
 # from transcription_pipeline import pipe
 from serpapi import GoogleSearch
 
@@ -23,14 +30,25 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(SessionMiddleware,secret_key="thalaforareason")
 client = AzureOpenAI(
   api_key = os.environ.get("AOAI_KEY"),  
   api_version = os.environ.get("AOAI_VERSION"),
   azure_endpoint=os.environ.get("AOAI_ENDPOINT")
 )
 
+oauth = OAuth()
 
-
+oauth.register(
+    name= "google",
+    server_metadata_url = "https://accounts.google.com/.well-known/openid-configuration",
+    client_id = os.environ.get("CLIENT_ID"),
+    client_secret = os.environ.get("CLIENT_SECRET"),
+    client_kwargs= {
+        'scope': 'email openid profile',
+        "redirect_url": "http://localhost:8002/auth"
+    }
+)
 
 database = {}
 with open("./STATIC/database.json", "r", encoding="utf-8") as e:
@@ -50,34 +68,249 @@ def references(query, assignment_id=""):
     return results["video_results"]
 
 
+templates = Jinja2Templates(directory="STATIC")
+
+def load_database():
+    if os.path.exists(database_path):
+        with open(database_path, "r") as f:
+            return json.load(f)
+    else:
+        # If the file doesn't exist, return a default structure
+        return {"assignments": []}
+
+# Helper function to save data to the JSON file
+def save_database(data):
+    with open(database_path, "w") as f:
+        json.dump(data, f, indent=2)
+
+@app.get("/")
+def index(request: Request):
+    # Get user data from the session
+    user = request.session.get('user')
+    print(user)
+    if user:
+        # Extract the user's email from the session data
+        user_email = user.get("email", None)
+
+        if user_email is None:
+            return RedirectResponse(url="/welcome", status_code=302)
+
+        # Load the database
+        data = load_database()
+
+        # Check if the email exists in students or teachers
+        student = None
+        teacher = None
+
+        # Look for the user in the students array
+        for stu in data[0]["students"]:  # Assuming a single institute
+            if stu["email"] == user_email:
+                student = stu
+                break
+        
+        # Look for the user in the teachers array
+        if not student:  # Only check if no student was found
+            for tea in data[0]["teachers"]:
+                if tea["email"] == user_email:
+                    teacher = tea
+                    break
+
+        # Redirect based on role found
+        if student:
+            # Redirect to the student URL with the appropriate parameters
+            return RedirectResponse(
+                url=f"http://127.0.0.1:5500/STATIC/students/?institute_id=123456&student_id={student['id']}",
+                status_code=302,
+            )
+
+        if teacher:
+            # Redirect to the teacher URL with the appropriate parameters
+            return RedirectResponse(
+                url=f"http://127.0.0.1:5500/STATIC/teachers/?institute_id=123456&teacher_id={teacher['id']}",
+                status_code=302,
+            )
+
+        # If user is neither a student nor a teacher, redirect to welcome
+        return RedirectResponse(url="/welcome", status_code=302)
+
+    # If no user in session, render the default template
+    return templates.TemplateResponse(
+        name="index.html",
+        context={"request": request}
+    )
+
+@app.get("/login")
+async def login(request: Request):
+    url = request.url_for('auth')
+    return await oauth.google.authorize_redirect(request, url)
 
 
+@app.get("/auth")
+async def auth(request : Request):
+    try: 
+        token = await oauth.google.authorize_access_token(request)
+    except OAuthError as e:
+        return {
+            "message" : "Can't login right now , please try after some time"
+        }
+    user = token.get('userinfo')
+    if user:
+        request.session['user'] = dict(user)
+    return RedirectResponse(url="/welcome")
 
 
+@app.post("/onboarding")
+def add_user(
+    request_type: str = Form(...),  # Could be "Teacher" or "Student"
+    institute_id: str = Query(..., description="Institute ID"),
+    name: str = Form(...),
+    email: str = Form(...),
+    image_url: str = Form(...)
+):
+    data = load_database()
+
+    # Find the institute index
+    institute_index = None
+    for i, institute in enumerate(data):
+        if institute["id"] == institute_id:
+            institute_index = i
+            break
+    
+    if institute_index is None:
+        return {
+            "status": "failure",
+            "message": "Institute not found.",
+        }
+
+    # Generate a unique user ID using uuid
+    user_id = str(uuid.uuid4())  # Generate a unique user ID
+
+    # Add to the appropriate list based on the request type
+    if request_type.lower() == "teacher":
+        user_data = {
+        "id": user_id,
+        "name": name,
+        "email": email,
+        "image_url": image_url,
+    }
+        data[institute_index]["teachers"].append(user_data)
+        # Redirect to the teacher-specific URL
+        save_database(data)
+        return {
+            "id": user_id,
+            "status": "ok"
+        }
+    elif request_type.lower() == "student":
+        user_data = {
+        "id": user_id,
+        "name": name,
+        "email": email,
+        "image_url": image_url,
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [],
+        "assigned": []
+    }
+        assignments_from_teachers = [
+        assignment
+        for assignment in institute["assignments"]
+        if assignment["teacher_id"] in user_data["teachers_ids"]
+    ]
+
+    # Add assignment IDs to `assigned` list in `user_data`
+    for assignment in assignments_from_teachers:
+        user_data["assigned"].append({"aid": assignment["id"]})
+        data[institute_index]["students"].append(user_data)
+        # Redirect to the student-specific URL
+        save_database(data)
+        return {
+            "id": user_id,
+            "status": "ok"
+        }
+    else:
+        raise HTTPException(status_code=400, detail="Invalid request type. Use 'Teacher' or 'Student'.")
 
 
+@app.get('/welcome')
+def welcome(request: Request):
+    user = request.session.get('user')
+    if not user:
+        return RedirectResponse('/')
+    return templates.TemplateResponse(
+        name='onboarding/index.html',
+        context={'request': request, 'user': user}
+    )
 
+
+@app.get('/logout')
+def logout(request: Request):
+    request.session.pop('user')
+    request.session.clear()
+    return RedirectResponse('/')
 
 @app.post("/evaluate")
-async def evaluate_asignment(request: Request, submission_id: str):
+async def evaluate_asignment(request: Request):
     data = await request.json()
-    response = client.chat.completions.create(
+
+    # The first call returns evaluation scores in JSON format
+    initial_response = client.chat.completions.create(
         model="gpt4-turbo",
         messages=[{
             "role": "system",
-            "content": "Evaluate the student's code below for the mentioned task. Strictly use only the evauation metrices mentioned below and none other.\nGenerate an in-depth report of the same. You must only return the evaluation report in Markdown and nothing else."
+            "content": "Evaluate the student's code below for the given task, using evaluation metrics provided. Return only the evaluation scores in JSON format."
         },{
             "role": "user",
-            "content": "TASK: "+data["task"]+"\n==========================================\n\nCODE OF THE STUDENT:\n"+data["code"]+"\n\n===============================================\n\nEVALUATION METRICS:\n"+data["evaluation_metrics"]
+            "content": f"TASK: {data['task']}\nCODE OF THE STUDENT:\n{data['code']}\nEVALUATION METRICS:\n{data['evaluation_metrics']}"
         }],
         temperature=0.3,
         stream=False,
         max_tokens=2000
     )
 
-    with open(f"./evaluations/{submission_id}.md", "w", encoding="utf-8") as e:
-        e.write(response.choices[0].message.content)
+    # Extract the evaluation scores from the response
+    evaluation_result = initial_response.choices[0].message.content
+    print(evaluation_result)
+    # Validate the format and parse the JSON to ensure it's valid
+    try:
+        scores = json.loads(evaluation_result)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Failed to parse evaluation scores from JSON.")
 
+    # Ensure the expected keys are present in the result
+    if "accuracy" not in scores or "efficiency" not in scores or "score" not in scores:
+        raise HTTPException(status_code=500, detail="Evaluation scores are missing expected keys.")
+
+    # The second call generates the markdown report
+    detailed_response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{
+            "role": "system",
+            "content": "Generate a markdown evaluation report based on the provided code and task. Return only markdown content."
+        },{
+            "role": "user",
+            "content": f"TASK: {data['task']}\nCODE OF THE STUDENT:\n{data['code']}\nEVALUATION METRICS:\n{data['evaluation_metrics']}"
+        }],
+        temperature=0.3,
+        max_tokens=2000,
+        stream=False
+    )
+
+    submission_id =  str(uuid.uuid4())
+
+    # Save the markdown report to a file
+    with open(f"./report/{submission_id}.md", "w", encoding="utf-8") as file:
+        file.write(detailed_response.choices[0].message.content)
+
+    # Return the evaluation scores and a message indicating the markdown report was generated
+    return {
+        "submission_id": submission_id,
+        "accuracy": scores["accuracy"],
+        "efficiency": scores["efficiency"],
+        "score": scores["score"],
+        "message": "Evaluation completed. Markdown report generated."
+    }
 
 
 
@@ -88,17 +321,44 @@ async def evaluate_asignment(request: Request, submission_id: str):
 
 # ============================================= #
 
-@app.post("/student")
-async def student(request: Request):
-    global database
-    return database["students"]
+@app.get("/students")
+async def student_redirect(request: Request):
+    user = request.session.get("user")
+    if user:
+           return templates.TemplateResponse(
+        "/students/index.html",
+        {"request": request},
+    )
 
+    
 
-@app.post("/teacher")
-async def teacher(request: Request):
-    global database
-    return database
+@app.get("/teachers")
+def teacher_redirect(request: Request):
+    user = request.session.get("user")
+    if user:
+        email = user.get("email")
 
+        # Load the database to find the teacher with the corresponding email
+        data = load_database()
+        institute = next((i for i in data if i["id"] == "123456"), None)  # Assuming institute_id is known
+
+        if not institute:
+            raise HTTPException(status_code=404, detail="Institute not found.")
+
+        # Find the teacher with the matching email
+        teacher = next((t for t in institute["teachers"] if t["email"] == email), None)
+
+        if teacher:
+            # Redirect to the teacher-specific page with the correct teacher_id
+            teacher_id = teacher["id"]
+            return RedirectResponse(
+                url=f"http://127.0.0.1:5500/STATIC/teachers/?institute_id=123456&teacher_id={teacher_id}"
+            )
+
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request},
+    )
 
 
 @app.get("/get_task")
@@ -153,8 +413,7 @@ def get_mode(task: str):
 database_path = "./STATIC/database.json"
 
 class Assignment(BaseModel):
-    id: str
-    teacherId: str
+    teacher_id: str
     title: str
     description: str
     problem_statement: str # Optional problem statement
@@ -163,28 +422,15 @@ class Assignment(BaseModel):
     attachment: Optional[str] = None
     sample_input: str
     sample_output: str
+    parameters: str
 
-
-def load_database():
-    if os.path.exists(database_path):
-        with open(database_path, "r") as f:
-            return json.load(f)
-    else:
-        # If the file doesn't exist, return a default structure
-        return {"assignments": []}
-
-# Helper function to save data to the JSON file
-def save_database(data):
-    with open(database_path, "w") as f:
-        json.dump(data, f, indent=2)
 
 
 @app.post("/add_task/")
 def add_task(assignment: Assignment, institute_id: str = Query(..., description="Institute ID"), teacher_id: str = Query(..., description="Teacher ID")):
  
     data = load_database()
-    print(institute_id)
-    print(teacher_id)
+
     
     institute_index = None
     for i, institute in enumerate(data):
@@ -211,24 +457,28 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
             "status": "failure",
             "message": "Teacher not found.",
         }
-
+    id = str(uuid.uuid4())
     for existing_assignment in data[institute_index]["assignments"]:
-        if existing_assignment["id"] == assignment.id:
+        if existing_assignment["id"] == id:
             return {
                 "status": "failure",
                 "message" : "Assignment not added",
             }
-
-    # Add the new assignment to the 'assignments' array
-    # while iterating through the JSON object, check for the institute id.
-    # when the institute ID matches the provided institute id... that is when we add the assignment in the array of the JSON Object.
-    # We tag the asignment with the teacher's ID.
-    # prior to tagging the teacher's ID in the assignment, make sure to check if the teacher with that ID exists.
-    # if the teacher with that ID doesn't exists, return `error`.
-    # else proceed
     
-    assignment_data = assignment.model_dump()
-    assignment_data["teacherId"] = teacher_id
+    assignment_data = {
+        "id": id,
+         "teacher_id": teacher_id,
+    "title": assignment.title,
+    "description": assignment.description,
+    "problem_statement": assignment.problem_statement, # Optional problem statement
+    "due_date": assignment.due_date,  # Integer representation of a due date (e.g., a timestamp)
+    "difficulty": assignment.difficulty,  # String representation of difficulty level
+    "attachment": assignment.attachment,
+    "sample_input": assignment.sample_input,
+    "sample_output": assignment.sample_output,
+    "parameters": assignment.parameters,
+    }
+    # assignment_data["teacherId"] = teacher_id
 
     print(assignment_data)
     # Add the assignment to the 'assignments' list for this institute
@@ -237,7 +487,9 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
     for student in data[institute_index]["students"]:
         if "assigned" not in student:
           student["assigned"] = []
-          student["assigned"].append(assignment.id)
+
+        if  teacher_id in student["teachers_ids"]:
+          student["assigned"].append({"aid": id}) 
 
     # Save the updated data back to the JSON file
     save_database(data)
@@ -245,7 +497,7 @@ def add_task(assignment: Assignment, institute_id: str = Query(..., description=
     return {
         "status": "success",
         "message": "Assignment added successfully",
-        "task_id": assignment.id
+        "task_id": id
     }
 
 
@@ -282,33 +534,109 @@ def get_assignment(institute_id: str = Query(..., description="Institute ID"), a
   raise HTTPException(status_code=404, detail="Assignment not found")
 
 
-@app.get("/student/get_assignments")
-def get_assignment(institute_id: str = Query(..., description="Institute ID")):
-    # Load the database
-  data = load_database()
-  print(institute_id)
+@app.get("student/get_submission")
+def get_submission(institute_id: str = Query(..., description="Institute ID"),
+    submission_id: str = Query(..., description="Student ID")
+    ):
+        data = load_database()
+
+        institute_index = None
+        for i, institute in enumerate(data):
+            if institute["id"] == institute_id:
+                institute_index = i
+                break
     
-  institute_index = None
-  for i, institute in enumerate(data):
+        if institute_index is None:
+            raise HTTPException(status_code=404, detail="Institute not found.")
+
+        submission_data = None
+        for submission in data[institute_index]["submissions"]:
+            if submission["id"] == submission_id:
+                submission_data = submission
+            break
+
+        print(submission_data)
+
+        if submission_data is None:
+            raise HTTPException(status_code=404, detail="Submission not found.")
+
+        return {
+            "submission_data": submission_data
+        }
+
+@app.get("/student/get_assignments")
+def get_assignments(
+    institute_id: str = Query(..., description="Institute ID"),
+    student_id: str = Query(..., description="Student ID")
+):
+    data = load_database()
+
+    # Find the institute by its ID
+    institute_index = None
+    for i, institute in enumerate(data):
         if institute["id"] == institute_id:
             institute_index = i
             break
     
-  if institute_index is None:
-        return {
-            "status": "failure",
-            "message": "Institute not found.",
-        }
+    if institute_index is None:
+        raise HTTPException(status_code=404, detail="Institute not found.")
 
-  assignments = data[institute_index]["assignments"]
+    # Find the specific student by their ID
+    student = None
+    for s in data[institute_index]["students"]:
+        if s["id"] == student_id:
+            student = s
+            break
     
-  return {
+    if student is None:
+        raise HTTPException(status_code=404, detail="Student not found.")
+
+    # Retrieve the institute's assignments
+    assignments = data[institute_index]["assignments"]
+
+    # Get the assignments the student has in 'assigned'
+    assigned_assignment_ids = [assigned["aid"] for assigned in student["assigned"]]
+
+    # Get the submissions for the given student
+    student_submissions = [
+    submission for submission in data[institute_index]["submissions"]
+    if submission["student_id"] == student_id
+]
+
+# Get the assignment IDs from these submissions
+    submitted_assignment_ids = [
+    submission["aid"] for submission in student_submissions
+]
+    
+    for submission in student_submissions:
+        assignment_data = None  # Ensure assignment_data is always initialized
+    # Find the corresponding assignment in the list of all assignments
+        assignment_data = next(
+        (assignment for assignment in assignments if assignment["id"] == submission["aid"]),
+        None
+    )
+    
+        if assignment_data:  # Only append if there's a corresponding assignment
+            submission["assignment"] = assignment_data
+
+    # Filter assignments based on 'assigned' and 'submissions'
+    assigned_assignments = [
+        assignment for assignment in assignments if assignment["id"] in assigned_assignment_ids
+    ]
+    submitted_assignments = [
+        assignment for assignment in assignments if assignment["id"] in submitted_assignment_ids
+    ]
+
+    # Return assignments, submissions, and their associated assignment details
+    return {
         "status": "success",
-        "assignments": assignments,
+        "assigned": assigned_assignments,
+        "submitted": submitted_assignments,
+        "submissions": student_submissions,
     }
 
-    # If no assignment is found, return a 404 error
-  raise HTTPException(status_code=404, detail="Assignment not found")
+
+ 
 
 
 @app.get("/teacher/get_assignments")
@@ -340,8 +668,11 @@ def get_assignments_teacher(  institute_id: str = Query(..., description="Instit
             if submission["teacher_id"] == teacher_id and submission["aid"] == "001"
     ]
   
-  students = data[institute_index]["students"]
-  
+  students = [
+    student for student in data[institute_index]["students"]
+    if  teacher_id in student["teachers_ids"]
+]
+
     
   return {
         "status": "success",
@@ -380,12 +711,15 @@ def get_assignments_student(  institute_id: str, assignment_id: str):
 
 # Endpoint for students to submit assignments
 
+
 class Submissions(BaseModel):
     id: str
-    teacherId: str
+    teacher_id: str
     student_id: str
     aid: str
     submission: str
+    date_time: str
+    evaluation: object
 
 @app.post("/student/submit")
 async def submit_assignment(
@@ -409,20 +743,34 @@ async def submit_assignment(
             "status": "failure",
             "message": "Institute not found.",
         }
+      # Find the correct student and add the assignment to their submissions list
+    student_found = False
+    for student in data[institute_index]["students"]:
+        if student["id"] == student_id:
+            student_found = True
+            if "submissions" not in student:
+                student["submissions"] = []  # Create 'submissions' if it doesn't exist
 
-    # Find the student in the database
-    for institute in data:
-        for student in institute["students"]:
-            if student["id"] == student_id:
+            # Append the assignment_id to the student's 'submissions' list
+            if assignment_id not in student["submissions"]:
+                student["submissions"].append({"aid": assignment_id})
+              
 
-                # If not completed yet, add assignment_id to completed assignments
-                if "completed" not in student:
-                    data[institute_index]["students"]["completed"] = []
+            break
 
-                if assignment_id not in data[institute_index]["students"]["completed"]:
-                    data[institute_index]["students"]["completed"].append(assignment_id)
-                
-    submission_data = submission.model_dump()
+    if not student_found:
+        raise HTTPException(status_code=404, detail="Student not found.")
+
+
+    submission_data = {
+        "id": submission.id,
+        "teacher_id": submission.teacher_id,
+        "student_id": submission.student_id,
+        "aid": assignment_id,
+        "submission": submission.submission,
+        "date_time": submission.date_time,
+        "evaluation": submission.evaluation
+    }
 
     data[institute_index]["submissions"].append(submission_data)
     save_database(data)

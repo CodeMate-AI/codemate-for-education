@@ -50,9 +50,9 @@
     #input_box{
         height: 50px;
         width: 100%;
-        border: 2px solid #000;
+        border: 1px solid #46536240;
         outline: none;
-        border-radius: 10px;
+        border-radius: 42px;
         padding-left: 15px;
         padding-right: 15px;
         box-sizing: border-box;
@@ -150,9 +150,17 @@
         border-radius: 10px;
         max-width: 90%;
     }
-    /* .submit_button {
-
-    } */
+    .submit_button {
+        padding-top: 4px;
+    }
+    .submit_button > button {
+        background: #48AEF3;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        color: white;
+        padding: 10px;
+    }
 </style>
 <div id="header">
     <span>Student Portal</span>

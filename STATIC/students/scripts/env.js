@@ -62,13 +62,17 @@ const env = {
                 fetch("./components/dash.cmfe")
                     .then((dash) => dash.text())
                     .then((dash) => {
-                        fetch("../db.json")
+                        let newUrl = new URL(window.location.href);
+                        let institute_id = newUrl.searchParams.get("institute_id")
+                        let student_id = newUrl.searchParams.get('student_id');
+                        fetch(`http://localhost:8002/student/get_assignments/?institute_id=${institute_id}&student_id=${student_id}`)
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp;
-                                dash = dash.replace("{{assignments.submitted}}", resp.students.assignment_stats.submitted);
-                                dash = dash.replace("{{assignments.pending}}", resp.students.assignment_stats.pending);
-                                dash = dash.replace("{{proficiency}}", resp.students.proficiency);
+                                console.log(resp);
+                                dash = dash.replace("{{assignments.submitted}}", resp.submitted.length);
+                                dash = dash.replace("{{assignments.pending}}", resp.assigned.length);
+                                    dash = dash.replace("{{proficiency}}",(resp.submitted.length/resp.assigned.length)*100)
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -81,8 +85,9 @@ const env = {
                                 setTimeout(() => {
                                     var assignments__sa = "";
                                     
+                                   if(env.scripts.data.dash.submitted.length !== 0) {
                                     if(dash_elms !== undefined) {
-                                        env.scripts.data.dash.students.assignments.submitted.forEach((e) => {
+                                        env.scripts.data.dash.submitted.forEach((e) => {
                                             var temp = dash_elms.submitted_assignment;
                                             temp = temp.replace("{{sa.title}}", e.title);
                                             temp = temp.replace("{{sa.task}}", e.description);
@@ -99,9 +104,15 @@ const env = {
                                     }  
 
                                     dash = dash.replace("{{sa.stat}}", assignments__sa);
-                                    // console.log(dash);
                                     env.app.innerHTML = dash;
                                     env.app.appendChild(env.scripts.elements.dash);
+                                   } else {
+                                    dash = dash.replace("{{sa.stat}}", `<p>Nothing to show here :)</p>`);
+                                    env.app.innerHTML = dash;
+                                    env.app.appendChild(env.scripts.elements.dash);
+                                   }
+                                    // console.log(dash);
+                                   
                                     setTimeout(() => {
                                         fillContainerWithDivs('presenter');
                                     }, 100);
@@ -249,7 +260,8 @@ const env = {
                     .then((playground) => {
                         let newUrl = new URL(window.location.href);
                         let assignment_id = newUrl.searchParams.get('assignment_id');
-                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=001`)
+                        let student_id= newUrl.searchParams.get('student_id')
+                        fetch(`http://localhost:8002/student/get_assignment/?institute_id=123456&assignment_id=${assignment_id}&student_id=${student_id}`)
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.playground = res;
@@ -300,7 +312,10 @@ const env = {
                     //     document.body.appendChild(script);
                     // })
                     .then((assign) => {
-                        fetch("http://localhost:8002/student/get_assignments/?institute_id=123456")
+                        let newUrl = new URL(window.location.href);
+                        // let assignment_id = newUrl.searchParams.get('assignment_id');
+                        let student_id= newUrl.searchParams.get('student_id')
+                        fetch(`http://localhost:8002/student/get_assignments/?institute_id=123456&student_id=${student_id}`)
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.assignments = res;
@@ -316,19 +331,34 @@ const env = {
                                 document.body.appendChild(elm);
                             }).then(() => {
                                 setTimeout(() => {
-                                     let assignments_pending = "";
-                    
-                                    env.scripts.data.assignments.assignments.forEach((e) => {
-                                        var temp2 = pa_elm.pending;
-                                
-                                        temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
-                                        temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
-                                        temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
-                                        temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
-                                        temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                    let assignments_pending = "";
+                                    console.log(env.scripts.data.assignments);
+                                    let newUrl = new URL(window.location.href);
+                                    let assignment = newUrl.searchParams.get('assignment');
+                                    if(assignment === "Completed"){
+                                        env.scripts.data.assignments.submissions.forEach((e) => {
+                                            var temp2 = pa_elm.completed;
                                     
-                                        assignments_pending += temp2;
-                                    });
+                                            temp2 = temp2.replace("{{assignments.pending.title}}", e.assignment.title);
+                                            temp2 = temp2.replace("{{assignments.pending.description}}", e.assignment.description);
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.date_Time);
+                                            temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                         
+                                            assignments_pending += temp2;
+                                        });
+                                    } else {
+                                        env.scripts.data.assignments.assigned.forEach((e) => {
+                                            var temp2 = pa_elm.pending;
+                                    
+                                            temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
+                                            temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
+                                            temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                            temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                        
+                                            assignments_pending += temp2;
+                                        });
+                                    }
                 
                                     // env.app.innerHTML = assign+assignments_pending;
                                     env.app.appendChild(env.scripts.elements.assignments);

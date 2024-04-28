@@ -7,15 +7,38 @@
 //     search_params[`${e.split("=")[0]}`] = e.split("=")[1];
 // })
 
-document.querySelectorAll(".assignment__").forEach((e)=>{
-    console.log(e)
-    e.onclick = ()=>{
-        if(!e.classList.contains("active")){
-            document.querySelector(".assignment__.active").classList.remove("active");
-            e.classList.add("active");
-        }
+function setActiveBasedOnQuery() {
+  const currentUrl = new URL(window.location.href);
+  const assignment = currentUrl.searchParams.get("assignment");
+
+  // Default to "Pending" if there's no assignment parameter
+  const defaultAssignment = assignment ? assignment.trim() : "Pending";
+
+  document.querySelectorAll(".assignment__").forEach((e) => {
+    if (e.innerText.trim() === defaultAssignment) {
+      e.classList.add("active");
+    } else {
+      e.classList.remove("active");
     }
-})
+
+    // Onclick event to update the URL and reload the page when clicked
+    e.onclick = () => {
+      if (!e.classList.contains("active")) {
+        currentUrl.searchParams.set("assignment", e.innerText.trim());
+
+        // Update the URL with the new search parameter and reload the page
+        history.pushState({}, "", currentUrl.toString());
+        window.location.reload(); // Reload to ensure content changes
+      }
+    };
+  });
+}
+
+// Call the function to set the initial active class
+setActiveBasedOnQuery();
+
+// Optionally, you can listen for `popstate` to update active class if the user navigates back
+window.addEventListener("popstate", setActiveBasedOnQuery);
 
 // document.getElementById("btn1").onclick = () => {
 //     if(!document.getElementById("btn1").classList.contains("active")) {
@@ -23,6 +46,10 @@ document.querySelectorAll(".assignment__").forEach((e)=>{
 //         document.getElementById("btn2").classList.remove("active")
 //     }
 // }
+
+window.addEventListener("popstate", () => {
+  refreshAssignments(); // Update when the URL changes
+});
 
 
 pa_elm = {
@@ -39,6 +66,22 @@ pa_elm = {
           <div class="btn">
           <div class="btn-inside">
           <button assignment_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="start">START</button>
+          </div>
+          </div>
+          </div>
+`,
+"completed": `     
+          <div id="container-inside">
+          <div class="content">
+          <p class="title">{{assignments.pending.title}}</p>
+          <p class="description" id="description">{{assignments.pending.description}}</p>
+          <div class="date-diff">
+          <p class="date">Submitted on : <span>{{assignments.pending.due_date}}</span></p>
+          </div>
+          </div>
+          <div class="btn">
+          <div class="btn-inside">
+          <button submission_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="view">View Submission</button>
           </div>
           </div>
           </div>
@@ -76,32 +119,7 @@ pa_elm = {
 //     })
 // }
 
-function extractLanguage(description) {
-    const languages = [
-      'Python',
-      'JavaScript',
-      'Java',
-      'C++',
-      'C#',
-      'Ruby',
-      'PHP',
-      'Swift',
-      'Go',
-      'Kotlin',
-      'R',
-      'Objective-C',
-      'Perl',
-      'Scala',
-      'TypeScript'
-    ];
-    const lowerCaseDescription = description.toLowerCase();
-    for (const language of languages) {
-      if (lowerCaseDescription.includes(language.toLowerCase())) {
-        return language;
-      }
-    }
-    return 'text';
-  }
+
 
 
 function clickHandler() {
@@ -113,10 +131,38 @@ buttons.forEach(button => {
         // Get the assignment ID from the button attribute
         let assignmentId = this.getAttribute('assignment_id');
 
+        const languages = [
+          'Python',
+          'JavaScript',
+          'Java',
+           'C',
+          'C++',
+          'PHP',
+          'Rust',
+          'Golang'
+        ];
+
+
+
         fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
         .then(resp=>resp.json())
         .then((resp)=>{
-          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${String(resp.assignment.language).toLowerCase()}&institute_id=123456&student_id=001`);
+          // Convert the description to lowercase and split into words
+          const descriptionWords = resp.assignment.description.toLowerCase().split(/\s+/); // Split by whitespace
+
+          let assign_language = "python";
+          console.log(descriptionWords);
+          // Check if any known language matches a word in the description
+          for (let word of descriptionWords) {
+            if (languages.includes(word)) {
+              assign_language = word; // If a matching language is found
+              break; // Exit the loop if a match is found
+            }
+          }
+          let newUrl = new URL(window.location.href);
+          let institute_id = newUrl.searchParams.get('institute_id');
+          let student_id= newUrl.searchParams.get('student_id')
+          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
           window.location.reload()
         })
     });
@@ -124,3 +170,53 @@ buttons.forEach(button => {
 }
 
 clickHandler()
+
+
+function viewSubmissionsHandler() {
+  let buttons = document.querySelectorAll('button[submission_id]');
+
+// Iterate over each button and attach click event listener
+buttons.forEach(button => {
+  button.addEventListener('click', function() {
+      // Get the assignment ID from the button attribute
+      let assignmentId = this.getAttribute('submission_id');
+
+      const languages = [
+        'Python',
+        'JavaScript',
+        'Java',
+         'C',
+        'C++',
+        'PHP',
+        'Rust',
+        'Golang'
+      ];
+
+
+
+      fetch("http://localhost:8002/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
+      .then(resp=>resp.json())
+      .then((resp)=>{
+        // Convert the description to lowercase and split into words
+        const descriptionWords = resp.assignment.description.toLowerCase().split(/\s+/); // Split by whitespace
+
+        let assign_language = "python";
+        console.log(descriptionWords);
+        // Check if any known language matches a word in the description
+        for (let word of descriptionWords) {
+          if (languages.includes(word)) {
+            assign_language = word; // If a matching language is found
+            break; // Exit the loop if a match is found
+          }
+        }
+        let newUrl = new URL(window.location.href);
+        let institute_id = newUrl.searchParams.get('institute_id');
+        let student_id= newUrl.searchParams.get('student_id')
+        history.pushState({}, '', `?app=playground&mode=Completed&submission_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+        window.location.reload()
+      })
+  });
+});
+}
+
+viewSubmissionsHandler()

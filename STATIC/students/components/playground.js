@@ -37,6 +37,20 @@ setTimeout(()=>{
                 document.getElementById("task___").remove();
             }
         })
+    }else if (search_params.mode === "Completed") {
+         {
+            fetch(`http://localhost:8002/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
+            .then(resp => resp.json())
+            .then((submissionResp) => {
+                if (submissionResp.submission) {
+                    const editorDiv = document.getElementById("editor");
+                    console.log(editorDiv);
+                    if (editorDiv) {
+                        editorDiv.innerText = submissionResp.submission; // Set innerText to submission data
+                    }
+                }
+            });
+        }
     }else{
         document.getElementById("task___").remove();
     }
@@ -51,8 +65,8 @@ setTimeout(()=>{
         "element": document.getElementById("enhanced_context_toggle"),
     },
     "message": {
-        "user": `<div class="msg msg-user">{{message}}</div>`,
-        "assistant": `<div class="msg msg-ai">{{message}}</div>`
+        "user": `<div class="msg msg-user" style="background: #F7F7F7 ; border-radius: 7px; font-size:0.9rem">{{message}}</div>`,
+        "assistant": `<div class="msg msg-ai" style="background: #48AEF326; font-size:0.9rem">{{message}}</div>`
     },
     "chatbox": document.getElementById("chat_box")
 }
@@ -98,7 +112,7 @@ document.getElementById("send_button").onclick = ()=>{
         console.log(document.getElementById("task___"));
         task = document.getElementById("task___").innerText;
     }else{
-        task = "THERE IS NOT TASK :: FREE STYLE CODEING SESSION.";
+        task = "THERE IS NOT TASK :: FREE STYLE CODING SESSION.";
     }
     fetch("http://localhost:8002/chat", {
         method: "POST",
@@ -126,38 +140,73 @@ document.getElementById("send_button").onclick = ()=>{
     })
 }
 
-document.querySelector(".submit_button button").addEventListener("click", function() {
-    var confirmation = confirm("Are you sure you want to submit?");
-    console.log(confirmation);
-    if(confirmation){
-        let submission = document.getElementById("editor").innerText;
-    console.log(submission.innerText);
-    const id = String(Math.floor(Math.random() * 1000) + 1);
-    const teacherId = "001"
-    const student_id = "001"
-    let newUrl = new URL(window.location.href);
-    let aid = newUrl.searchParams.get('assignment_id');
-  
-    fetch(`http://localhost:8002/student/submit/?institute_id=123456&student_id=001&assignment_id=${aid}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id,
-        teacherId,
-        student_id,
-        aid,
-        submission
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Submission Successful:", data);
-    })
-    .catch(error => {
-      console.error("Submission Error:", error);
-    });
+document.querySelector(".submit_button button").addEventListener("click", async function () {
+    const confirmation = confirm("Are you sure you want to submit?");
+    if (confirmation) {
+        try {
+            const submission = document.getElementById("editor").innerText;
+            const teacher_id = "001";
+            const newUrl = new URL(window.location.href);
+            const aid = newUrl.searchParams.get("assignment_id");
+            const student_id = newUrl.searchParams.get("student_id");
+            const date_time = new Date(Date.now()).toLocaleString();
+
+            // Fetch evaluation data
+            const evaluation_response = await fetch(`http://localhost:8002/evaluate`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    task: document.getElementById("task_______").innerText,
+                    code: submission,
+                    evaluation_metrics: "Accuracy, Efficiency, Score",
+                }),
+            });
+            console.log(evaluation_response);
+            const evaluation_data = await evaluation_response.json();
+            console.log(evaluation_data);
+            if (!evaluation_response.ok || !evaluation_data) {
+                throw new Error("Failed to get evaluation data");
+            }
+
+            // Prepare the data for assignment submission
+            const evaluation = {
+                accuracy: evaluation_data.accuracy,
+                efficiency: evaluation_data.efficiency,
+                score: evaluation_data.score,
+            };
+            const id = evaluation_data.submission_id
+
+            const submit_response = await fetch(`http://localhost:8002/student/submit/?institute_id=123456&student_id=${student_id}&assignment_id=${aid}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id,
+                    teacher_id,
+                    student_id,
+                    aid,
+                    submission,
+                    date_time,
+                    evaluation, // Include the evaluation in the submission data
+                }),
+            });
+
+            const submit_data = await submit_response.json();
+
+            if (!submit_response.ok) {
+                throw new Error("Failed to submit assignment");
+            }
+
+            alert("Assignment submitted successfully!");
+            console.log(submit_data);
+        } catch (error) {
+            console.error("Submission Error:", error);
+            alert("There was an error submitting your assignment. Please try again.");
+        }
     }
-  });
+});
+
   

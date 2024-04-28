@@ -133,7 +133,7 @@ function formSubmission() {
   //create-form
   let newUrl = new URL(window.location.href);
   let institute_id = newUrl.searchParams.get('institute_id');
-  let teacherId = newUrl.searchParams.get('teacher_id');
+  const teacher_id = newUrl.searchParams.get('teacher_id');
   const form = document.getElementById("create-form")
 
   form.addEventListener("submit", async (e) => {
@@ -152,11 +152,10 @@ function formSubmission() {
     let attachment = document.getElementById("file-upload").value
     const sample_input = document.getElementById("input").value
     const sample_output = document.getElementById("output").value
-    const id = String(Math.floor(Math.random() * 1000) + 1); // Random integer from 1 to 100
-
+    // const id = String(Math.floor(Math.random() * 1000) + 1); // Random integer from 1 to 100
+    let parameters = document.getElementById("parameters").value
     console.log(JSON.stringify({
-      id,
-      teacherId,
+      teacher_id,
       title,
       description,
       problem_statement,
@@ -165,17 +164,17 @@ function formSubmission() {
       attachment,
       sample_input,
       sample_output,
+      parameters
     }));
 
     try {
-     const data =  await fetch(`http://localhost:8002/add_task/?teacher_id=${teacherId}&institute_id=${institute_id}`, { // Modify the endpoint as needed
+     const data =  await fetch(`http://localhost:8002/add_task/?teacher_id=${teacher_id}&institute_id=${institute_id}`, { // Modify the endpoint as needed
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          id, 
-          teacherId,
+          teacher_id,
           title,
           description,
           problem_statement,
@@ -184,6 +183,7 @@ function formSubmission() {
           attachment,
           sample_input,
           sample_output,
+          parameters
         }),
       })
      const response = await data.json()

@@ -291,6 +291,10 @@ span.active {
   <label for="difficulty" class="headings">Due Date</label>
   <input class="common-input" type="datetime-local" id="date-time">
  </div>
+ <div>
+  <label for="title" class="headings">Define Parameters</label>
+      <input type="text" id="parameters"  class="common-input" style="width: 100% !important; height: 23px;">
+ </div>
     </div>
 
   <button id="create-publish" class="publish_button" type="submit">

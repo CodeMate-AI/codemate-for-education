@@ -11,7 +11,7 @@ uncheck_assign = {
     `,
     "unchecked": `  
               <div id="data">
-              <input type="checkbox" style="background-color: #465362B2;">
+            <input type="checkbox" style="background-color: #465362B2;">
             <div class="image-profile">
             <img src="https://s3-alpha-sig.figma.com/img/cb9a/a039/39e015567ec7c2c390f0447cdc7a643d?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Hyk3rf-YXFRWhJezF6m~XUftl4oI5kmq1WrDjgqExkanhBaRgh2x5hPsgNmBW9p9Pn8GEw0yJpIAgvv0BWDYEYN42pOYzwbv25UJ4pOybNdCVX25omPE0IJQ-30XxVNp6PkzThvsLJsWKDlIz5AJ8wFAyLNJMZHZj0Nioj4Grk3rT8EdbTr2FD4QocA~u5p6nXGnWgKN54uGfwSpUBWprIk3uLf9lROiUvKGnWVY1LRtqpY63y9S5Cl9CMk01tOnn-ynZrLQhflP~qKaEjnR89xIHUIVCTGILsmD5hZS30jhAAuEOvRz54mDzQCfmwRDos45MKoMVLoLRjjSe2XVVw__" alt="profile" />
             <p class="title">{{students.name}}</p>
@@ -31,8 +31,8 @@ function goBack() {
   if(button) {
       button.addEventListener("click" , (event) => {
           event.preventDefault()
-          history.back();
-          // window.location.reload();
+          window.location.reload();
+          history.back();    
       })
   }
 
@@ -47,3 +47,42 @@ document.querySelectorAll(`.view__button____`).forEach((e)=>{
     window.open(`../report/?submission_id=${e.getAttribute('submission_id')}`, '_blank');
   }
 })
+
+function SelectAll() {
+  let selectedAll = false;
+
+  const selectAllButton = document.getElementById("select_all");
+  const reevaluateButton = document.querySelector("#re_evaluate"); // The button container
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  // Function to check if any checkboxes are checked
+  const anyCheckboxChecked = () => {
+    return Array.from(checkboxes).some(checkbox => checkbox.checked);
+  };
+
+  // Toggle the visibility of the ReEvaluate button
+  const updateReEvaluateButtonVisibility = () => {
+    reevaluateButton.style.display = anyCheckboxChecked() ? "block" : "none";
+  };
+
+  selectAllButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    
+    selectedAll = !selectedAll; // Toggle the 'select all' state
+    
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = selectedAll;
+    });
+
+    // Change the text based on the new state
+    selectAllButton.innerText = selectedAll ? "Unselect All" : "Select All";
+
+    // Update the visibility of the ReEvaluate button
+    updateReEvaluateButtonVisibility();
+  });
+
+  // Initial check for visibility
+  updateReEvaluateButtonVisibility();
+}
+
+SelectAll();

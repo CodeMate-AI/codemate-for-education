@@ -7,8 +7,8 @@
         "id": "001",
         "teacher_id": "001",
         "title": "Python Web Scrapper",
-        "due_date" : "25/04/24",
-        "difficulty" : "Hard",
+        "due_date": "25/04/24",
+        "difficulty": "Hard",
         "description": "Create a web-scrapper in python that scrapes the content of a given web-page and then cleans the collected content.",
         "language": "Python",
         "problem_statement": "",
@@ -199,6 +199,96 @@
         "attachment": "",
         "sample_input": "input ",
         "sample_output": "output "
+      },
+      {
+        "id": "80",
+        "teacher_id": "001",
+        "title": "Compiler in Rust ",
+        "description": "Build a compiler in rust without using google and keyboard , mouse .",
+        "problem_statement": "Build a compiler in rust without using google and keyboard , mouse .",
+        "due_date": 1714113660,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output "
+      },
+      {
+        "id": "761",
+        "teacher_id": "001",
+        "title": "OS in Rust",
+        "description": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "problem_statement": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "due_date": 1714472400,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "output",
+        "teacherId": "001"
+      },
+      {
+        "id": "934",
+        "teacher_id": "001",
+        "title": "OS in Rust",
+        "description": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "problem_statement": "Javascript Rust Golang C Zig Scala Pascal OCaml C++ C#",
+        "due_date": 1714472400,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "output",
+        "teacherId": "001"
+      },
+      {
+        "id": "504",
+        "teacher_id": "a411f050-8b4c-454d-a89c-d0f4beec908c",
+        "title": "Hello World in Python",
+        "description": "Description",
+        "problem_statement": "Description",
+        "due_date": 1714501740,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input",
+        "sample_output": "output",
+        "parameters": "a >=100"
+      },
+      {
+        "id": "475",
+        "teacher_id": "df032db0-c31e-4ba5-b762-05d63200a330",
+        "title": "Create an Api endpoint in Python ",
+        "description": "Create an Api endpoint in Python ",
+        "problem_statement": "Create an Api endpoint in Python ",
+        "due_date": 1714455360,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output ",
+        "parameters": "a>=100; 100 < a < 200"
+      },
+      {
+        "id": "bbee9d81-4e47-4d91-ae87-1dfddb1ee95b",
+        "teacher_id": "df032db0-c31e-4ba5-b762-05d63200a330",
+        "title": "title ",
+        "description": "description",
+        "problem_statement": "statement",
+        "due_date": 1714456980,
+        "difficulty": "Hard",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output ",
+        "parameters": "a>=100; 100 < a < 200"
+      },
+      {
+        "id": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40",
+        "teacher_id": "001",
+        "title": "Os in Python",
+        "description": "Os in Python",
+        "problem_statement": "Os in Python",
+        "due_date": 1714472340,
+        "difficulty": "Medium",
+        "attachment": "",
+        "sample_input": "input ",
+        "sample_output": "output ",
+        "parameters": "a> 100"
       }
     ],
     "submissions": [
@@ -241,6 +331,29 @@
           "score": 16
         },
         "date_time": "26/02/24, 9:54 AM"
+      },
+      {
+        "id": "582",
+        "teacher_id": "001",
+        "student_id": "001",
+        "aid": "001",
+        "submission": "1\nprint(\"Hello World !!\")"
+      },
+      {
+        "id": "187",
+        "teacher_id": "001",
+        "student_id": "3071326f-cb5f-4de6-a2ed-aaf8cf4778a6",
+        "aid": "001",
+        "submission": "1\nprint(\"hello\")",
+        "date_Time": "4/27/2024, 11:36:31 PM"
+      },
+      {
+        "id": "115",
+        "teacher_id": "001",
+        "student_id": "71f929bc-e0f5-4737-9fd1-125c8567d163",
+        "aid": "001",
+        "submission": "1\nprint(\"Hello World !!\")",
+        "date_Time": "4/28/2024, 11:04:17 AM"
       }
     ],
     "teachers": [
@@ -261,18 +374,44 @@
         "name": "Narendra Modi",
         "email": "modi@narendra.com",
         "students": 42
+      },
+      {
+        "id": "a411f050-8b4c-454d-a89c-d0f4beec908c",
+        "name": "Arrpit",
+        "email": "arrpit0@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocLdxqsDiUKsbFrAo8XxCYvHhhrHO7h8BeX1qIEM9q44DKfQHA=s96-c"
+      },
+      {
+        "id": "df032db0-c31e-4ba5-b762-05d63200a330",
+        "name": "PromoGenie",
+        "email": "promogenie2@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocLl1rIn-kgpZnoAC8oxmuDyJ3lKsSeiQRALaXCimDKpJucTdg=s96-c"
       }
     ],
     "students": [
       {
         "id": "001",
         "name": "Tushar Bansal",
+        "email": "tushar@gmail.com",
+        "teachers_ids": [
+          "001",
+          "003"
+        ],
         "assigned": [
           {
             "aid": "005"
           },
           {
             "aid": "007"
+          },
+          {
+            "aid": "761"
+          },
+          {
+            "aid": "934"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
           }
         ],
         "submissions": [
@@ -281,12 +420,20 @@
           },
           {
             "aid": "003"
+          },
+          {
+            "aid": "001"
           }
         ]
       },
       {
         "id": "002",
         "name": "Bhanu Pratap Thakur",
+        "email": "tushar@gmail.com",
+        "teachers_ids": [
+          "002",
+          "003"
+        ],
         "assigned": [
           {
             "aid": "005"
@@ -307,12 +454,26 @@
       {
         "id": "003",
         "name": "BAchha ",
+        "email": "tushar@gmail.com",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
         "assigned": [
           {
             "aid": "005"
           },
           {
             "aid": "007"
+          },
+          {
+            "aid": "761"
+          },
+          {
+            "aid": "934"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
           }
         ],
         "submissions": [
@@ -321,6 +482,90 @@
           },
           {
             "aid": "003"
+          }
+        ]
+      },
+      {
+        "id": "3071326f-cb5f-4de6-a2ed-aaf8cf4778a6",
+        "name": "Arrpit Tiwari",
+        "email": "arrpittiwari@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocLhg1jBw3MNh3bXX4qHXjO38wg_L9fyPyCKtylYkYnILydvfg=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [
+          {
+            "aid": "001"
+          }
+        ],
+        "assigned": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
+          }
+        ]
+      },
+      {
+        "id": "6b1a7fa9-5237-4725-aac2-3363d4597eac",
+        "name": "Arpit Tiwari",
+        "email": "atofficial2410@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocID3ZNQEb4BVQO95GAocrNI_rPjMoaOBsimlCC6niEGurRGPQ=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [],
+        "assigned": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
+          }
+        ]
+      },
+      {
+        "id": "71f929bc-e0f5-4737-9fd1-125c8567d163",
+        "name": "Chimpux",
+        "email": "chimpux2@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocJybmNHEJUrEM9O_O9fPX5tbLbwpraYQQGpzv_OGWYqJdNAsw=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [
+          {
+            "aid": "001"
+          }
+        ],
+        "assigned": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
+          }
+        ]
+      },
+      {
+        "id": "579fee85-eeef-46f1-ad71-fe1bd29f5140",
+        "name": "Arpit Tiwari",
+        "email": "atofficial2410@gmail.com",
+        "image_url": "https://lh3.googleusercontent.com/a/ACg8ocID3ZNQEb4BVQO95GAocrNI_rPjMoaOBsimlCC6niEGurRGPQ=s96-c",
+        "teachers_ids": [
+          "001",
+          "002"
+        ],
+        "submissions": [],
+        "assigned": [
+          {
+            "aid": "001"
+          },
+          {
+            "aid": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40"
           }
         ]
       }
