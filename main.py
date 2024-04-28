@@ -259,7 +259,7 @@ async def evaluate_asignment(request: Request):
         model="gpt4-turbo",
         messages=[{
             "role": "system",
-            "content": "Evaluate the student's code below for the given task, using evaluation metrics provided. Return only the evaluation scores in JSON format."
+            "content": "Evaluate the student's code below for the given task, using evaluation metrics provided. Return only the evaluation scores in JSON format. The scores are going to be out of 10."
         },{
             "role": "user",
             "content": f"TASK: {data['task']}\nCODE OF THE STUDENT:\n{data['code']}\nEVALUATION METRICS:\n{data['evaluation_metrics']}"
@@ -274,9 +274,15 @@ async def evaluate_asignment(request: Request):
     print(evaluation_result)
     # Validate the format and parse the JSON to ensure it's valid
     try:
+        if "```" in evaluation_result:
+            evaluation_result = evaluation_result.split("```")[1]
+            if "json" in evaluation_result:
+                evaluation_result = evaluation_result.split("json")[1]
+        evaluation_result = str(evaluation_result).lower()
         scores = json.loads(evaluation_result)
     except json.JSONDecodeError:
         raise HTTPException(status_code=500, detail="Failed to parse evaluation scores from JSON.")
+    
 
     # Ensure the expected keys are present in the result
     if "accuracy" not in scores or "efficiency" not in scores or "score" not in scores:
@@ -284,7 +290,7 @@ async def evaluate_asignment(request: Request):
 
     # The second call generates the markdown report
     detailed_response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-35-turbo-16k",
         messages=[{
             "role": "system",
             "content": "Generate a markdown evaluation report based on the provided code and task. Return only markdown content."
@@ -297,10 +303,11 @@ async def evaluate_asignment(request: Request):
         stream=False
     )
 
-    submission_id =  str(uuid.uuid4())
+    submission_id = str(uuid.uuid4())
+    print(submission_id)
 
     # Save the markdown report to a file
-    with open(f"./report/{submission_id}.md", "w", encoding="utf-8") as file:
+    with open(f"./STATIC/report/{submission_id}.md", "w", encoding="utf-8") as file:
         file.write(detailed_response.choices[0].message.content)
 
     # Return the evaluation scores and a message indicating the markdown report was generated

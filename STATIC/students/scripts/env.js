@@ -121,7 +121,6 @@ const env = {
                             .then(() => {
                                 var int___ = setInterval(() => {
                                     if (document.getElementsByClassName("success_acc__").length > 0) {
-                                        console.log("FK I AM HERE!")
                                         var success_elms = {
                                             "acc": document.querySelectorAll(".success_acc__"),
                                             "eff": document.querySelectorAll(".success_eff__"),
