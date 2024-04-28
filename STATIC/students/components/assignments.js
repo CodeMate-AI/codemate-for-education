@@ -81,7 +81,7 @@ pa_elm = {
           </div>
           <div class="btn">
           <div class="btn-inside">
-          <button assignment_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="view">View Submission</button>
+          <button submission_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="view">View Submission</button>
           </div>
           </div>
           </div>
@@ -173,13 +173,13 @@ clickHandler()
 
 
 function viewSubmissionsHandler() {
-  let buttons = document.querySelectorAll('button[assignment_id]');
+  let buttons = document.querySelectorAll('button[submission_id]');
 
 // Iterate over each button and attach click event listener
 buttons.forEach(button => {
   button.addEventListener('click', function() {
       // Get the assignment ID from the button attribute
-      let assignmentId = this.getAttribute('assignment_id');
+      let assignmentId = this.getAttribute('submission_id');
 
       const languages = [
         'Python',
@@ -212,7 +212,7 @@ buttons.forEach(button => {
         let newUrl = new URL(window.location.href);
         let institute_id = newUrl.searchParams.get('institute_id');
         let student_id= newUrl.searchParams.get('student_id')
-        history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+        history.pushState({}, '', `?app=playground&mode=Completed&submission_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
         window.location.reload()
       })
   });

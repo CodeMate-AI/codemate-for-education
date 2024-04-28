@@ -1,9 +1,11 @@
 from http.client import HTTPException
 import uuid
+import re
 from fastapi import FastAPI, Request, Query, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from openai import AzureOpenAI
 import os
+import random
 from dotenv import load_dotenv
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -249,26 +251,66 @@ def logout(request: Request):
     return RedirectResponse('/')
 
 @app.post("/evaluate")
-async def evaluate_asignment(request: Request, submission_id: str):
+async def evaluate_asignment(request: Request):
     data = await request.json()
 
-    response = client.chat.completions.create(
+    # The first call returns evaluation scores in JSON format
+    initial_response = client.chat.completions.create(
         model="gpt4-turbo",
         messages=[{
             "role": "system",
-            "content": "Evaluate the student's code below for the mentioned task. Strictly use only the evauation metrices mentioned below and none other.\nGenerate an in-depth report of the same. You must only return the evaluation report in Markdown and nothing else."
+            "content": "Evaluate the student's code below for the given task, using evaluation metrics provided. Return only the evaluation scores in JSON format."
         },{
             "role": "user",
-            "content": "TASK: "+data["task"]+"\n==========================================\n\nCODE OF THE STUDENT:\n"+data["code"]+"\n\n===============================================\n\nEVALUATION METRICS:\n"+data["evaluation_metrics"]
+            "content": f"TASK: {data['task']}\nCODE OF THE STUDENT:\n{data['code']}\nEVALUATION METRICS:\n{data['evaluation_metrics']}"
         }],
         temperature=0.3,
         stream=False,
         max_tokens=2000
     )
 
-    with open(f"./evaluations/{submission_id}.md", "w", encoding="utf-8") as e:
-        e.write(response.choices[0].message.content)
+    # Extract the evaluation scores from the response
+    evaluation_result = initial_response.choices[0].message.content
+    print(evaluation_result)
+    # Validate the format and parse the JSON to ensure it's valid
+    try:
+        scores = json.loads(evaluation_result)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Failed to parse evaluation scores from JSON.")
 
+    # Ensure the expected keys are present in the result
+    if "accuracy" not in scores or "efficiency" not in scores or "score" not in scores:
+        raise HTTPException(status_code=500, detail="Evaluation scores are missing expected keys.")
+
+    # The second call generates the markdown report
+    detailed_response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{
+            "role": "system",
+            "content": "Generate a markdown evaluation report based on the provided code and task. Return only markdown content."
+        },{
+            "role": "user",
+            "content": f"TASK: {data['task']}\nCODE OF THE STUDENT:\n{data['code']}\nEVALUATION METRICS:\n{data['evaluation_metrics']}"
+        }],
+        temperature=0.3,
+        max_tokens=2000,
+        stream=False
+    )
+
+    submission_id =  str(uuid.uuid4())
+
+    # Save the markdown report to a file
+    with open(f"./report/{submission_id}.md", "w", encoding="utf-8") as file:
+        file.write(detailed_response.choices[0].message.content)
+
+    # Return the evaluation scores and a message indicating the markdown report was generated
+    return {
+        "submission_id": submission_id,
+        "accuracy": scores["accuracy"],
+        "efficiency": scores["efficiency"],
+        "score": scores["score"],
+        "message": "Evaluation completed. Markdown report generated."
+    }
 
 
 
@@ -512,7 +554,9 @@ def get_submission(institute_id: str = Query(..., description="Institute ID"),
             if submission["id"] == submission_id:
                 submission_data = submission
             break
-    
+
+        print(submission_data)
+
         if submission_data is None:
             raise HTTPException(status_code=404, detail="Submission not found.")
 
@@ -667,6 +711,7 @@ def get_assignments_student(  institute_id: str, assignment_id: str):
 
 # Endpoint for students to submit assignments
 
+
 class Submissions(BaseModel):
     id: str
     teacher_id: str
@@ -674,6 +719,7 @@ class Submissions(BaseModel):
     aid: str
     submission: str
     date_time: str
+    evaluation: object
 
 @app.post("/student/submit")
 async def submit_assignment(
@@ -715,15 +761,16 @@ async def submit_assignment(
     if not student_found:
         raise HTTPException(status_code=404, detail="Student not found.")
 
-               
+
     submission_data = {
-    "id": submission.id,
-    "teacher_id": submission.teacher_id,
-    "student_id": submission.student_id,
-    "aid": submission.aid,
-    "submission": submission.submission,
-    "date_Time": submission.date_time
-}
+        "id": submission.id,
+        "teacher_id": submission.teacher_id,
+        "student_id": submission.student_id,
+        "aid": assignment_id,
+        "submission": submission.submission,
+        "date_time": submission.date_time,
+        "evaluation": submission.evaluation
+    }
 
     data[institute_index]["submissions"].append(submission_data)
     save_database(data)
