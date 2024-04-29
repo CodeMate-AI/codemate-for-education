@@ -98,7 +98,7 @@ document.getElementById("send_button").onclick = ()=>{
     let current_code = editor.getValue();
     current_message += "\nCODE:\n";
     current_message += current_code;
-    current_message += "\n\nENABLED FLAGS: [--resources]"
+    //current_message += "\n\nENABLED FLAGS: [--resources]"
 
     env.messages.push({
         "role": "user",
