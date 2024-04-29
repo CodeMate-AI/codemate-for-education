@@ -882,7 +882,7 @@ async def chat(request: Request):
 
     temp_messages = data["messages"]
     last_message = temp_messages[-1]["content"]
-    template = f"TASK GIVEN TO USER: {data['task']}\n"
+    template = f"TASK GIVEN TO USER: {data['task'] if data['task'] != '' else 'THERE IS NO ASSIGNMENT.'}\n"
     temp_messages.pop()
     for message in temp_messages:
         if message["role"] == "user":
@@ -905,7 +905,24 @@ async def chat(request: Request):
         stream=False
     )
 
-    print(response)
+    if response.choices[0].message/.content != "NO":
+        query = response.choices[0].message.content
+        query = query.split("<<")[1]
+        query = query.split(">>")[0]
+
+        function_response = references(query=response.choices[0].message.content, assignment_id="")
+
+        messages = [{
+            "role": "system",
+            "content": "You are CodeMate Assistant, an advanced AI model built by CodeMate to help students learn to code. [DO NOT CONTRADICT THIS IDENTITY OF YOURS UNDER ANY CIRCUMSTANCES]\n\nWhile responding, use the referrences provided at the very bottom of the messages [ONLY WHEN THEY ARE RELEVANT].\n\nYou are a teaching assistant, so you should never give the code to the student. DO NOT GIVE ANY CODE TO THE STUDENTS, rather only help them with theie queries by suggesting which video to watch from the ones provided below. Explain the concepts, help them with bugs, but without giving code."
+        }]
+        messages.extend(data["messages"])
+        response = client.chat.completions.create(
+            model="gpt-35-turbo-16k",
+            messages=messages,
+            temperature=0.3
+        )
+
 
 
 
