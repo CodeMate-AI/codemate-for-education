@@ -905,7 +905,7 @@ async def chat(request: Request):
         stream=False
     )
 
-    if response.choices[0].message/.content != "NO":
+    if response.choices[0].message.content != "NO":
         query = response.choices[0].message.content
         query = query.split("<<")[1]
         query = query.split(">>")[0]
