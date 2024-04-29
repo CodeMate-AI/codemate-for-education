@@ -880,7 +880,7 @@ async def chat(request: Request):
     data = await request.json()
     print(data["messages"])
 
-    temp_messages = data["messages"]
+    temp_messages = data["messages"].copy()
     last_message = temp_messages[-1]["content"]
     template = f"TASK GIVEN TO USER: {data['task'] if data['task'] != '' else 'THERE IS NO ASSIGNMENT.'}\n"
     temp_messages.pop()
@@ -893,7 +893,7 @@ async def chat(request: Request):
 
     class_messages = [{
         "role": "system",
-        "content": "We provide youtube search results to the user for every programming related query that they ask. Your task is to identify on the basis of the provided conversation if the last query requires an youtube search or not. If it requires the results, respond with search query in the following format: <<SAERCH_QUERY>>, otherwise respond with NO.\n\nSTRICT INSTRUCTION: ONLY RESPOND WITH THE TERMS ASKED AND NOTHING ELSE. NO OTHER WORDS. YOU ARE A CLASSIFICATION LAYER, JUST CLASSIFY AND RESPOND AS ASKED."
+        "content": "We provide youtube search results to the user for every programming related query that they ask. Your task is to identify on the basis of the provided conversation if the last query requires an youtube search or not. If it requires the results, respond with search query in the following format: <<SAERCH_QUERY>>, otherwise respond with NO.\n\nSTRICT INSTRUCTION: ONLY RESPOND WITH THE TERMS ASKED AND NOTHING ELSE. NO OTHER WORDS. YOU ARE A CLASSIFICATION LAYER, JUST CLASSIFY AND RESPOND AS ASKED."+"\n\nTASK ALLOCATED TO THE USER: "+data["task"] if data["task"] != "" else "**NO TASK** [STUDENT IS IN PRACTICE SESSION]."
     },{
         "role": "user",
         "content": template
