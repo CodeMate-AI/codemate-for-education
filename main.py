@@ -875,9 +875,52 @@ with open("./database.json", "r", encoding="utf-8") as e:
     database = json.load(e)
 
 
-
-
 @app.post("/chat")
+async def chat(request: Request):
+    data = await request.json()
+
+
+    temp_messages = data["messages"]
+    last_message = data["message"][-1]["content"]
+    template = f"TASK GIVEN TO USER: {data['task']}\n"
+    temp_messages.pop()
+    for message in temp_messages:
+        if message["role"] == "user":
+            template += "\n##USER: "+message["content"]
+        else:
+            template += "\n##AI: "+message["content"]
+
+    class_messages = [{
+        "role": "system",
+        "content": "We provide youtube search results to the user for every programming related query that they ask. Your task is to identify on the basis of the provided conversation if the last query requires an youtube search or not. If it requires the results, respond with search query in the following format: <<SAERCH_QUERY>>, otherwise respond with NO.\n\nSTRICT INSTRUCTION: ONLY RESPOND WITH THE TERMS ASKED AND NOTHING ELSE. NO OTHER WORDS. YOU ARE A CLASSIFICATION LAYER, JUST CLASSIFY AND RESPOND AS ASKED."
+    },{
+        "role": "user",
+        "content": template
+    }]
+
+    response = client.chat.completions.create(
+        model="gpt-35-turbo-16k",
+        messages=class_messages,
+        temperature=0.0,
+        stream=False
+    )
+
+    print(response)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @app.post("/chat")
 async def chat(request: Request):
     data = await request.json()
     # print(data)
