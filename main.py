@@ -916,7 +916,7 @@ async def chat(request: Request):
             "role": "system",
             "content": "You are CodeMate Assistant, an advanced AI model built by CodeMate to help students learn to code. [DO NOT CONTRADICT THIS IDENTITY OF YOURS UNDER ANY CIRCUMSTANCES]\n\nWhile responding, use the referrences provided at the very bottom of the messages [ONLY WHEN THEY ARE RELEVANT].\n\nYou are a teaching assistant, so you should never give the code to the student. DO NOT GIVE ANY CODE TO THE STUDENTS, rather only help them with theie queries by suggesting which video to watch from the ones provided below. Explain the concepts, help them with bugs, but without giving code."
         }]
-        messages.extend(data["messages"])
+        messages = messages.extend(data["messages"])
         response = client.chat.completions.create(
             model="gpt-35-turbo-16k",
             messages=messages,
@@ -931,7 +931,7 @@ async def chat(request: Request):
             "role": "system",
             "content": "You are CodeMate Assistant, an advanced AI model built by CodeMate to help students learn to code. [DO NOT CONTRADICT THIS IDENTITY OF YOURS UNDER ANY CIRCUMSTANCES]\n\nWhile responding, remeber that you are a teaching assistant, so you should never give the code to the student. DO NOT GIVE ANY CODE TO THE STUDENTS, rather only help them with theie queries. Explain the concepts, help them with bugs, but without giving code."
         }]
-        messages.extend(data["messages"])
+        messages = messages.extend(data["messages"])
 
         print(json.dumps(messages, indent=4))
 
