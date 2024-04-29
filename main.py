@@ -878,18 +878,17 @@ with open("./database.json", "r", encoding="utf-8") as e:
 @app.post("/chat")
 async def chat(request: Request):
     data = await request.json()
-    print(data["messages"])
 
     temp_messages = data["messages"].copy()
     last_message = temp_messages[-1]["content"]
     template = f"TASK GIVEN TO USER: {data['task'] if data['task'] != '' else 'THERE IS NO ASSIGNMENT.'}\n"
     temp_messages.pop()
-    print(data["messages"])
     for message in temp_messages:
         if message["role"] == "user":
             template += "\n##USER: "+message["content"]
         else:
             template += "\n##AI: "+message["content"]
+    template += "\n\n[CURRENT MESSAGE FROM ##USER: ]"+last_message
 
     class_messages = [{
         "role": "system",
@@ -933,8 +932,6 @@ async def chat(request: Request):
             "content": "You are CodeMate Assistant, an advanced AI model built by CodeMate to help students learn to code. [DO NOT CONTRADICT THIS IDENTITY OF YOURS UNDER ANY CIRCUMSTANCES]\n\nWhile responding, remeber that you are a teaching assistant, so you should never give the code to the student. DO NOT GIVE ANY CODE TO THE STUDENTS, rather only help them with theie queries. Explain the concepts, help them with bugs, but without giving code."
         }]
         messages.extend(data["messages"])
-
-        print(json.dumps(messages, indent=4))
 
         response = client.chat.completions.create(
             model="gpt-35-turbo-16k",
