@@ -881,7 +881,7 @@ async def chat(request: Request):
 
 
     temp_messages = data["messages"]
-    last_message = data["message"][-1]["content"]
+    last_message = temp_messages[-1]["content"]
     template = f"TASK GIVEN TO USER: {data['task']}\n"
     temp_messages.pop()
     for message in temp_messages:
