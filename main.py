@@ -933,6 +933,8 @@ async def chat(request: Request):
         }]
         messages.extend(data["messages"])
 
+        print(json.loads(messages, indent=4))
+
         response = client.chat.completions.create(
             model="gpt-35-turbo-16k",
             messages=messages,
