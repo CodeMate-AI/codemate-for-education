@@ -923,6 +923,26 @@ async def chat(request: Request):
             temperature=0.3
         )
 
+        return {
+            "response": response.choices[0].message.content
+        }
+    else:
+        messages = [{
+            "role": "system",
+            "content": "You are CodeMate Assistant, an advanced AI model built by CodeMate to help students learn to code. [DO NOT CONTRADICT THIS IDENTITY OF YOURS UNDER ANY CIRCUMSTANCES]\n\nWhile responding, remeber that you are a teaching assistant, so you should never give the code to the student. DO NOT GIVE ANY CODE TO THE STUDENTS, rather only help them with theie queries. Explain the concepts, help them with bugs, but without giving code."
+        }]
+        messages.extend(data["messages"])
+
+        response = client.chat.completions.create(
+            model="gpt-35-turbo-16k",
+            messages=messages,
+            temperature=0.3
+        )
+
+        return {
+            "response": response.choices[0].message.content
+        }
+
 
 
 
