@@ -921,7 +921,7 @@ async def chat(request: Request):
 
 
     @app.post("/chat")
-async def chat(request: Request):
+async def chat__(request: Request):
     data = await request.json()
     # print(data)
 
