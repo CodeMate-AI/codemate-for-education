@@ -192,7 +192,8 @@ function formSubmission() {
      newUrl.searchParams.set('assignment_id',await response.task_id);
      newUrl.searchParams.set('app', "publish");
      history.pushState({}, '', newUrl)
-     
+
+     alert("Assignment has been published successfully.")
     } catch (error) {
       console.log(error)
       alert(error)
