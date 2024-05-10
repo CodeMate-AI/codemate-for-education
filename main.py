@@ -26,7 +26,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -36,6 +36,96 @@ client = AzureOpenAI(
   api_version = os.environ.get("AOAI_VERSION"),
   azure_endpoint=os.environ.get("AOAI_ENDPOINT")
 )
+
+
+
+
+
+
+
+
+
+
+import ast
+import json
+
+class NodeVisitor(ast.NodeVisitor):
+    def __init__(self):
+        self.classes = []
+        self.functions = []
+        self.variables = []
+        self.imports = []
+    
+    def add_item(self, node_type, name, from_line, to_line):
+        return {
+            'type': node_type,
+            'name': name,
+            'lines': {
+                'from': from_line,
+                'to': to_line
+            },
+            'calls_at': []
+        }
+    
+
+    def visit_ClassDef(self, node):
+        class_info = self.add_item('class', node.name, node.lineno, node.end_lineno)
+        self.classes.append(class_info)
+        self.generic_visit(node)
+
+    def visit_Import(self, node):
+        for alias in node.names:
+            import_info = self.add_item('import', alias.name, node.lineno, node.end_lineno)
+            self.imports.append(import_info)
+
+    def visit_ImportFrom(self, node):
+        for alias in node.names:
+            import_info = self.add_item('import', f"{node.module}.{alias.name}", node.lineno, node.end_lineno)
+            self.imports.append(import_info)
+
+    def visit_Assign(self, node):
+        for target in node.targets:
+            if isinstance(target, ast.Name):
+                variable_info = self.add_item('variable', target.id, node.lineno, node.end_lineno)
+                self.variables.append(variable_info)
+        self.generic_visit(node)
+
+    def visit_Call(self, node):
+        if isinstance(node.func, ast.Name):
+            call_name = node.func.id
+            self.update_call_references(call_name, node.lineno)
+        self.generic_visit(node)
+
+    def update_call_references(self, call_name, call_line):
+        for item in (self.classes + self.functions + self.variables + self.imports):
+            if call_name == item['name']:
+                item['calls_at'].append(call_line)
+
+
+
+def parse_file(filepath):
+    with open(filepath, 'r') as file:
+        content = file.read()
+
+    tree = ast.parse(content)
+    visitor = NodeVisitor()
+    visitor.visit(tree)
+
+    return {
+        'classes': visitor.classes,
+        'functions': visitor.functions,
+        'variables': visitor.variables,
+        'imports': visitor.imports
+    }
+
+
+
+
+
+
+
+
+
 
 oauth = OAuth()
 

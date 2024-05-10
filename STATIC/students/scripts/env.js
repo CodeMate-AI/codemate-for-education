@@ -72,7 +72,7 @@ const env = {
                                 console.log(resp);
                                 dash = dash.replace("{{assignments.submitted}}", resp.submitted.length);
                                 dash = dash.replace("{{assignments.pending}}", resp.assigned.length);
-                                    dash = dash.replace("{{proficiency}}",(resp.submitted.length/resp.assigned.length)*100)
+                                dash = dash.replace("{{proficiency}}", ((resp.submitted.length / resp.assigned.length) * 100).toFixed(2));
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -80,7 +80,7 @@ const env = {
                             }).then(() => {
                                 var elm = document.createElement("script");
                                 elm.src = env.scripts.paths.dash;
-                                document.body.appendChild(elm);
+                                document.getElementById("app").appendChild(elm);
                             }).then(() => {
                                 setTimeout(() => {
                                     var assignments__sa = "";
@@ -340,7 +340,7 @@ const env = {
                                     
                                             temp2 = temp2.replace("{{assignments.pending.title}}", e.assignment.title);
                                             temp2 = temp2.replace("{{assignments.pending.description}}", e.assignment.description);
-                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.date_Time);
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", new Date(e.date_Time * 1000).toLocaleString());
                                             temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
                                          
                                             assignments_pending += temp2;
@@ -351,7 +351,7 @@ const env = {
                                     
                                             temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
                                             temp2 = temp2.replace("{{assignments.pending.description}}", e.description);
-                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.due_date);
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", new Date(parseInt(e.due_date) * 1000).toLocaleString());
                                             temp2 = temp2.replace("{{assignments.pending.difficulty}}", e.difficulty);
                                             temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
                                         
