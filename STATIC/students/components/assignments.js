@@ -120,6 +120,15 @@ pa_elm = {
 // }
 
 
+document.querySelectorAll(".task_elm").forEach((e)=>{
+  e.onclick = ()=>{
+    search__ = window.location.search;
+    search__ = search__.replace("assignments", "playground");
+    window.location.href = window.location.pathname+search__+"&assignment_id="+e.getAttribute("submission_id");
+  }
+})
+
+
 
 
 function clickHandler() {

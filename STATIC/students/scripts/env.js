@@ -88,9 +88,11 @@ const env = {
                                    if(env.scripts.data.dash.submitted.length !== 0) {
                                     if(dash_elms !== undefined) {
                                         env.scripts.data.dash.submitted.forEach((e) => {
+                                            console.log(e);
                                             var temp = dash_elms.submitted_assignment;
                                             temp = temp.replace("{{sa.title}}", e.title);
                                             temp = temp.replace("{{sa.task}}", e.description);
+                                            temp = temp.replace("{{sa.submission_id}}", e.id);
                                             if (e.status == "pending") {
                                                 temp = temp.replace("{{sa.stat}}", dash_elms.submitted_assignment_stats.pending);
                                                 temp = temp.replace("{{sa.donwload.report}}", "sa_rept_disabled");
@@ -115,6 +117,13 @@ const env = {
                                    
                                     setTimeout(() => {
                                         fillContainerWithDivs('presenter');
+                                        setTimeout(()=>{
+                                            document.querySelectorAll(".sa_rept").forEach((e)=>{
+                                                e.onclick = ()=>{
+                                                    window.open(`../report/?submission_id=${e.getAttribute('submission_id')}`, '_blank');
+                                                }
+                                            })
+                                        }, 100);
                                     }, 100);
                                 }, 100);
                             })
@@ -337,10 +346,12 @@ const env = {
                                     if(assignment === "Completed"){
                                         env.scripts.data.assignments.submissions.forEach((e) => {
                                             var temp2 = pa_elm.completed;
+
+                                            console.log(e);
                                     
                                             temp2 = temp2.replace("{{assignments.pending.title}}", e.assignment.title);
                                             temp2 = temp2.replace("{{assignments.pending.description}}", e.assignment.description);
-                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", new Date(e.date_Time * 1000).toLocaleString());
+                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.date_time);
                                             temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
                                          
                                             assignments_pending += temp2;
