@@ -25,7 +25,6 @@ var editor = ace.edit("editor");
 
 
 setTimeout(()=>{
-    console.log("jhsgkjer");
     if(search_params.assignment_id != "" && search_params.assignment_id != undefined){
         fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id="+search_params.assignment_id)
         .then(resp => resp.json())
@@ -37,17 +36,18 @@ setTimeout(()=>{
                 document.getElementById("task___").remove();
             }
         })
-    }else if (search_params.mode === "Completed") {
+    }if (search_params.assignment === "Completed") {
          {
             fetch(`https://backend.edu.codemate.ai/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
             .then(resp => resp.json())
             .then((submissionResp) => {
                 if (submissionResp.submission) {
-                    const editorDiv = document.getElementById("editor");
-                    console.log(editorDiv);
-                    if (editorDiv) {
-                        editorDiv.innerText = submissionResp.submission; // Set innerText to submission data
-                    }
+                    editor.setText(submissionResp.submission);
+                    // const editorDiv = document.getElementById("editor");
+                    // console.log(editorDiv);
+                    // if (editorDiv) {
+                    //     editorDiv.innerText = submissionResp.submission; // Set innerText to submission data
+                    // }
                 }
             });
         }

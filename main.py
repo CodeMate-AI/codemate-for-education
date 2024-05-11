@@ -631,7 +631,7 @@ def get_assignment(institute_id: str = Query(..., description="Institute ID"), a
   raise HTTPException(status_code=404, detail="Assignment not found")
 
 
-@app.get("student/get_submission")
+@app.get("/student/get_submission")
 def get_submission(institute_id: str = Query(..., description="Institute ID"),
     submission_id: str = Query(..., description="Student ID")
     ):
