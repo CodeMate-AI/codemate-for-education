@@ -95,7 +95,7 @@ dash_elms = {
                         </div>
                         <div class="sa_an">{{sa.stat}}</div>
                         <div class="sa_cl">
-                            <div class="sa_rept tooltip" data-tip="View Report" submission_id="{{sa.submission_id}}">
+                            <div class="sa_rept tooltip" data-tip="View Report" submission_id="{{sa.submission_id}} assignment_id="{{sa.assignment_id}}">
                                 <i class="ph-fill ph-cloud-arrow-down {{sa.donwload.report}}"></i>
                             </div>
                             <div class="sa_view-sa tooltip" data-tip="View Submission">

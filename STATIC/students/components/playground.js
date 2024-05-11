@@ -25,22 +25,25 @@ var editor = ace.edit("editor");
 
 setTimeout(()=>{
     if(search_params.assignment_id != "" && search_params.assignment_id != undefined){
-        fetch(`https://backend.edu.codemate.ai/student/get_assignment?institute_id=${search_params.institute_id}&assignment_id=${search_params.assignment_id}&student_id=${search_params.student_id}`)
-        .then(resp => resp.json())
-        .then(resp => {
-            console.log(resp.assignment.language.toLowerCase());
-            editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
-        })
         fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id="+search_params.assignment_id)
         .then(resp => resp.json())
         .then((resp)=>{
-            // console.log(resp);
+            console.log(resp);
             // editor.session.setMode(`ace/mode/${String(resp.language)}`);
             if(resp.task != null){
+                console.log(resp.task);
                 document.getElementById("task_______").innerText = resp.task;
             }else{
+                console.log("REMOVING");
                 document.getElementById("task___").remove();
             }
+        }).then(()=>{
+            fetch(`https://backend.edu.codemate.ai/student/get_assignment?institute_id=${search_params.institute_id}&assignment_id=${search_params.assignment_id}&student_id=${search_params.student_id}`)
+            .then(resp => resp.json())
+            .then(resp => {
+                console.log(resp.assignment.language.toLowerCase());
+                editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
+            });
         })
     }if (search_params.assignment === "Completed") {
          {
@@ -49,18 +52,10 @@ setTimeout(()=>{
             .then((submissionResp) => {
                 console.log(submissionResp.submission_data);
                 if (submissionResp.submission_data.submission) {
-                    global = submissionResp.submission_data.submission;
                     editor.setValue(submissionResp.submission_data.submission);
-                    // const editorDiv = document.getElementById("editor");
-                    // console.log(editorDiv);
-                    // if (editorDiv) {
-                    //     editorDiv.innerText = submissionResp.submission; // Set innerText to submission data
-                    // }
                 }
             });
         }
-    }else{
-        document.getElementById("task___").remove();
     }
 }, 500);
 

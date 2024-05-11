@@ -89,10 +89,12 @@ const env = {
                                     if(dash_elms !== undefined) {
                                         env.scripts.data.dash.submitted.forEach((e) => {
                                             console.log(e);
+                                            // console.log(e.assignment.id);
                                             var temp = dash_elms.submitted_assignment;
                                             temp = temp.replace("{{sa.title}}", e.title);
                                             temp = temp.replace("{{sa.task}}", e.description);
                                             temp = temp.replace("{{sa.submission_id}}", e.id);
+                                            // temp = temp.replace("{{sa.assignment_id}}", e.assignment.id);
                                             if (e.status == "pending") {
                                                 temp = temp.replace("{{sa.stat}}", dash_elms.submitted_assignment_stats.pending);
                                                 temp = temp.replace("{{sa.donwload.report}}", "sa_rept_disabled");
@@ -353,12 +355,14 @@ const env = {
                                             temp2 = temp2.replace("{{assignments.pending.description}}", e.assignment.description);
                                             temp2 = temp2.replace("{{assignments.pending.due_date}}", e.date_time);
                                             temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                            temp2 = temp2.replace("{{assignments.completed.aid}}", e.assignment.id);
                                          
                                             assignments_pending += temp2;
                                         });
                                     } else {
                                         env.scripts.data.assignments.assigned.forEach((e) => {
                                             var temp2 = pa_elm.pending;
+                                            console.log(e);
                                     
                                             temp2 = temp2.replace("{{assignments.pending.title}}", e.title);
                                             temp2 = temp2.replace("{{assignments.pending.description}}", e.description);

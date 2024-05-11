@@ -81,7 +81,7 @@ pa_elm = {
           </div>
           <div class="btn">
           <div class="btn-inside">
-          <button submission_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="view">View Submission</button>
+          <button submission_id="{{assignments.pending.aid}}" assignment_id="{{assignments.completed.aid}}" class="task_elm" nav="task" id="view">View Submission</button>
           </div>
           </div>
           </div>
@@ -124,7 +124,7 @@ document.querySelectorAll(".task_elm").forEach((e)=>{
   e.onclick = ()=>{
     search__ = window.location.search;
     search__ = search__.replace("assignments", "playground");
-    window.location.href = window.location.pathname+search__+"&assignment_id="+e.getAttribute("submission_id");
+    window.location.href = window.location.pathname+search__+"&submission_id="+e.getAttribute("submission_id")+"&assignment_id="+e.getAttribute("assignment_id");
   }
 })
 
