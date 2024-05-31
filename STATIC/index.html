@@ -30,23 +30,27 @@
             flex: 1;
         }
         .left_div {
+            height:100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             background: #ECF7FE;
-            justify-content: space-between;
-            gap: 90px;
+            justify-content: space-evenly;
+            gap: 20px;
             padding-top: 48px;
+        }
+        @media(max-width:800px){
+          .left_div{
+            display:none;
+          }
         }
     
         .right_div {
-            padding-left: 170px;
+          height:100vh;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            /* justify-content: center; */
-            padding-top: 50px;
-            gap: 50px;
+            align-items: center;
+            justify-content: space-evenly;
         }
     </style>
 </head>
@@ -278,11 +282,14 @@
                         </a>
                       <p style="color: #888888; font-size:0.8rem">By registering you agree to our <a href="" style="color: #011936;">Terms of Service</a> & <a href="" style="color: #011936;">Privacy Policy</a>.</p>
                       <!-- <p style="color: #888888; font-size:1.2rem">LOGIN</p> -->
-                      <div id="temp_auth" style="width: 100%;">
-                        <p style="color: #888888; font-size:1.2rem">LOGIN</p>
+                      <div id="temp_auth">
+                        <p style="color: #888888; font-size:1.2rem; text-align:center">LOGIN</p>
                         <style>
 #temp_auth .container {
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
 }
 
 #temp_auth a {
@@ -340,11 +347,17 @@
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
   border: 0;
   outline: 0;
-  padding: 22px 18px;
+  padding: 13px 13px;
+}
+
+@media(max-width:800px){
+  #temp_auth .form__field{
+    width:80vw;
+  }
 }
                         </style>
                         <div class="container">
-                            <div class="container__item">
+                            <div class="container__item" style="display:flex">
                                 <form class="form">
                                     <input type="email" class="form__field" placeholder="Your E-Mail Address" />
                                     <button type="button" class="btn btn--primary btn--inside uppercase" id="send_temp_auth">Send</button>
