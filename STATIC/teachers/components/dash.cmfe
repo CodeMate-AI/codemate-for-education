@@ -1,4 +1,7 @@
 <style>
+    #app{
+        padding:20px 20px;
+    }
     #header{
         height: 100px;
         width: 100%;
@@ -36,25 +39,25 @@
 }
 
     #assignments_stats{
-        height: 70px;
         width: 100%;
         display: flex;
-        justify-content: space-between;
+        row-gap:2vh;
+        justify-content: start;
+        column-gap:2vw;
+        flex-wrap:wrap;
     }
 
     #assignments_stats > div{
-        flex: 1;
+        width:350px;
         padding: 15px;
         padding-left: 30px;
         padding-right: 30px;
         border-radius: 10px;
-        height: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: rgb(238, 238, 238);
     } #assignments_stats > div:not(:last-child){
-        margin-right: 30px;
     }
 
     .stats__ .icon{
@@ -65,10 +68,31 @@
         font-size: 18px;
         color: rgb(119, 119, 119);
     }.stats__ .stats{
-        font-size: 40px;
+        font-size: 24px;
         font-weight: bold;
         color: rgb(36, 36, 36);
         background: transparent;
+    }
+
+    @media(max-width:450px){
+        #assignments_stats > div{
+            padding-left:15px;
+            padding-right:15px;
+        }
+
+        .stats__ .icon{
+        height: 40px;
+        width: 40px;
+        }
+
+        .stats__ .title{
+        font-size: 14px;
+        }
+
+        .stats__ .stats{
+        font-size: 18px;
+        }
+
     }
 
     #container-inside {
@@ -81,13 +105,11 @@
         width: 100%;
         border: 2px solid #d1d1d1;
         padding: 20px;
-        padding-bottom: 2px;
         border-radius: 15px;
         box-sizing: border-box;
     }
 
     #container-inside  .content {
-        flex:2;
         display: flex;
         flex-direction: column;
         color:  #465362BF;
@@ -140,14 +162,12 @@
     }
 
      .title {
-        font-size: 1rem;
         font-weight: bold;
         color: #011936;
         margin:0
     }
 
     .description {
-        font-size: 0.9rem;
         overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3; /* Number of lines to show */
@@ -199,7 +219,9 @@
         <div id="presenter"></div>
     </div> -->
     <div id="submitted_assignments" style="padding-bottom:10px  ;">
-        <h2 style="font-size: 1.5rem; color: #011936;font-weight: 600;">Recently Created</h2>
+        <div class="text-2xl font-semibold">Assignment Submissions</div>
+        <h2 class="text-lg text-gray-400">Recently Created</h2>
     </div>
         {{data}}
+
 </div>

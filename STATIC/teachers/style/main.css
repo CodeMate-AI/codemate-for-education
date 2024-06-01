@@ -18,12 +18,12 @@ body{
     flex-direction: row;
 }
 
-#sidebar{
+#sidebar {
     height: 100%;
     width: 300px;
     border-right: 1px solid #d1d1d1;
-    display: flex;
     flex-direction: column;
+    transition: transform 0.3s ease-in-out;
 }
 
 #app_header{
@@ -87,4 +87,15 @@ body{
 
 .tooltip:before {
     z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        position: absolute;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    #sidebar.show {
+        transform: translateX(0);
+    }
 }
