@@ -9,6 +9,32 @@
         box-sizing: border-box;
     }
 
+    @media(max-width:1300px){
+        #main{
+            flex-direction:column;
+            width:100%;
+        }
+        .ia{
+            width:100% !important;
+            margin-left:0 !important;
+        }
+
+        .submit_button{
+            text-align:center;
+            margin:20px;
+        }
+    }
+
+    @media(max-width:400px){
+        #app{
+            padding:10px;
+        }
+        
+        #main{
+            padding:0;
+        }
+    }
+
     #header{
         height: 100px;
         width: 100%;
@@ -44,7 +70,6 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        overflow: hidden;
     }
 
     #input_box{
@@ -160,7 +185,10 @@
         border-radius: 5px;
         color: white;
         padding: 10px;
+        padding-left:20px;
+        padding-right:20px;
     }
+
 </style>
 <div id="header">
     <span>Student Portal</span>
