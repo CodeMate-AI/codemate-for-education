@@ -214,4 +214,14 @@ document.querySelector(".submit_button button").addEventListener("click", async 
     }
 });
 
+
+document.querySelector('.chat-popup').addEventListener('click', function () {
+    console.log("clikce")
+    const container = document.getElementById('container');
+    if (container.classList.contains('chat-fullscreen')) {
+        container.classList.remove('chat-fullscreen');
+    } else {
+        container.classList.add('chat-fullscreen');
+    }
+});
   
