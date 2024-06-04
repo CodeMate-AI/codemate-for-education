@@ -7,7 +7,7 @@
     <div class="assignment__ bg-[#f7f7f7]  text-base flex text-black py-2.5 px-4 sm:px-12 rounded-xl border-[#dddddd] border justify-center cursor-pointer rounded-b-none">Completed</div>
 </div>
 <div id="main" class="relative h-full w-full flex flex-1 justify-between box-border">
-    <div id="container" class="border-2 border-gray-300 p-5 box-border flex flex-col items-center gap-2.5 overflow-auto">
+    <div id="container" class="border-2 w-full border-gray-300 p-5 box-border flex flex-col items-center gap-2.5 overflow-auto">
         {{assignments.pending}}
     </div>
 </div>
