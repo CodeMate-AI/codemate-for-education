@@ -1,136 +1,82 @@
-<style>
-     #main {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    flex: 1;
-    display: flex;
-    padding-bottom: 20px;
-    justify-content: space-between;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Profile</title>
+</head>
+<body>
+    <div id="header" class="h-24 w-full rounded-2xl flex flex-col justify-center mb-2.5">
+        <h1 class="text-3xl font-bold m-0 text-[#011936]">Profile</h1>
+    </div>
+    <div id="main" class="relative w-full border-2 rounded-br-lg rounded-bl-lg border-[#d1d1d1] border-b-0 flex flex-col box-border">
+        <div id="container" class="flex-1 p-3 rounded-lg flex flex-col gap-2.5 overflow-auto mt-2.5">
+            <div class="main-container flex items-start p-5 relative">
+                <div class="img_info flex flex-col gap-y-4 mt-5 sm:mt-0 lg:gap-y-0 lg:flex-row items-center text-center lg:items-start justify-start gap-x-[2vw] flex-grow">
+                    <div class="image relative">
+                        <svg width="172" height="172" viewBox="0 0 172 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="86" cy="86" r="86" fill="#EAEAEA"/>
+                        </svg>
+                        <img class="absolute" style="top: calc((100% - 40px) / 2); left:calc((100% - 40px)/2)" width="40" height="40" src="https://img.icons8.com/ios-glyphs/30/camera--v1.png" alt="camera--v1"/>
+                    </div>
+                    <div class="text-info flex flex-col gap-y-1">
+                        <h2 class="text-[#011936] text-2xl font-bold">Archana Sharma</h2>
+                        <p class="text-[#465362] text-[0.9rem]">Indian Institute Technology, Bombay</p>
+                        <p class="text-[#465362] text-[0.9rem] mb-8">Teacher ID: <span class="text-[#011936] font-semibold">001</span></p>
+                        <p class="text-[#465362] text-[0.9rem]">Email: <span class="text-[#011936] font-semibold">archana@gmail.com</span></p>
+                        <p class="text-[#465362] text-[0.9rem]">Phone: <span class="text-[#011936] font-semibold">+91 9999999999</span></p>
+                    </div>
+                </div>
+                <div class="edit_button flex items-start justify-end absolute top-0 right-0">
+                    <button class="bg-transparent rounded-lg p-2 cursor-pointer flex border-[#48aef3] border text-[#48aef3]">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 22H3C2.59 22 2.25 21.66 2.25 21.25C2.25 20.84 2.59 20.5 3 20.5H21C21.41 20.5 21.75 20.84 21.75 21.25C21.75 21.66 21.41 22 21 22Z" fill="#48AEF3"/>
+<path d="M19.0206 3.48162C17.0806 1.54162 15.1806 1.49162 13.1906 3.48162L11.9806 4.69162C11.8806 4.79162 11.8406 4.95162 11.8806 5.09162C12.6406 7.74162 14.7606 9.86162 17.4106 10.6216C17.4506 10.6316 17.4906 10.6416 17.5306 10.6416C17.6406 10.6416 17.7406 10.6016 17.8206 10.5216L19.0206 9.31162C20.0106 8.33162 20.4906 7.38162 20.4906 6.42162C20.5006 5.43162 20.0206 4.47162 19.0206 3.48162Z" fill="#48AEF3"/>
+<path d="M15.6103 11.5309C15.3203 11.3909 15.0403 11.2509 14.7703 11.0909C14.5503 10.9609 14.3403 10.8209 14.1303 10.6709C13.9603 10.5609 13.7603 10.4009 13.5703 10.2409C13.5503 10.2309 13.4803 10.1709 13.4003 10.0909C13.0703 9.81086 12.7003 9.45086 12.3703 9.05086C12.3403 9.03086 12.2903 8.96086 12.2203 8.87086C12.1203 8.75086 11.9503 8.55086 11.8003 8.32086C11.6803 8.17086 11.5403 7.95086 11.4103 7.73086C11.2503 7.46086 11.1103 7.19086 10.9703 6.91086C10.9491 6.86547 10.9286 6.8203 10.9088 6.7754C10.7612 6.44208 10.3265 6.34463 10.0688 6.60239L4.34032 12.3309C4.21032 12.4609 4.09032 12.7109 4.06032 12.8809L3.52032 16.7109C3.42032 17.3909 3.61032 18.0309 4.03032 18.4609C4.39032 18.8109 4.89032 19.0009 5.43032 19.0009C5.55032 19.0009 5.67032 18.9909 5.79032 18.9709L9.63032 18.4309C9.81032 18.4009 10.0603 18.2809 10.1803 18.1509L15.9016 12.4296C16.1612 12.17 16.0633 11.7246 15.7257 11.5805C15.6877 11.5643 15.6492 11.5477 15.6103 11.5309Z" fill="#48AEF3"/>
 
-
-    #header {
-        height: 100px;
-        width: 100%;
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-bottom: 10px;
-    }
-
-    #header>h1 {
-        font-size: 36px;
-        font-weight: bold !important;
-        margin: 0;
-        color: #011936;
-    }
-
-    #header>span {
-        color: rgb(88, 88, 88);
-        font-size: 17px;
-    }
-
-    #container {
-        flex: 1;
-        /* width: 100%; */
-        border: 2px solid #d1d1d1;
-        padding-top: 20px;
-        padding-right: 25px;
-        padding-bottom: 20px;
-        padding-left: 15px;
-        border-radius: 15px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        /* align-items: center;
-        justify-items: center; */
-        gap: 10px;
-        overflow: auto;
-        margin-top: 10px;
-    }
-
-   
-.main-container {
-  display: flex; /* Flexbox layout for horizontal alignment */
-  justify-content: space-between; /* Pushes items to the edges */
-  align-items: flex-start; /* Aligns items to the top */
-  padding: 20px; /* Optional padding for better spacing */
-}
-
-.img_info {
-  display: flex; /* Use flexbox for inner alignment */
-  flex-direction: row; /* Aligns inner elements in a row */
-  align-items: flex-start;
-  justify-items: center; /* Aligns inner content to the top */
-  flex-grow: 1; /* Allows flexibility in case of additional elements */
-}
-
-.text-info {
-  margin-left: 20px; /* Adds space between the SVG and text content */
-}
-
-.edit_button {
-  display: flex; /* Flexbox for vertical alignment */
-  align-items: flex-start; /* Aligns to the top */
-  justify-content: flex-end !important; /* Aligns button to the extreme right */
-}
-
-button {
-  background-color: transparent; /* Optional styles for button */
-  border: none;
-  padding: 10px;
-  cursor: pointer; /* Changes cursor on hover */
-}
-
-button svg {
-  fill: #48AEF3; /* Optional SVG styling */
-}
-</style>
-
-<div id="header">
-    <!-- <span>User/Assignments</span> -->
-    <h1>Profile</h1>
+                        </svg>
+                        Edit Profile
+                    </button>
+                </div>
+            </div>
+            <div class="other_profiles  sm:ml-10 flex flex-col gap-y-4">
+                <h2 class="text-[#011936] text-2xl font-bold">Other Profiles</h2>
+                <div class="main-container gap-2 flex flex-col lg:flex-row">
+                    <div class="github border border-gray-300 rounded-lg flex flex-row items-center pt-2 sm:py-2 px-4 justify-start sm:justify-center">
+                        <div class="flex w-fit overflow-x-auto items-center pb-2 sm:pb-0">
+                            <div class="w-[42px] h-[42px]">
+                            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 38.5C30.665 38.5 38.5 30.665 38.5 21C38.5 11.335 30.665 3.5 21 3.5C11.335 3.5 3.5 11.335 3.5 21C3.5 30.665 11.335 38.5 21 38.5Z" fill="#181717"/>
+                                <path d="M5.96191 29.9557C8.09222 33.5246 11.4573 36.2711 15.4677 37.6061C16.3433 37.7663 16.6623 37.2259 16.6623 36.7618C16.6623 36.5696 16.6591 36.2301 16.6548 35.7758C16.6498 35.2496 16.6433 34.5695 16.6387 33.7859C11.771 34.8431 10.744 31.4397 10.744 31.4397C9.94791 29.4189 8.80052 28.8806 8.80052 28.8806C7.21161 27.7945 8.92083 27.816 8.92083 27.816C10.6773 27.9406 11.6012 29.6198 11.6012 29.6198C13.1622 32.2938 15.6976 31.5213 16.6946 31.0744C16.8536 29.9432 17.3047 29.1718 17.8054 28.7345C13.9196 28.293 9.83398 26.7911 9.83398 20.0852C9.83398 18.1751 10.5162 16.6131 11.6356 15.3895C11.4551 14.9468 10.8546 13.1677 11.8064 10.7581C11.8064 10.7581 13.2761 10.2875 16.6193 12.5522C18.0149 12.1644 19.5124 11.9699 21.0004 11.9635C22.4861 11.9699 23.9838 12.1644 25.3814 12.5522C28.7225 10.2875 30.189 10.7581 30.189 10.7581C31.1441 13.1677 30.5435 14.9468 30.3631 15.3895C31.4846 16.6131 32.1625 18.1751 32.1625 20.0852C32.1625 26.8083 28.0705 28.2876 24.1717 28.7205C24.8002 29.2609 25.36 30.3288 25.36 31.9618C25.36 33.5258 25.3504 34.8882 25.344 35.7906C25.3408 36.2376 25.3385 36.5717 25.3385 36.7618C25.3385 37.2302 25.6532 37.7749 26.5417 37.6041C29.7365 36.5376 32.5213 34.576 34.5979 32.0166C31.3893 35.972 26.4899 38.5 20.9999 38.5C14.6076 38.5 9.01594 35.0728 5.96191 29.9557Z" fill="white"/>
+                            </svg>
 </div>
-<div id="main">
-    <div id="container">
-        <div class="main-container">
-           <div class="img_info ">
-            <div class="image"><svg width="172" height="172" viewBox="0 0 172 172" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="86" cy="86" r="86" fill="#EAEAEA"/>
-                </svg></div> 
-                    <div class="text-info">
-                    <h2 style="color: #011936;">Archana Sharma</h2>
-                    <p style="color: #465362; font-size: 0.9rem; font-weight: 500;">Indian Institute Technology, Bombay</p>
-                    <p style="color: #465362; font-size: 0.9rem;">Teacher ID: <span style="color: #011936;font-weight: 500;">001</span></p>
-                    <p style="color: #465362; font-size: 0.9rem;">Email: <span style="color: #011936;font-weight: 500;">archana@gmail.com</span></p>
-                    <p style="color: #465362; font-size: 0.9rem;">Phone: <span style="color: #011936;font-weight: 500;">+91 9999999999</span></p> 
-                    </div> 
-           </div>
-                <div class="edit_button">
-                <button><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 22H3C2.59 22 2.25 21.66 2.25 21.25C2.25 20.84 2.59 20.5 3 20.5H21C21.41 20.5 21.75 20.84 21.75 21.25C21.75 21.66 21.41 22 21 22Z" fill="#48AEF3"/>
-                    <path d="M19.0206 3.48162C17.0806 1.54162 15.1806 1.49162 13.1906 3.48162L11.9806 4.69162C11.8806 4.79162 11.8406 4.95162 11.8806 5.09162C12.6406 7.74162 14.7606 9.86162 17.4106 10.6216C17.4506 10.6316 17.4906 10.6416 17.5306 10.6416C17.6406 10.6416 17.7406 10.6016 17.8206 10.5216L19.0206 9.31162C20.0106 8.33162 20.4906 7.38162 20.4906 6.42162C20.5006 5.43162 20.0206 4.47162 19.0206 3.48162Z" fill="#48AEF3"/>
-                    <path d="M15.6103 11.5309C15.3203 11.3909 15.0403 11.2509 14.7703 11.0909C14.5503 10.9609 14.3403 10.8209 14.1303 10.6709C13.9603 10.5609 13.7603 10.4009 13.5703 10.2409C13.5503 10.2309 13.4803 10.1709 13.4003 10.0909C13.0703 9.81086 12.7003 9.45086 12.3703 9.05086C12.3403 9.03086 12.2903 8.96086 12.2203 8.87086C12.1203 8.75086 11.9503 8.55086 11.8003 8.32086C11.6803 8.17086 11.5403 7.95086 11.4103 7.73086C11.2503 7.46086 11.1103 7.19086 10.9703 6.91086C10.9491 6.86547 10.9286 6.8203 10.9088 6.7754C10.7612 6.44208 10.3265 6.34463 10.0688 6.60239L4.34032 12.3309C4.21032 12.4609 4.09032 12.7109 4.06032 12.8809L3.52032 16.7109C3.42032 17.3909 3.61032 18.0309 4.03032 18.4609C4.39032 18.8109 4.89032 19.0009 5.43032 19.0009C5.55032 19.0009 5.67032 18.9909 5.79032 18.9709L9.63032 18.4309C9.81032 18.4009 10.0603 18.2809 10.1803 18.1509L15.9016 12.4296C16.1612 12.17 16.0633 11.7246 15.7257 11.5805C15.6877 11.5643 15.6492 11.5477 15.6103 11.5309Z" fill="#48AEF3"/>
-                    </svg>
-                    Edit Profile</button>
-                </div>                          
-        </div>
-        <div class="other_profiles">
-            <h2 style="color: #011936; text-align: center;">Other Profiles</h2>
-            <div class="main-container" style="gap: 10px;">
-                <div id="container" style="display: flex;flex-direction: row; align-items: center; padding: 2px; justify-content: center;"><svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 38.5C30.665 38.5 38.5 30.665 38.5 21C38.5 11.335 30.665 3.5 21 3.5C11.335 3.5 3.5 11.335 3.5 21C3.5 30.665 11.335 38.5 21 38.5Z" fill="#181717"/>
-                    <path d="M5.96191 29.9557C8.09222 33.5246 11.4573 36.2711 15.4677 37.6061C16.3433 37.7663 16.6623 37.2259 16.6623 36.7618C16.6623 36.5696 16.6591 36.2301 16.6548 35.7758C16.6498 35.2496 16.6433 34.5695 16.6387 33.7859C11.771 34.8431 10.744 31.4397 10.744 31.4397C9.94791 29.4189 8.80052 28.8806 8.80052 28.8806C7.21161 27.7945 8.92083 27.816 8.92083 27.816C10.6773 27.9406 11.6012 29.6198 11.6012 29.6198C13.1622 32.2938 15.6976 31.5213 16.6946 31.0744C16.8536 29.9432 17.3047 29.1718 17.8054 28.7345C13.9196 28.293 9.83398 26.7911 9.83398 20.0852C9.83398 18.1751 10.5162 16.6131 11.6356 15.3895C11.4551 14.9468 10.8546 13.1677 11.8064 10.7581C11.8064 10.7581 13.2761 10.2875 16.6193 12.5522C18.0149 12.1644 19.5124 11.9699 21.0004 11.9635C22.4861 11.9699 23.9838 12.1644 25.3814 12.5522C28.7225 10.2875 30.189 10.7581 30.189 10.7581C31.1441 13.1677 30.5435 14.9468 30.3631 15.3895C31.4846 16.6131 32.1625 18.1751 32.1625 20.0852C32.1625 26.8083 28.0705 28.2876 24.1717 28.7205C24.8002 29.2609 25.36 30.3288 25.36 31.9618C25.36 33.5258 25.3504 34.8882 25.344 35.7906C25.3408 36.2376 25.3385 36.5717 25.3385 36.7618C25.3385 37.2302 25.6532 37.7749 26.5417 37.6041C29.7365 36.5376 32.5213 34.576 34.5979 32.0166C31.3893 35.972 26.4899 38.5 20.9999 38.5C14.6076 38.5 9.01594 35.0728 5.96191 29.9557Z" fill="white"/>
-                    </svg>
-                    https://github.com/archanas5526</div>
-            <div id="container" style="display: flex;flex-direction: row; align-items: center; padding: 2px;  justify-content: center;"><svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M32.0906 32.0907H27.4234V24.78C27.4234 23.037 27.3919 20.7927 24.9953 20.7927C22.5645 20.7927 22.1918 22.6932 22.1918 24.6514V32.0907H17.5245V17.0573H22.0054V19.1127H22.0684C22.9819 17.5534 24.6829 16.6189 26.4889 16.6845C31.2191 16.6845 32.0933 19.7952 32.0933 23.8455L32.0906 32.088V32.0907ZM12.2587 15.0019C11.5418 14.9985 10.8551 14.7123 10.3479 14.2056C9.84071 13.6989 9.55389 13.0125 9.54975 12.2955C9.54975 10.8098 10.773 9.58654 12.2587 9.58654C13.7445 9.58654 14.9651 10.8098 14.9678 12.2955C14.9678 13.7813 13.7445 15.0019 12.2587 15.0019ZM14.5924 32.0907H9.91988V17.0573H14.5924V32.0907ZM34.4137 5.25004H7.57312C6.96452 5.2465 6.37911 5.4833 5.94411 5.90896C5.50911 6.33462 5.25967 6.91475 5.25 7.52329V34.4768C5.25967 35.0853 5.50911 35.6655 5.94411 36.0911C6.37911 36.5168 6.96452 36.7536 7.57312 36.75H34.4164C35.0264 36.755 35.6137 36.519 36.0507 36.0933C36.4876 35.6676 36.739 35.0867 36.75 34.4768V7.52066C36.739 6.91121 36.4875 6.33083 36.0503 5.906C35.6132 5.48117 35.0259 5.24633 34.4164 5.25266L34.4137 5.25004Z" fill="#0A66C2"/>
-                </svg>
-                https://www.linkedin.com/in/archanas12345/</div>
+                            <a href="https://github.com/archanas5526" class="text-[#011936] ml-2 text-sm sm:text-lg">https://github.com/archanas5526</a>
+                        </div>
+                        
+                    </div>
+                    <div class="linkedin border border-gray-300 rounded-lg flex flex-row items-center pt-2 sm:py-2 px-4 justify-start sm:justify-center">
+                      <div class="w-fit flex items-center  overflow-x-auto pb-2 sm:pb-0">
+                        <div class="w-[42px] h-[42px]">
+                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M32.0906 32.0907H27.4234V24.78C27.4234 23.037 27.3919 20.7927 24.9953 20.7927C22.5645 20.7927 22.1918 22.6932 22.1918 24.6514V32.0907H17.5245V17.0573H22.0054V19.1127H22.0684C22.9819 17.5534 24.6829 16.6189 26.4889 16.6845C31.2191 16.6845 32.0933 19.7952 32.0933 23.8455L32.0906 32.088V32.0907ZM12.2587 15.0019C11.5418 14.9985 10.8551 14.7123 10.3479 14.2056C9.84071 13.6989 9.55389 13.0125 9.54975 12.2955C9.54975 10.8098 10.773 9.58654 12.2587 9.58654C13.7445 9.58654 14.9651 10.8098 14.9678 12.2955C14.9678 13.7813 13.7445 15.0019 12.2587 15.0019ZM14.5924 32.0907H9.91988V17.0573H14.5924V32.0907ZM34.4137 5.25004H7.57312C6.96452 5.2465 6.37911 5.4833 5.94411 5.90896C5.50911 6.33462 5.25967 6.91475 5.25 7.52329V34.4768C5.25967 35.0853 5.50911 35.6655 5.94411 36.0911C6.37911 36.5168 6.96452 36.7536 7.57312 36.75H34.4164C35.0264 36.755 35.6137 36.519 36.0507 36.0933C36.4876 35.6676 36.739 35.0867 36.75 34.4768V7.52066C36.739 6.91121 36.4875 6.33083 36.0503 5.906C35.6132 5.48117 35.0259 5.24633 34.4164 5.25266L34.4137 5.25004Z" fill="#0A66C2"/>
+                        </svg>
+                       </div>
+                        <a href="https://www.linkedin.com/in/archanas12345" class="text-[#011936] ml-2 text-sm sm:text-lg">https://www.linkedin.com/in/archanas12345</a>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
+        <div class="bottom-tag flex justify-between py-2 px-4 rounded-br-lg rounded-bl-lg bg-[#35a6f2] text-white">
+            <span>Teacher Account</span>
+            <span><i> Active since 2024</i></span>
+        </div>
     </div>
-</div>
+</body>
+</html>
+
+
+
+
+                   
