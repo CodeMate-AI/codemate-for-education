@@ -280,8 +280,8 @@
       {
         "id": "ea1fc7f1-6482-4c4e-9f63-a8df3fd00a40",
         "teacher_id": "001",
-        "title": "Os in Python",
-        "description": "Os in Python",
+        "title": "Traverse a graph using Python",
+        "description": "You are given teh adjacency list of various nodes. Using python, traverse the graph using any traversal technique.",
         "problem_statement": "Os in Python",
         "due_date": 1714472340,
         "difficulty": "Medium",
