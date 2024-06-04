@@ -1,88 +1,21 @@
-<style>
-    /* Modal styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Options styles */
-.options {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-.option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-}
-
-.icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80px;
-    height: 80px;
-    background-color: #e0e0e0;
-    border-radius: 50%;
-    font-size: 24px;
-}
-
-.option p {
-    margin-top: 10px;
-    font-weight: bold;
-}
-</style>
-
-<button id="openModal">Create Assignment</button>
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Create Assignment</h2>
-        <div class="options">
-            <div class="option">
-                <div class="icon">
+<button id="openModal" class="px-4 py-2 bg-blue-500 text-white rounded">Create Assignment</button>
+<div id="modal" class="modal fixed inset-0 z-50 hidden justify-center items-center overflow-auto bg-black bg-opacity-40 w-screen h-screen">
+    <div class="modal-content bg-white p-5 border border-gray-300 w-1/3 bg-black">
+        <span class="close text-gray-500 float-right text-2xl font-bold cursor-pointer">&times;</span>
+        <h2 class="text-2xl mb-4">Create Assignment</h2>
+        <div class="options flex justify-around mt-5">
+            <div class="option flex flex-col items-center cursor-pointer">
+                <div class="icon flex justify-center items-center w-20 h-20 bg-gray-300 rounded-full text-2xl">
                     <i class="fas fa-arrow-up"></i>
                 </div>
-                <p>Self Generated</p>
+                <p class="mt-2 font-bold">Self Generated</p>
             </div>
-            <div class="option">
-                <div class="icon">
+            <div class="option flex flex-col items-center cursor-pointer">
+                <div class="icon flex justify-center items-center w-20 h-20 bg-gray-300 rounded-full text-2xl">
                     <i class="fas fa-plus"></i>
                     <i class="fas fa-wand-magic"></i>
                 </div>
-                <p>AI Generated</p>
+                <p class="mt-2 font-bold">AI Generated</p>
             </div>
         </div>
     </div>
@@ -90,28 +23,31 @@
 <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
 <script>
     // Get the modal
-const modal = document.getElementById("modal");
+    const modal = document.getElementById("modal");
 
-// Get the button that opens the modal
-const btn = document.getElementById("openModal");
+    // Get the button that opens the modal
+    const btn = document.getElementById("openModal");
 
-// Get the <span> element that closes the modal
-const span = document.getElementsByClassName("close")[0];
+    // Get the <span> element that closes the modal
+    const span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal
-btn.onclick = function () {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
     }
-}
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
 </script>

@@ -19,93 +19,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <style>
-        /* Modal styles */
-        .modal {
-          display: none;
-          position: fixed;
-          z-index: 1;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          overflow: auto;
-          background-color: rgba(0,0,0,0.4);
-        }
-    
-        .modal-content {
-          background-color: #fefefe;
-          margin: 15% auto;
-          padding: 20px;
-          width: 40%;
-          border-radius: 20px;
-          position: relative;
-        }
-    
-        .modal-header {
-          padding: 10px;
-        }
-    
-        .modal-header h2 {
-          margin: 0;
-          font-size: 1.5rem;
-        }
-
-        .close {
-           color: black;
-           font-size: 20px;
-           font-weight: bold;
-           cursor: pointer;
-           position: absolute;
-           top: 10px;
-           right: 10px;
-           color: white;
-           background-color: #465362;
-           border-radius: 50%; /* Add border-radius to make it rounded */
-           width: 30px; /* Set width and height for the close button */
-           height: 30px;
-           display: flex;
-           justify-content: center;
-           align-items: center;
-       }
-
-    
-        .modal-body {
-            margin-top: 10px;
-          padding: 0;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-around;
-          justify-items: center;
-          align-items: center;
-        }
-    
-        /* Button styles */
-        button#manual-btn, button#ai-generated-btn {
-            background-color: #E4F4FF !important;
-          padding: 10px 20px !important;
-          margin: 5px;
-          cursor: pointer;
-          border: none;
-          outline: none;
-          border-radius: 10px;
-          color: #2CA3F2 !important;
-          font-weight: bold;
-          font-size: 1.3rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-around;
-          align-items: center;
-          padding-top: 20px;
-          padding-bottom: 10px;
-          padding-left: 30px ;
-          padding-right: 30px ;
-        }
-
-        button#manual-btn > p:hover,button#ai-generated-btn > p:hover  {
-            text-decoration: underline;
-        }
-</style>
 </head>
 <body>
     <div id="root">
@@ -155,35 +68,18 @@
                 </div>
             </div>
         </div>
-        <div class="modal" id="assignments-modal">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h2 style="text-align: center;">Create Assignment</h2>
-                <span class="close">&times;</span>
+        <div class="modal hidden fixed z-[1] left-0 top-0 w-full h-full overflow-auto bg-white justify-center items-center" style="background-color: rgba(0,0,0,0.4);" id="assignments-modal">
+            <div class="modal-content bg-[#fefefe] mx-auto w-fit rounded-lg relative  px-2 py-4">
+              <div class="modal-header p-[10px]">
+                <h2 class="m-0  text-xl sm:text-2xl text-center" style="text-align: center;">Create Assignment</h2>
+                <span class="close text-xl font-bold cursor-pointer absolute top-2 right-2 text-white bg-[#465362] rounded-lg w-8 h-8 flex justify-center items-center">&times;</span>
               </div>
-              <div class="modal-body">
-                <button  id="manual-btn"><svg width="42" height="42" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div class="modal-body mt-[10px] flex justify-center items-center">
+                <button  id="manual-btn" class="bg-[#E4F4FF] px-3 sm:px-5 py-2 sm:py-[10px] m-[5px] cursor-pointer border-none outline-none rounded-lg text-[#2CA3F2] font-bold text-lg sm:text-xl flex flex-col justify-around items-center"><svg width="42" height="42" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 18C0.5 9.75041 0.5 5.62563 3.06282 3.06282C5.62563 0.5 9.75041 0.5 18 0.5C26.2495 0.5 30.3744 0.5 32.9371 3.06282C35.5 5.62563 35.5 9.75041 35.5 18C35.5 26.2495 35.5 30.3744 32.9371 32.9371C30.3744 35.5 26.2495 35.5 18 35.5C9.75041 35.5 5.62563 35.5 3.06282 32.9371C0.5 30.3744 0.5 26.2495 0.5 18ZM18 28.0625C18.7248 28.0625 19.3125 27.4748 19.3125 26.75V17.6687L22.322 20.678C22.8345 21.1906 23.6654 21.1906 24.178 20.678C24.6906 20.1654 24.6906 19.3345 24.178 18.822L18.928 13.5719C18.682 13.3258 18.3481 13.1875 18 13.1875C17.6519 13.1875 17.318 13.3258 17.072 13.5719L11.8219 18.822C11.3094 19.3345 11.3094 20.1654 11.8219 20.678C12.3345 21.1906 13.1655 21.1906 13.6781 20.678L16.6875 17.6687V26.75C16.6875 27.4748 17.2751 28.0625 18 28.0625ZM11 10.5625C10.2751 10.5625 9.6875 9.97487 9.6875 9.25C9.6875 8.52513 10.2751 7.9375 11 7.9375H25C25.7248 7.9375 26.3125 8.52513 26.3125 9.25C26.3125 9.97487 25.7248 10.5625 25 10.5625H11Z" fill="#2CA3F2"/>
                     </svg>
-                    <p>Self Generated</p></button>
-                <button id="ai-generated-btn" style=" background-color: #E4F4FF !important;
-                padding: 10px 20px !important;
-                margin: 5px;
-                cursor: pointer;
-                border: none;
-                outline: none;
-                border-radius: 10px;
-                color: #2CA3F2 !important;
-                font-weight: bold;
-                font-size: 1.3rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                align-items: center;
-                padding-top: 20px;
-                padding-bottom: 10px;
-                padding-left: 30px ;
-                padding-right: 30px ;" 
+                    <p class="hover:underline">Self Generated</p></button>
+                <button id="ai-generated-btn" class="bg-[#E4F4FF] px-3 sm:px-5 py-2 sm:py-[10px] m-[5px] cursor-pointer border-none outline-none rounded-lg text-[#2CA3F2] font-bold text-lg sm:text-xl flex flex-col justify-around items-center" 
                  >
                     <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.72793 6.72793C4.75736 8.69848 4.75736 11.8934 6.72793 13.864L9.50647 16.6425C9.52733 16.6184 9.54921 16.5948 9.57211 16.5719L16.5721 9.57192C16.595 9.54908 16.6184 9.52726 16.6425 9.50645L13.864 6.72793C11.8934 4.75736 8.69848 4.75736 6.72793 6.72793Z" fill="#2CA3F2"/>
@@ -192,7 +88,7 @@
                         <path d="M34.9426 15.9765C35.2241 15.2598 36.2349 15.2598 36.5165 15.9765L36.7911 16.6754C36.8772 16.8942 37.0497 17.0675 37.2678 17.1538L37.964 17.4294C38.6781 17.7121 38.6781 18.7266 37.964 19.0092L37.2678 19.2848C37.0497 19.3711 36.8772 19.5443 36.7911 19.7631L36.5165 20.4621C36.2349 21.1789 35.2241 21.1789 34.9426 20.4621L34.668 19.7631C34.5819 19.5443 34.4094 19.3711 34.1913 19.2848L33.495 19.0092C32.781 18.7266 32.781 17.7121 33.495 17.4294L34.1913 17.1538C34.4094 17.0675 34.5819 16.8942 34.668 16.6754L34.9426 15.9765Z" fill="#2CA3F2"/>
                         <path d="M8.9831 26.7876C9.26475 26.0708 10.2754 26.0708 10.5571 26.7876L10.8317 27.4864C10.9177 27.7053 11.0903 27.8785 11.3083 27.9648L12.0046 28.2404C12.7187 28.5231 12.7187 29.5375 12.0046 29.8202L11.3083 30.0958C11.0903 30.1821 10.9177 30.3553 10.8317 30.5743L10.5571 31.273C10.2754 31.9898 9.26475 31.9898 8.9831 31.273L8.70849 30.5743C8.6225 30.3553 8.44991 30.1821 8.23188 30.0958L7.53561 29.8202C6.82147 29.5375 6.82147 28.5231 7.53561 28.2404L8.23188 27.9648C8.44991 27.8785 8.6225 27.7053 8.70849 27.4864L8.9831 26.7876Z" fill="#2CA3F2"/>
                         </svg>
-                       <p> AI Generated</p></button>
+                       <p class="hover:underline"> AI Generated</p></button>
               </div>
             </div>
           </div>
@@ -218,7 +114,7 @@
     <script>
         // Open the modal when the assignments button is clicked
         document.getElementById("assignments-btn").addEventListener("click", function() {
-          document.getElementById("assignments-modal").style.display = "block";
+          document.getElementById("assignments-modal").style.display = "flex";
         });
       
         // Close the modal when the close button or outside the modal is clicked
