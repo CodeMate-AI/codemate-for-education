@@ -75,8 +75,6 @@ body{
     display: flex;
     flex-direction: column;
     padding: 20px;
-    padding-left: 40px;
-    padding-right: 40px;
     overflow: scroll;
 }
 
