@@ -122,6 +122,13 @@ body{
     box-sizing: border-box;
 }
 
+@media(max-width:395px)
+{
+    #chat_in{
+    font-size:14px;
+    }
+}
+
 .ec-active{
     color: rgb(127, 172, 255) !important;
 }
