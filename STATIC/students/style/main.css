@@ -3,7 +3,7 @@
 }
 
 html,
-body{
+body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -11,14 +11,14 @@ body{
     overflow: hidden;
 }
 
-#root{
+#root {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: row;
 }
 
-#sidebar{
+#sidebar {
     height: 100%;
     width: 300px;
     border-right: 1px solid #d1d1d1;
@@ -26,11 +26,7 @@ body{
     transition: transform 0.3s ease-in-out;
 }
 
-#sidebar.show {
-    transform: translateX(0);
-}
-
-#app_header{
+#app_header {
     height: 70px;
     width: 100%;
     display: flex;
@@ -39,13 +35,16 @@ body{
     border-bottom: 1px solid #d1d1d1;
 }
 
-#nav{
+#nav {
     width: 100%;
     flex: 1;
 }
 
-.nav_elm *{color: #465362;}
-.nav_elm{
+.nav_elm * {
+    color: #465362;
+}
+
+.nav_elm {
     cursor: pointer;
     height: 65px;
     width: 100%;
@@ -55,23 +54,30 @@ body{
     padding-right: 40px;
     box-sizing: border-box;
     align-items: center;
-}.nav_elm_active{
-    /* color: #48AEF3 !important; */
-    background: #48AEF31A;
-}.nav_elm_active *{
-    color: #2fabfd !important;
-}.nav_elm:hover{
-    background: #1e446e1a;
-}
-.nav_elm i{
-    font-size: 30px;
-    margin-right: 20px;
-}.nav_elm p{
-    font-size: 19px;
-    /* font-weight: bold; */
 }
 
-#app{
+.nav_elm_active {
+    background: #48AEF31A;
+}
+
+.nav_elm_active * {
+    color: #2fabfd !important;
+}
+
+.nav_elm:hover {
+    background: #1e446e1a;
+}
+
+.nav_elm i {
+    font-size: 30px;
+    margin-right: 20px;
+}
+
+.nav_elm p {
+    font-size: 19px;
+}
+
+#app {
     height: 100%;
     width: 100%;
     display: flex;
@@ -84,4 +90,15 @@ body{
 
 .tooltip:before {
     z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        position: absolute;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    #sidebar.show {
+        transform: translateX(0);
+    }
 }

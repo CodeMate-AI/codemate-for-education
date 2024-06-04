@@ -80,11 +80,14 @@
             const sidebar = document.getElementById('sidebar');
             if (sidebar.classList.contains('hidden')) {
                 sidebar.classList.remove('hidden');
-                sidebar.classList.add('flex');
-                sidebar.style.position = 'absolute';
+                setTimeout(() => {
+                    sidebar.classList.add('show');
+                }, 10); // Adding a small delay
             } else {
-                sidebar.classList.add('hidden');
-                sidebar.classList.remove('flex');
+                sidebar.classList.remove('show');
+                setTimeout(() => {
+                    sidebar.classList.add('hidden');
+                }, 300); // Delay to match the CSS transition duration
             }
         });
     </script>

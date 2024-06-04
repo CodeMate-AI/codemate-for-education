@@ -62,6 +62,27 @@
         background: transparent;
     }
 
+    @media(max-width:450px){
+        #assignments_stats > div{
+            padding-left:15px;
+            padding-right:15px;
+        }
+
+        .stats__ .icon{
+        height: 40px;
+        width: 40px;
+        }
+
+        .stats__ .title{
+        font-size: 14px;
+        }
+
+        .stats__ .stats{
+        font-size: 18px;
+        }
+
+    }
+
 
     #strks_mgr{
     height: auto;
