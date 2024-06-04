@@ -54,37 +54,38 @@ window.addEventListener("popstate", () => {
 
 pa_elm = {
 "pending": `     
-          <div id="container-inside">
-          <div class="content">
-          <p class="title">{{assignments.pending.title}}</p>
-          <p class="description" id="description">{{assignments.pending.description}}</p>
-          <div class="date-diff">
-          <p class="date">Due Date : <span>{{assignments.pending.due_date}}</span></p>
-          <p class="difficulty">Difficulty : <span>{{assignments.pending.difficulty}}</span></p>
-          </div>
-          </div>
-          <div class="btn">
-          <div class="btn-inside">
-          <button assignment_id="{{assignments.pending.aid}}" class="task_elm" nav="task" id="start">START</button>
-          </div>
-          </div>
-          </div>
+<div id="container-inside" class="flex flex-col lg:flex-row gap-y-3 lg:gap-y-0 justify-between w-full items-center p-5 border-2 border-gray-300 rounded-lg">
+  <div class="content flex flex-col gap-y-3 text-[#465362BF]">
+    <p class="title text-xl font-bold text-[#011936]">{{assignments.pending.title}}</p>
+    <p class="description text-lg" id="description">{{assignments.pending.description}}</p>
+    <div class="date-diff flex flex-col sm:flex-row gap-5 text-base">
+      <p class="date">Due Date : <span class="text-[#2593b3]">{{assignments.pending.due_date}}</span></p>
+      <p class="difficulty">Difficulty : <span class="text-[#2593b3]">{{assignments.pending.difficulty}}</span></p>
+    </div>
+  </div>
+  <div class="btn flex">
+    <div class="btn-inside">
+      <button assignment_id="{{assignments.pending.aid}}" class="task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="start">START</button>
+    </div>
+  </div>
+</div>
+
 `,
 "completed": `     
-          <div id="container-inside">
-          <div class="content">
-          <p class="title">{{assignments.pending.title}}</p>
-          <p class="description" id="description">{{assignments.pending.description}}</p>
-          <div class="date-diff">
-          <p class="date">Submitted on : <span>{{assignments.pending.due_date}}</span></p>
-          </div>
-          </div>
-          <div class="btn">
-          <div class="btn-inside">
-          <button submission_id="{{assignments.pending.aid}}" assignment_id="{{assignments.completed.aid}}" class="task_elm" nav="task" id="view">View Submission</button>
-          </div>
-          </div>
-          </div>
+<div id="container-inside" class="flex flex-col lg:flex-row gap-y-3 lg:gap-y-0 justify-between w-full items-center p-5 border-2 border-gray-300 rounded-lg">
+<div class="content flex flex-col gap-y-3 text-[#465362BF]">
+  <p class="title text-xl font-bold text-[#011936]">{{assignments.completed.title}}</p>
+  <p class="description text-lg" id="description">{{assignments.completed.description}}</p>
+  <div class="date-diff flex flex-col sm:flex-row gap-5 text-base">
+    <p class="date">Submitted on : <span class="text-[#2593b3]">{{assignments.completed.due_date}}</span></p>
+  </div>
+</div>
+<div class="btn">
+  <div class="btn-inside">
+    <button submission_id="{{assignments.completed.aid}}" assignment_id="{{assignments.completed.aid}}" class="task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
+  </div>
+</div>
+</div>
 `
 };
 
