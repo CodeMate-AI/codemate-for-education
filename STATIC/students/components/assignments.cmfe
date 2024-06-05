@@ -2,12 +2,12 @@
     <span class="text-lg text-gray-600">User/Assignments</span>
     <h1 class="text-4xl font-bold text-[#011936] m-0">My Assignments</h1>
 </div>
-<div id="headings__" class=" relative flex gap-2.5 p-0 m-0 pl-0 pt-12 text-center">
-    <div class="assignment__ bg-[#010536] text-base flex text-white py-2.5 px-4 sm:px-12 rounded-xl border-none justify-center cursor-pointer rounded-b-none">Pending</div>
-    <div class="assignment__ bg-[#f7f7f7]  text-base flex text-black py-2.5 px-4 sm:px-12 rounded-xl border-[#dddddd] border justify-center cursor-pointer rounded-b-none">Completed</div>
+<div id="headings__" class=" relative flex flex-col sm:flex-row gap-2.5 p-0 m-0 pl-0 pt-12 text-center">
+    <div class="assignment__ bg-[#010536] text-base flex text-white py-2.5 px-4 sm:px-12 rounded-xl border-none justify-center cursor-pointer sm:rounded-b-none">Pending</div>
+    <div class="assignment__ bg-[#f7f7f7]  text-base flex text-black py-2.5 px-4 sm:px-12 rounded-xl border-[#dddddd] border justify-center cursor-pointer sm:rounded-b-none">Completed</div>
 </div>
-<div id="main" class="relative h-full w-full flex flex-1 justify-between box-border">
-    <div id="container" class="border-2 w-full border-gray-300 p-5 box-border flex flex-col items-center gap-2.5 overflow-auto">
+<div id="main" class="relative sm:h-full w-full flex flex-1 justify-between box-border">
+    <div id="container" class="sm:border-2 w-full border-gray-300 pt-5 sm:p-5 box-border flex flex-col items-center gap-2.5 sm:overflow-auto">
         {{assignments.pending}}
     </div>
 </div>

@@ -46,8 +46,14 @@ const env = {
         if (env.active_page === null || env.active_page === undefined ) {
             env.active_page = "dash";
         }
+
         if (document.querySelector(".nav_elm_active")) {
             document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");
+        }
+
+        if (env.active_page === "dash") {
+            const dashboardElement = document.getElementById('dashboard');
+            dashboardElement.classList.add("nav_elm_active");
         }
         // document.querySelector(`[nav="${env.active_page}"]`).classList.add("nav_elm_active");
         eval(`env.load.components.${env.active_page}()`);
@@ -55,6 +61,16 @@ const env = {
 
         document.querySelectorAll(".nav_elm").forEach((e) => {
             e.onclick = () => {
+                //close the sidebar
+                const sidebar = document.getElementById('sidebar');
+            if (!sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove('show');
+                setTimeout(() => {
+                    sidebar.classList.add('hidden');
+                }, 300); // Delay to match the CSS transition duration
+                }
+
+                
                 if (document.querySelector(".nav_elm_active")) {
                     document.querySelector(".nav_elm_active").classList.remove("nav_elm_active");
                 }

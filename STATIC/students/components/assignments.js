@@ -54,7 +54,7 @@ window.addEventListener("popstate", () => {
 
 pa_elm = {
 "pending": `     
-<div id="container-inside" class="flex flex-col lg:flex-row gap-y-3 lg:gap-y-0 justify-between w-full items-center p-5 border-2 border-gray-300 rounded-lg">
+<div id="container-inside" class="flex flex-col lg:flex-row gap-y-3 lg:gap-y-0 justify-between w-full items-start sm:items-center p-5 border-2 border-gray-300 rounded-lg">
   <div class="content flex flex-col gap-y-3 text-[#465362BF]">
     <p class="title text-xl font-bold text-[#011936]">{{assignments.pending.title}}</p>
     <p class="description text-lg" id="description">{{assignments.pending.description}}</p>
@@ -63,9 +63,9 @@ pa_elm = {
       <p class="difficulty">Difficulty : <span class="text-[#2593b3]">{{assignments.pending.difficulty}}</span></p>
     </div>
   </div>
-  <div class="btn flex">
-    <div class="btn-inside">
-      <button assignment_id="{{assignments.pending.aid}}" class="task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="start">START</button>
+  <div class="btn flex w-full sm:w-fit ">
+    <div class="btn-inside w-full sm:w-fit">
+      <button assignment_id="{{assignments.pending.aid}}" class="w-full sm:w-fit task_elm py-3 sm:py-2 px-10 rounded bg-gradient-to-r from-cyan-400 to-sky-600 text-white border-none focus:outline-none" nav="task" id="start">START</button>
     </div>
   </div>
 </div>
