@@ -26,8 +26,8 @@
 
 <body>
     <div id="root">
-        <div class="open-sidebar absolute md:hidden bg-gray-200 p-3 rounded-full right-5 top-2 z-[1000000] cursor-pointer">
-            <img width="40" height="40" src="https://img.icons8.com/ios-filled/50/menu--v1.png" alt="menu--v1"/>
+        <div class="open-sidebar absolute md:hidden bg-gray-200 p-2 rounded-full right-2 top-2 z-[1000000] cursor-pointer">
+            <img width="28" height="28" src="https://img.icons8.com/ios-filled/50/menu--v1.png" alt="menu--v1"/>
         </div>
         <div id="sidebar" class="hidden md:flex z-[1000000] bg-white">
             <div id="app_header">
@@ -50,7 +50,7 @@
             <div id="nav">
                 <br>
                 <br>
-                <div class="nav_elm nav_elm_active" nav="dash">
+                <div class="nav_elm" nav="dash" id="dashboard">
                     <i class="ph-fill ph-squares-four"></i>
                     <p>Dashboard</p>
                 </div>
@@ -90,6 +90,19 @@
                 }, 300); // Delay to match the CSS transition duration
             }
         });
+
+        function getQueryParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Check if the query parameter 'app' is 'dash'
+if (getQueryParameter('app') === 'dash') {
+    const dashboardElement = document.getElementById('dashboard');
+    console.log("here")
+
+        dashboardElement.classList.add("nav_elm_active");;
+}
     </script>
     <script src="./scripts/env.js"></script>
     <script src="./scripts/ace/src-noconflict/ace.js"></script>
