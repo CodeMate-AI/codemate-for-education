@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom-tag flex justify-between py-2 px-4 rounded-br-lg rounded-bl-lg bg-[#35a6f2] text-white">
+        <div class="bottom-tag flex justify-between py-2 px-4 rounded-br-lg rounded-bl-lg bg-gradient-to-r from-cyan-400 to-sky-600 text-white">
             <span>Teacher Account</span>
             <span><i> Active since 2024</i></span>
         </div>
