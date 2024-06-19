@@ -183,7 +183,7 @@ document.querySelector(".submit_button button").addEventListener("click", async 
             };
             const id = evaluation_data.submission_id
 
-            const submit_response = await fetch(`https://backend.edu.codemate.ai/student/submit/?institute_id=123456&student_id=${student_id}&assignment_id=${aid}`, {
+            const submit_response = await fetch(`https://backend.edu.codemate.ai/student/submit?institute_id=123456&student_id=${student_id}&assignment_id=${aid}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

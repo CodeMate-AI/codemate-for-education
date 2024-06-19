@@ -110,7 +110,7 @@ const env = {
                         let institute_id = newUrl.searchParams.get("institute_id")
                         let teacher_id = newUrl.searchParams.get('teacher_id');
                         // let aid = newUrl.searchParams.get('aid');
-                        fetch(`https://backend.edu.codemate.ai/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
+                        fetch(`https://backend.edu.codemate.ai/teacher/get_assignments?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 console.log(resp);
@@ -281,7 +281,7 @@ const env = {
                     let institute_id = newUrl.searchParams.get("institute_id")
                     let teacher_id = newUrl.searchParams.get('teacher_id');
                     let aid = newUrl.searchParams.get('aid');
-                    fetch(`https://backend.edu.codemate.ai/teacher/get_submissions/?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${aid}`)
+                    fetch(`https://backend.edu.codemate.ai/teacher/get_submissions?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${aid}`)
                     .then((res) => res.json())
                     .then((res) => {
                              
@@ -355,7 +355,7 @@ const env = {
                     let institute_id = newUrl.searchParams.get("institute_id")
                     let teacher_id = newUrl.searchParams.get('teacher_id');
                     // let aid = newUrl.searchParams.get('aid');
-                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
+                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                     .then((res) => res.json())
                     .then((res) => {
                         env.scripts.data.studentwise = res
@@ -429,7 +429,7 @@ const env = {
                     let institute_id = newUrl.searchParams.get("institute_id")
                     let teacher_id = newUrl.searchParams.get('teacher_id');
                     // let aid = newUrl.searchParams.get('aid');
-                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
+                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                         .then((resp) => resp.json())
                         .then((resp) => {
                             env.scripts.data.assignments = resp;
@@ -473,7 +473,7 @@ const env = {
                         const queryParams = new URL(window.location.href);
                         const institute_id = queryParams.searchParams.get('institute_id');
                         const assignment_id = queryParams.searchParams.get('assignment_id') 
-                        fetch(`https://backend.edu.codemate.ai/share/?institute_id=${institute_id}&assignment_id=${assignment_id}`)
+                        fetch(`https://backend.edu.codemate.ai/share?institute_id=${institute_id}&assignment_id=${assignment_id}`)
                         .then((res) => res.json())
                         .then ((res) => {
                             console.log(res.assignment.problem_statement);
