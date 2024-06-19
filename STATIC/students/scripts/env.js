@@ -360,7 +360,7 @@ const env = {
                                     console.log(env.scripts.data.assignments);
                                     let newUrl = new URL(window.location.href);
                                     let assignment = newUrl.searchParams.get('assignment');
-                                    if(assignment === "Completed"){
+                                    if(assignment === "completed"){
                                         env.scripts.data.assignments.submissions.forEach((e) => {
                                             var temp2 = pa_elm.completed;
 
