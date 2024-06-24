@@ -39,15 +39,19 @@ dash_elm_teachers = {
             </div>
             </div>
             <div class="flex flex-col text-lg gap-y-4">
-                <div class="flex p-2 border-[#7c858f] border rounded-lg justify-evenly w-[280px] sm:w-[300px] items-center">
+                <div class="flex p-2 px-4 border-[#7c858f] border rounded-lg justify-between w-[280px] sm:w-[300px] items-center">
                     <span class="text-[#4a5766] text-base">Submissions</span>
                     <span class="font-semibold">{{assignments.pending.submissions}}</span>
-                    <span assignment_id={{assignment_id}} class="text-[#5bb7f5] bg-white font-semibold">View</span>
+                    <div class="bton w-fit">
+                    <div class="btn-inside w-fit">
+                    <button assignment_id={{assignment_id}} class="font-semibold !px-6">View</button>
+                    </div>
+                    </div>
                 </div>
-                <div class="flex p-2 border-[#7c758f] border rounded-lg justify-evenly w-[280px] sm:w-[300px] items-center">
+                <div class="flex p-2 px-4 border-[#7c758f] border rounded-lg justify-between w-[280px] sm:w-[300px] items-center">
                     <span class="text-[#4a5766] text-base"> Yet To Submit</span>
                     <span class="font-semibold">{{assignments.pending.yet}}</span>
-                    <span class="text-[#5bb7f5] font-semibold">Notify</span>
+                    <button class="font-semibold !px-5">Notify</button>
                 </div>
             </div>
     </div>

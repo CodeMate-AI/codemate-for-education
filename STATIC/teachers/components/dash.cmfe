@@ -130,9 +130,9 @@
         border: none;
     }
 
-      .bton {
+      /* .bton {
         flex: 1;
-        /* padding-top:10px; */
+        / padding-top:10px; /
         padding-right: 0;
         margin:0;
         background: none;
@@ -141,7 +141,8 @@
     .btn-inside {
         background: none;
         padding-left: 200px
-    }
+    } */
+    /*   */
 
      .date-diff {
         display: flex;

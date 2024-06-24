@@ -90,6 +90,7 @@ const env = {
                                 dash = dash.replace("{{proficiency}}", ((resp.submitted.length / resp.assigned.length) * 100).toFixed(2));
                                 return dash;
                             }).then((dash) => {
+                                console.log("dash=",dash)
                                 env.scripts.elements.dash = document.createElement("script");
                                 env.scripts.elements.dash.src = env.scripts.paths.dash;
                             }).then(() => {
@@ -156,7 +157,7 @@ const env = {
                                         console.log(success_elms);
 
                                         var counter = 0;
-
+                                        console.log("env.scripts.data.dash.students=",env.scripts.data.dash.students)
                                         env.scripts.data.dash.students.assignments.submitted.forEach((e) => {
                                             if (e.status == "completed") {
                                                 var sa__upss = new ProgressBar.Circle(success_elms.acc[counter], {
@@ -360,7 +361,7 @@ const env = {
                                     console.log(env.scripts.data.assignments);
                                     let newUrl = new URL(window.location.href);
                                     let assignment = newUrl.searchParams.get('assignment');
-                                    if(assignment === "completed"){
+                                    if(assignment === "Completed"){
                                         env.scripts.data.assignments.submissions.forEach((e) => {
                                             var temp2 = pa_elm.completed;
 
