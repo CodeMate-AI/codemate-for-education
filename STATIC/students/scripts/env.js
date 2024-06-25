@@ -367,10 +367,10 @@ const env = {
 
                                             console.log(e);
                                     
-                                            temp2 = temp2.replace("{{assignments.pending.title}}", e.assignment.title);
-                                            temp2 = temp2.replace("{{assignments.pending.description}}", e.assignment.description);
-                                            temp2 = temp2.replace("{{assignments.pending.due_date}}", e.date_time);
-                                            temp2 = temp2.replace("{{assignments.pending.aid}}", e.id);
+                                            temp2 = temp2.replace("{{assignments.completed.title}}", e.assignment.title);
+                                            temp2 = temp2.replace("{{assignments.completed.description}}", e.assignment.description);
+                                            temp2 = temp2.replace("{{assignments.completed.due_date}}", e.date_time);
+                                            temp2 = temp2.replace("{{assignments.completed.id}}", e.id);
                                             temp2 = temp2.replace("{{assignments.completed.aid}}", e.assignment.id);
                                          
                                             assignments_pending += temp2;

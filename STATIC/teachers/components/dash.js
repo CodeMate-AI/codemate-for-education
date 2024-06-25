@@ -34,7 +34,7 @@ dash_elm_teachers = {
             <p class="title text-lg">{{assignments.pending.title}} </p>
             <p class="description text-base text-[#7c858f]">{{assignments.pending.description}}</p>
             <div class="flex flex-wrap gap-x-4 text-lg">
-            <div class="date flex font-semibold text-sm text-gray-900  items-center justify-center">Due Date : <span class="ml-1 text-[#69bab0]">12.09.2024</span></div>
+            <div class="date flex font-semibold text-sm text-gray-900  items-center justify-center">Due Date : <span class="ml-1 text-[#69bab0]">{{assignments.pending.due_date}}</span></div>
             <div class="difficult flex font-semibold text-sm text-gray-900  items-center justify-center">Difficulty : <span class="ml-1 text-[#69bab0]">Easy</span></div>
             </div>
             </div>
