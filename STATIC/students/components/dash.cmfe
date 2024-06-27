@@ -137,7 +137,10 @@
 }
 .sa_ds{flex: 6; display: flex; flex-direction: column; max-width: 60%;}
 .sa_an{flex: 5; display: flex; align-items: center; justify-content: center;}
-.sa_cl{flex: 2; display: flex;}
+.sa_cl{
+    /* flex: 2;  */
+    display: flex;
+}
 
 .sa_ds span{
     font-size: 20px;
@@ -177,7 +180,7 @@
 
 .sa_cl > div{
     height: 100%;
-    flex: 1;
+    /* flex: 1; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -256,8 +259,9 @@
         <h2>My Submissions</h2>
         <div id="presenter"></div>
     </div>
-    <div id="submitted_assignments">
+    <div id="submitted_assignments" class="flex justify-between items-center">
         <h2>Submitted Assignments</h2>
+        <h3 class="text-[#48aef3] cursor-pointer" id="view-all">View All</h3>
     </div>
     <div id="submitted_assignments_cover">
         {{sa.stat}}
