@@ -82,7 +82,7 @@ pa_elm = {
 </div>
 <div class="btn">
   <div class="btn-inside">
-    <button submission_id="{{assignments.completed.aid}}" assignment_id="{{assignments.completed.aid}}" class="task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
+    <button submission_id="{{assignments.completed.id}}" assignment_id="{{assignments.completed.aid}}" class="w-[206px] task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
   </div>
 </div>
 </div>

@@ -114,7 +114,7 @@ document.getElementById("send_button").onclick = ()=>{
     ex.chatbox.innerHTML += user_message;
     var task = "";
     if(document.getElementById("task___") != null){
-        console.log(document.getElementById("task___"));
+        console.log('document.getElementById("task___")=',document.getElementById("task___"));
         task = document.getElementById("task___").innerText;
     }else{
         task = "THERE IS NOT TASK :: FREE STYLE CODING SESSION.";
@@ -149,7 +149,7 @@ document.querySelector(".submit_button button").addEventListener("click", async 
     const confirmation = confirm("Are you sure you want to submit?");
     if (confirmation) {
         try {
-            const submission = document.getElementById("editor").innerText;
+            const submission = editor.getValue();
             const teacher_id = "001";
             const newUrl = new URL(window.location.href);
             const aid = newUrl.searchParams.get("assignment_id");
@@ -183,7 +183,7 @@ document.querySelector(".submit_button button").addEventListener("click", async 
             };
             const id = evaluation_data.submission_id
 
-            const submit_response = await fetch(`https://backend.edu.codemate.ai/student/submit/?institute_id=123456&student_id=${student_id}&assignment_id=${aid}`, {
+            const submit_response = await fetch(`https://backend.edu.codemate.ai/student/submit?institute_id=123456&student_id=${student_id}&assignment_id=${aid}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

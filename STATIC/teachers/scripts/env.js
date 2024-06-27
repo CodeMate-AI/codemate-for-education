@@ -110,7 +110,7 @@ const env = {
                         let institute_id = newUrl.searchParams.get("institute_id")
                         let teacher_id = newUrl.searchParams.get('teacher_id');
                         // let aid = newUrl.searchParams.get('aid');
-                        fetch(`https://backend.edu.codemate.ai/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
+                        fetch(`https://backend.edu.codemate.ai/teacher/get_assignments?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 console.log(resp);
@@ -155,28 +155,68 @@ const env = {
                                         var uncheckedLength = env.scripts.data.dash.assignments.length
                                         console.log(uncheckedLength);
                                       
-                                         var assignments__sa = "";
+                                        var assignments__sa = "";
+                                        
+                                        // env.scripts.data.dash.assignments.forEach((e,index) => {
+                                        //     var temp = dash_elm_teachers.pending;
+                                            
+                                        //     if(dash_elm_teachers !== undefined) {
+                                              
+                                        //             temp = temp.replace("{{assignments.pending.title}}",e.title)
+                                        //             temp = temp.replace("{{assignments.pending.description}}",e.description)
+                                        //             temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.data.dash.submissions.length)
+                                        //             temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.dash.students.length - env.scripts.data.dash.submissions.length)
+                                        //             temp = temp.replace("{{assignment_id}}",e.id)
+            
+                                        //             if(index === uncheckedLength-1) {
+                                        //                 assignments__sa += temp;
+                                        //             }
+                                        //         }
+                                        //     })
                                       
-                                         env.scripts.data.dash.assignments.forEach((e,index) => {
-                                             var temp = dash_elm_teachers.pending;
-                                             
-                                             if(dash_elm_teachers !== undefined) {
-                                               
-                                                     temp = temp.replace("{{assignments.pending.title}}",e.title)
-                                                     temp = temp.replace("{{assignments.pending.description}}",e.description)
-                                                     temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.data.dash.submissions.length)
-                                                     temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.dash.students.length - env.scripts.data.dash.submissions.length)
-                                                     temp = temp.replace("{{assignment_id}}",e.id)
-             
-                                                     if(index === uncheckedLength-1) {
-                                                         assignments__sa += temp;
-                                                     }
-                                                 }
-                                             })
-                                             dash = dash.replace("{{data}}", assignments__sa);
-                                             // console.log(dash);
-                                             env.app.innerHTML = dash;
-                                             env.app.appendChild(env.scripts.elements.dash);
+                                         env.scripts.data.dash.assignments.forEach((e, index) => {
+                                            // Make a request to the backend to get submissions for each assignment
+                                            fetch(`https://backend.edu.codemate.ai/teacher/get_submissions?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${e.id}`)
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    const submissions = data.submissions;
+                                        
+                                                    const submissionsCount = submissions.length;
+                                        
+                                                    // finding number of unique student IDs in the submissions
+                                                    const uniqueStudentIds = new Set(submissions.map(submission => submission.student_id)).size;
+                                        
+                                                    // calculate the number of students who haven't submitted yet
+                                                    const pendingSubmissions = env.scripts.data.dash.students.length - uniqueStudentIds;
+                                        
+                                                    var temp = dash_elm_teachers.pending;
+                                                    temp = temp.replace("{{assignments.pending.title}}", e.title);
+                                                    temp = temp.replace("{{assignments.pending.description}}", e.description);
+                                                     //we need to convert unix timestamp to date string
+                                                    let unixTimestamp = e.due_date;
+                                                    let dateObj = new Date(unixTimestamp * 1000);
+                                                    let utcString = dateObj.toUTCString();
+                                                    temp = temp.replace("{{assignments.pending.due_date}}", utcString);
+                                                    temp = temp.replace("{{assignments.pending.submissions}}", submissionsCount);
+                                                    temp = temp.replace("{{assignments.pending.yet}}", pendingSubmissions);
+                                                    temp = temp.replace("{{assignment_id}}", e.id);
+                                        
+                                                    
+                                                    if (index === env.scripts.data.dash.assignments.length - 1) {
+                                                        assignments__sa += temp;
+                                                        dash = dash.replace("{{data}}", assignments__sa);
+                                                        env.app.innerHTML = dash;
+                                                        env.app.appendChild(env.scripts.elements.dash);
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching submissions:', error);
+                                                });
+                                        });
+                                            //  dash = dash.replace("{{data}}", assignments__sa);
+                                            //  // console.log(dash);
+                                            //  env.app.innerHTML = dash;
+                                            //  env.app.appendChild(env.scripts.elements.dash);
                                     } else {
                                         dash = dash.replace("{{data}}", `<p>Nothing to show here :)</p>`);
                                              // console.log(dash);
@@ -281,7 +321,7 @@ const env = {
                     let institute_id = newUrl.searchParams.get("institute_id")
                     let teacher_id = newUrl.searchParams.get('teacher_id');
                     let aid = newUrl.searchParams.get('aid');
-                    fetch(`https://backend.edu.codemate.ai/teacher/get_submissions/?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${aid}`)
+                    fetch(`https://backend.edu.codemate.ai/teacher/get_submissions?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${aid}`)
                     .then((res) => res.json())
                     .then((res) => {
                              
@@ -355,7 +395,7 @@ const env = {
                     let institute_id = newUrl.searchParams.get("institute_id")
                     let teacher_id = newUrl.searchParams.get('teacher_id');
                     // let aid = newUrl.searchParams.get('aid');
-                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
+                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                     .then((res) => res.json())
                     .then((res) => {
                         env.scripts.data.studentwise = res
@@ -426,45 +466,64 @@ const env = {
                 .then((assign) => assign.text())
                 .then((assign) => {
                     let newUrl = new URL(window.location.href);
-                    let institute_id = newUrl.searchParams.get("institute_id")
+                    let institute_id = newUrl.searchParams.get("institute_id");
                     let teacher_id = newUrl.searchParams.get('teacher_id');
-                    // let aid = newUrl.searchParams.get('aid');
-                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments/?institute_id=${institute_id}&teacher_id=${teacher_id}`)
+                    
+                    fetch(`https://backend.edu.codemate.ai/teacher/get_assignments?institute_id=${institute_id}&teacher_id=${teacher_id}`)
                         .then((resp) => resp.json())
                         .then((resp) => {
                             env.scripts.data.assignments = resp;
                             console.log(resp);
                             return assign;
                         }).then((assign) => {
-                            env.scripts.elements.assignments = document.createElement("script");
-                            env.scripts.elements.assignments.src = env.scripts.paths.assignments;
-                        }).then(() => {
-                            var elm = document.createElement("script");
-                            elm.src = env.scripts.paths.assignments;
-                            document.body.appendChild(elm);
-                        }).then(() => {
-                            setTimeout(() => {
-                                var assignments__sa = "";
-                              console.log(env.scripts.pat);
-                                env.scripts.data.assignments.assignments.forEach((e) => {
-                                    var temp = assign_teachers.pending;
-                                    temp = temp.replace("{{assignments.pending.title}}",e.title)
-                                    temp = temp.replace("{{assignments.pending.description}}",e.description)
-                                    temp = temp.replace("{{assignments.pending.due_date}}",e.due_date)
-                                    temp = temp.replace("{{assignments.pending.difficulty}}",e.difficulty)
-                                    temp = temp.replace("{{assignments.pending.submissions}}",env.scripts.data.assignments.submissions.length)
-                                    temp = temp.replace("{{assignments.pending.yet}}",env.scripts.data.assignments.students.length - env.scripts.data.assignments.submissions.length)
-                                    temp = temp.replace("{{assignment_id}}",e.id)
-                                    assignments__sa += temp;
-                                });
+                            var assignments__sa = "";
+                            let promises = [];
+                            
+                            env.scripts.data.assignments.assignments.forEach((e) => {
+                                let submissionsUrl = `https://backend.edu.codemate.ai/teacher/get_submissions?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${e.id}`;
+                                promises.push(
+                                    fetch(submissionsUrl)
+                                    .then((resp) => resp.json())
+                                    .then((submissionsResp) => {
+                                        var temp = assign_teachers.pending;
+                                        temp = temp.replace("{{assignments.pending.title}}", e.title);
+                                        temp = temp.replace("{{assignments.pending.description}}", e.description);
 
+                                        //we need to convert unix timestamp to date string
+                                        let unixTimestamp = e.due_date;
+                                        let dateObj = new Date(unixTimestamp * 1000);
+                                        let utcString = dateObj.toUTCString();
+                                        temp = temp.replace("{{assignments.pending.due_date}}", utcString);
+                                        temp = temp.replace("{{assignments.pending.difficulty}}", e.difficulty);
+                                        temp = temp.replace("{{assignments.pending.submissions}}", submissionsResp.submissions.length);
+                                        
+                                        // using set to find number of unique student id coz that gives number of students whoc actually submitted; one student might submit more than one assignments
+    let uniqueStudentIds = new Set();
+    submissionsResp.submissions.forEach(submission => {
+        uniqueStudentIds.add(submission.student_id);
+    });
+    
+    let totalStudents = env.scripts.data.assignments.students.length;
+    let pending = totalStudents - uniqueStudentIds.size;
+    pending = pending < 0 ? 0 : pending; // Ensure pending is not negative
+    temp = temp.replace("{{assignments.pending.yet}}", pending);
+    temp = temp.replace("{{assignment_id}}", e.id);
+    
+    assignments__sa += temp;
+                                    })
+                                );
+                            });
+                            
+                            Promise.all(promises).then(() => {
                                 assign = assign.replace("{{data}}", assignments__sa);
                                 
                                 env.app.innerHTML = assign;
+                                env.scripts.elements.assignments = document.createElement("script");
+                                env.scripts.elements.assignments.src = env.scripts.paths.assignments;
                                 env.app.appendChild(env.scripts.elements.assignments);
-                            }, 100);
-                        })
-                })
+                            });
+                        });
+                });
             },
             "view" : () => {
                 fetch("./components/view.cmfe")
@@ -473,7 +532,7 @@ const env = {
                         const queryParams = new URL(window.location.href);
                         const institute_id = queryParams.searchParams.get('institute_id');
                         const assignment_id = queryParams.searchParams.get('assignment_id') 
-                        fetch(`https://backend.edu.codemate.ai/share/?institute_id=${institute_id}&assignment_id=${assignment_id}`)
+                        fetch(`https://backend.edu.codemate.ai/share?institute_id=${institute_id}&assignment_id=${assignment_id}`)
                         .then((res) => res.json())
                         .then ((res) => {
                             console.log(res.assignment.problem_statement);
