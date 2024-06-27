@@ -86,7 +86,7 @@ function formatDate(date) {
 
 
 
-
+//sa_view-sa tooltip wali div is made hidden since it cant be commented yet has no functionality
 dash_elms = {
     "submitted_assignment": `<div class='sa__'>
                         <div class="sa_ds">
@@ -96,9 +96,9 @@ dash_elms = {
                         <div class="sa_an">{{sa.stat}}</div>
                         <div class="sa_cl">
                             <div class="sa_rept tooltip" data-tip="View Report" submission_id="{{sa.submission_id}}" assignment_id="{{sa.assignment_id}}">
-                                <i class="ph-fill ph-cloud-arrow-down {{sa.donwload.report}}"></i>
+                                <i class="ph-fill cursor-pointer ph-cloud-arrow-down {{sa.donwload.report}}"></i>
                             </div>
-                            <div class="sa_view-sa tooltip" data-tip="View Submission">
+                            <div class="sa_view-sa tooltip !hidden" data-tip="View Submission">
                                 <i class="ph ph-info"></i>
                             </div>
                         </div>
@@ -117,3 +117,20 @@ dash_elms = {
                     </div>`
     }
 }
+
+//assigning on click event listener to view all
+document.getElementById("view-all").addEventListener("click", function () {
+    let newUrl = new URL(window.location.href);
+    let institute_id = newUrl.searchParams.get("institute_id");
+    let student_id = newUrl.searchParams.get('student_id');
+    
+    // Set the new parameters for redirection
+    newUrl.searchParams.set('institute_id', institute_id);
+    newUrl.searchParams.set('student_id', student_id);
+    newUrl.searchParams.set('app', 'assignments');
+    newUrl.searchParams.set('assignment', 'Completed');
+    
+    // Update the URL and reload the page
+    history.pushState({}, '', newUrl);
+    window.location.reload();
+});

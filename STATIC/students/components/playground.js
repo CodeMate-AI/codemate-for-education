@@ -24,28 +24,32 @@ var editor = ace.edit("editor");
 
 
 setTimeout(()=>{
-    if(search_params.assignment_id != "" && search_params.assignment_id != undefined){
-        fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id="+search_params.assignment_id)
-        .then(resp => resp.json())
-        .then((resp)=>{
-            console.log(resp);
-            // editor.session.setMode(`ace/mode/${String(resp.language)}`);
-            if(resp.task != null){
-                console.log(resp.task);
-                document.getElementById("task_______").innerText = resp.task;
-            }else{
-                console.log("REMOVING");
-                document.getElementById("task___").remove();
-            }
-        }).then(()=>{
-            fetch(`https://backend.edu.codemate.ai/student/get_assignment?institute_id=${search_params.institute_id}&assignment_id=${search_params.assignment_id}&student_id=${search_params.student_id}`)
+    if (search_params.assignment_id != "" && search_params.assignment_id != undefined) {
+        fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id=" + search_params.assignment_id)
             .then(resp => resp.json())
-            .then(resp => {
-                console.log(resp.assignment.language.toLowerCase());
-                editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
-            });
-        })
-    }if (search_params.assignment === "Completed") {
+            .then((resp) => {
+                console.log(resp);
+                // editor.session.setMode(`ace/mode/${String(resp.language)}`);
+                if (resp.task != null) {
+                    console.log(resp.task);
+                    document.getElementById("task_______").innerText = resp.task;
+                } else {
+                    console.log("REMOVING");
+                    document.getElementById("task___").remove();
+                }
+            }).then(() => {
+                fetch(`https://backend.edu.codemate.ai/student/get_assignment?institute_id=${search_params.institute_id}&assignment_id=${search_params.assignment_id}&student_id=${search_params.student_id}`)
+                    .then(resp => resp.json())
+                    .then(resp => {
+                        console.log(resp.assignment.language.toLowerCase());
+                        editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
+                    });
+            })
+    }
+    else
+        document.querySelector(".submit_button button").style.display = "none";
+    
+    if (search_params.assignment === "Completed") {
          {
             fetch(`https://backend.edu.codemate.ai/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
             .then(resp => resp.json())
@@ -89,7 +93,7 @@ ex.enhanced_context.element.onclick = ()=>{
 
 
 
-document.getElementById("send_button").onclick = ()=>{
+function sendMessage(){
     let current_message = "QUERY:\n";
     let kjsdf = "";
     if(document.getElementById("chat_in").value != ""){
@@ -119,6 +123,7 @@ document.getElementById("send_button").onclick = ()=>{
     }else{
         task = "THERE IS NOT TASK :: FREE STYLE CODING SESSION.";
     }
+    document.getElementById("loader").style.display = "block";
     fetch("https://backend.edu.codemate.ai/chat", {
         method: "POST",
         headers: {
@@ -131,7 +136,8 @@ document.getElementById("send_button").onclick = ()=>{
             "resources": false
         })
     }).then((resp)=>resp.json())
-    .then((resp)=>{
+        .then((resp) => {
+            document.getElementById("loader").style.display = "none";
         console.log(resp);
         env.messages.push({
             "role": "assistant",
@@ -145,10 +151,22 @@ document.getElementById("send_button").onclick = ()=>{
     })
 }
 
+// assigning the sendMessage function to the send_button's onclick event
+document.getElementById("send_button").onclick = sendMessage;
+
+// adding an event listener to the chat_in input for the keydown event
+document.getElementById("chat_in").addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); 
+        sendMessage(); 
+    }
+});
+
 document.querySelector(".submit_button button").addEventListener("click", async function () {
     const confirmation = confirm("Are you sure you want to submit?");
     if (confirmation) {
         try {
+            document.getElementById("assignment-submit-modal").style.display = "flex";
             const submission = editor.getValue();
             const teacher_id = "001";
             const newUrl = new URL(window.location.href);
@@ -205,14 +223,33 @@ document.querySelector(".submit_button button").addEventListener("click", async 
                 throw new Error("Failed to submit assignment");
             }
 
-            alert("Assignment submitted successfully!");
+            var notyf = new Notyf();
+            document.getElementById("assignment-submit-modal").style.display = "none";
+            notyf.success("Assignment submitted successfully!");
+            redirectToDashboard();
             console.log(submit_data);
         } catch (error) {
             console.error("Submission Error:", error);
-            alert("There was an error submitting your assignment. Please try again.");
+            notyf.error("There was an error submitting your assignment. Please try again.");
+            document.getElementById("assignment-submit-modal").style.display = "none";
         }
     }
 });
+
+function redirectToDashboard() {
+    let newUrl = new URL(window.location.href);
+    let institute_id = newUrl.searchParams.get("institute_id");
+    let student_id = newUrl.searchParams.get('student_id');
+    
+    // Set the new parameters for redirection
+    newUrl.searchParams.set('institute_id', institute_id);
+    newUrl.searchParams.set('student_id', student_id);
+    newUrl.searchParams.set('app', 'dash');
+    
+    // Update the URL and reload the page
+    history.pushState({}, '', newUrl);
+    window.location.reload();
+}
 
 
 document.querySelector('.chat-popup').addEventListener('click', function () {

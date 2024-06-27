@@ -77,7 +77,7 @@ pa_elm = {
   <p class="title text-xl font-bold text-[#011936]">{{assignments.completed.title}}</p>
   <p class="description text-lg" id="description">{{assignments.completed.description}}</p>
   <div class="date-diff flex flex-col sm:flex-row gap-5 text-base">
-    <p class="date">Submitted on : <span class="text-[#2593b3]">{{assignments.completed.due_date}}</span></p>
+    <p class="date">Submitted on : <span class="text-[#2593b3]">{{assignments.completed.submit_date}}</span></p>
   </div>
 </div>
 <div class="btn">

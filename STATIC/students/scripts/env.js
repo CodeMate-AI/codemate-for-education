@@ -80,6 +80,8 @@ const env = {
                         let newUrl = new URL(window.location.href);
                         let institute_id = newUrl.searchParams.get("institute_id")
                         let student_id = newUrl.searchParams.get('student_id');
+
+                        
                         fetch(`https://backend.edu.codemate.ai/student/get_assignments?institute_id=${institute_id}&student_id=${student_id}`)
                             .then((resp) => resp.json())
                             .then((resp) => {
@@ -90,7 +92,6 @@ const env = {
                                 dash = dash.replace("{{proficiency}}", ((resp.submitted.length / resp.assigned.length) * 100).toFixed(2));
                                 return dash;
                             }).then((dash) => {
-                                console.log("dash=",dash)
                                 env.scripts.elements.dash = document.createElement("script");
                                 env.scripts.elements.dash.src = env.scripts.paths.dash;
                             }).then(() => {
@@ -100,7 +101,7 @@ const env = {
                             }).then(() => {
                                 setTimeout(() => {
                                     var assignments__sa = "";
-                                    
+                                    console.log("env.scripts.data.dash.submitted=",env.scripts.data.dash.submitted)
                                    if(env.scripts.data.dash.submitted.length !== 0) {
                                     if(dash_elms !== undefined) {
                                         env.scripts.data.dash.submitted.forEach((e) => {
@@ -361,6 +362,10 @@ const env = {
                                     console.log(env.scripts.data.assignments);
                                     let newUrl = new URL(window.location.href);
                                     let assignment = newUrl.searchParams.get('assignment');
+                                    // sort the submissions array by date_time in descending order (most recent first)
+            env.scripts.data.assignments.submissions.sort((a, b) => {
+                return new Date(b.date_time) - new Date(a.date_time);
+            });
                                     if(assignment === "Completed"){
                                         env.scripts.data.assignments.submissions.forEach((e) => {
                                             var temp2 = pa_elm.completed;
@@ -369,13 +374,17 @@ const env = {
                                     
                                             temp2 = temp2.replace("{{assignments.completed.title}}", e.assignment.title);
                                             temp2 = temp2.replace("{{assignments.completed.description}}", e.assignment.description);
-                                            temp2 = temp2.replace("{{assignments.completed.due_date}}", e.date_time);
+                                            temp2 = temp2.replace("{{assignments.completed.submit_date}}", e.date_time);
                                             temp2 = temp2.replace("{{assignments.completed.id}}", e.id);
                                             temp2 = temp2.replace("{{assignments.completed.aid}}", e.assignment.id);
                                          
                                             assignments_pending += temp2;
                                         });
                                     } else {
+                                        //sort such that most recent appear first
+                                        env.scripts.data.assignments.assigned.sort((a, b) => {
+                                            return new Date(parseInt(b.due_date) * 1000) - new Date(parseInt(a.due_date) * 1000);
+                                        });
                                         env.scripts.data.assignments.assigned.forEach((e) => {
                                             var temp2 = pa_elm.pending;
                                             console.log(e);
