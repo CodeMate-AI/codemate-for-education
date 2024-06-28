@@ -478,7 +478,6 @@ const env = {
                         }).then((assign) => {
                             var assignments__sa = "";
                             let promises = [];
-                            
                             env.scripts.data.assignments.assignments.forEach((e) => {
                                 let submissionsUrl = `https://backend.edu.codemate.ai/teacher/get_submissions?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${e.id}`;
                                 promises.push(

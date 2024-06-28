@@ -1,6 +1,6 @@
 function checking() {
   // Get all input and textarea elements
-  const inputFields = document.querySelectorAll('input[type="text"], input[type="radio"], textarea');
+  const inputFields = document.querySelectorAll('.compulsory');
 
   // Get reference to the button
   const publishButton = document.querySelector('.publish_button');
@@ -15,9 +15,10 @@ function checking() {
     // If all fields have content, change button background color to blue, otherwise revert to default
     if (publishButton) {
       publishButton.style.backgroundColor = areAllFieldsFilled() ? '#48AEF3' : '';
-      publishButton.addEventListener("click", () => {
+      publishButton.disabled = !areAllFieldsFilled(); // Enable or disable the button
+      // publishButton.addEventListener("click", () => {
 
-      })
+      // })
     }
   }
 
@@ -190,13 +191,18 @@ function formSubmission() {
 
      let newUrl = new URL(window.location.href);
      newUrl.searchParams.set('assignment_id',await response.task_id);
-     newUrl.searchParams.set('app', "publish");
-     history.pushState({}, '', newUrl)
+      newUrl.searchParams.set('app', "dash");//initially it was publish instead of dash but again option of making it public 
+      //was there which was kinda confusing
+      history.pushState({}, '', newUrl)
+      window.location.reload();
 
-     alert("Assignment has been published successfully.")
+      var notyf = new Notyf();
+      
+     notyf.success("Assignment has been published successfully.")
     } catch (error) {
       console.log(error)
-      alert(error)
+      var notyf = new Notyf();
+      notyf.error(error)
     }
   })
 }

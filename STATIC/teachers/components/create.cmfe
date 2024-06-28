@@ -32,9 +32,9 @@
   <div class="title-wali-div flex flex-col lg:flex-row gap-x-4">
       <div class="div1 flex-1 flex flex-col gap-2.5 m-0">
           <label for="title" class="headings text-[#011936] font-semibold text-lg">Enter Title</label>
-          <input type="text" id="title" class="common-input w-[99%] border border-[#d1d1d1] outline-none bg-none p-1 px-2 rounded-md text-lg">
+          <input type="text" id="title" class="compulsory common-input w-[99%] border border-[#d1d1d1] outline-none bg-none p-1 px-2 rounded-md text-lg">
           <label for="description" class="headings label2 text-[#011936] font-semibold text-lg pt-2.5">Brief Description</label>
-          <textarea id="description" cols="35" rows="2" class="textarea resize-none w-[99.5%] border border-[#d1d1d1] outline-none bg-none p-3 rounded-md text-lg"></textarea>
+          <textarea id="description" cols="35" rows="2" class="compulsory textarea resize-none w-[99.5%] border border-[#d1d1d1] outline-none bg-none p-3 rounded-md text-lg"></textarea>
       </div>
       <div class="div2 flex-[1.2] flex flex-col gap-2">
           <label for="" class="headings text-[#011936] font-semibold text-lg">Attachment</label>
@@ -51,28 +51,30 @@
   </div>
   <div class="text-area flex flex-col gap-2.5">
       <label for="name" class="headings text-[#011936] font-semibold text-lg resize-nones">Problem Statement</label>
-      <textarea id="problem" cols="30" rows="4" class="textarea w-[99.5%] border border-[#d1d1d1] outline-none bg-none p-1.5 rounded-md text-lg"></textarea>
+      <textarea id="problem" cols="30" rows="4" class="compulsory textarea w-[99.5%] border border-[#d1d1d1] outline-none bg-none p-1.5 rounded-md text-lg"></textarea>
   </div>
   <div class="title-wali-div flex flex-col lg:flex-row lg:gap-x-[10%]">
       <div class="text-area input-output flex flex-col gap-2.5 w-full lg:w-[45%]">
           <label for="input" class="headings text-[#011936] font-semibold text-lg">Sample Input</label>
-          <div class="input_button flex flex-col sm:flex-row justify-between w-full border border-[#d1d1d1] outline-none p-0.5 rounded-md text-[1rem]">
+          <div class="input_button flex flex-col sm:flex-row justify-between items-center w-full border border-[#d1d1d1] outline-none p-0.5 rounded-md text-[1rem]">
               <input type="text" id="input" class="flex-2 border-none p-1.5 m-0 focus:outline-none">
-              <button class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">Or Generate using AI</button>
+              <span class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">(Optional)</span>
+              <!-- <button class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">Or Generate using AI</button> -->
           </div>
       </div>
       <div class="text-area input-output flex flex-col gap-2.5 w-full lg:w-[45%]">
           <label for="output" class="headings text-[#011936] font-semibold text-lg">Sample Output</label>
-          <div class="input_button flex flex-col sm:flex-row justify-between w-full border border-[#d1d1d1] outline-none p-0.5 rounded-md text-[1rem]">
+          <div class="input_button flex flex-col sm:flex-row justify-between items-center w-full border border-[#d1d1d1] outline-none p-0.5 rounded-md text-[1rem]">
               <input type="text" id="output" class="flex-2 border-none p-1.5 m-0 focus:outline-none">
-              <button class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">Or Generate using AI</button>
+              <span class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">(Optional)</span>
+              <!-- <button class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">Or Generate using AI</button> -->
           </div>
       </div>
   </div>
   <div class="title-wali-div flex flex-row gap-x-[2%] flex-wrap gap-y-3">
       <div class="text-area flex flex-col gap-2.5 w-[300px] lg:w-[32%]">
           <label for="difficulty" class="headings text-[#011936] font-semibold text-lg">Difficulty</label>
-          <input class="common-input w-[99%] border border-[#d1d1d1] outline-none bg-none p-1.5 rounded-md text-lg" id="difficulty-input" list="difficulty" placeholder="Choose Difficulty">
+          <input class="compulsory common-input w-[99%] border border-[#d1d1d1] outline-none bg-none p-1.5 rounded-md text-lg" id="difficulty-input" list="difficulty" placeholder="Choose Difficulty">
           <datalist id="difficulty">
               <option value="Easy">
               <option value="Medium">
@@ -81,14 +83,14 @@
       </div>
       <div class="text-area flex flex-col gap-2.5 w-[300px] lg:w-[32%]">
           <label for="difficulty" class="headings text-[#011936] font-semibold text-lg">Due Date</label>
-          <input class="common-input w-[99%] border border-[#d1d1d1] outline-none bg-none p-1.5 rounded-md text-lg" type="datetime-local" id="date-time">
+          <input class="compulsory common-input w-[99%] border border-[#d1d1d1] outline-none bg-none p-1.5 rounded-md text-lg" type="datetime-local" id="date-time">
       </div>
       <div class="text-area flex flex-col gap-2.5 w-[300px] lg:w-[32%]">
           <label for="title" class="headings text-[#011936] font-semibold text-lg">Define Parameters</label>
-          <input type="text" id="parameters" class="common-input w-[99%] h-6 border border-[#d1d1d1] outline-none bg-none p-[21px] rounded-md text-lg">
+          <input type="text" id="parameters" class="compulsory common-input w-[99%] h-6 border border-[#d1d1d1] outline-none bg-none p-[21px] rounded-md text-lg">
       </div>
   </div>
   <div class="flex flex-row justify-end pt-2.5">
-      <button class="btn bg-[#48AEF3] text-white py-2 px-5 rounded-md">Next</button>
+      <button class="btn publish_button bg-gray-200  text-white py-2 px-5 rounded-md" disabled>Next</button>
   </div>
 </form>
