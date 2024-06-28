@@ -91,6 +91,6 @@
       </div>
   </div>
   <div class="flex flex-row justify-end pt-2.5">
-      <button class="btn publish_button bg-gray-200  text-white py-2 px-5 rounded-md" disabled>Next</button>
+      <button class="btn publish_button bg-gray-200  text-white py-2 px-5 rounded-md" disabled>Publish</button>
   </div>
 </form>
