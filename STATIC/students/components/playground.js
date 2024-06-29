@@ -252,9 +252,21 @@ function redirectToDashboard() {
 }
 
 
-//maybe container id wala div is not getting loaded and hence in production it wasnt working properly
-//now lets see after timeout it should work
+//most probably the issue was the addEventListener was running twice (when removeEventListener was not there) and
+//hence consecutively two times the code was running on click thus nullifying the effect, now with removeEventListener
+//we make sure it there is only one occurence
 setTimeout(() => {
+    document.getElementById("chatpop").removeEventListener('click', function () {
+        console.log("clikce")
+        
+        const container = document.getElementById('container');
+        if (container.classList.contains('chat-fullscreen')) {
+            
+            container.classList.remove('chat-fullscreen');
+        } else {
+            container.classList.add('chat-fullscreen');
+        }
+    });
     document.getElementById("chatpop").addEventListener('click', function () {
         console.log("clikce")
         
