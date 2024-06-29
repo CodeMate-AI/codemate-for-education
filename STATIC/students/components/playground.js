@@ -252,14 +252,20 @@ function redirectToDashboard() {
 }
 
 
-document.getElementById("chatpop").addEventListener('click', function () {
-    console.log("clikce")
-    const container = document.getElementById('container');
-    if (container.classList.contains('chat-fullscreen')) {
-        console.log(container.classList.contains('chat-fullscreen'))
-        container.classList.remove('chat-fullscreen');
-    } else {
-        container.classList.add('chat-fullscreen');
-    }
-});
+//maybe container id wala div is not getting loaded and hence in production it wasnt working properly
+//now lets see after timeout it should work
+setTimeout(() => {
+    document.getElementById("chatpop").addEventListener('click', function () {
+        console.log("clikce")
+        
+        const container = document.getElementById('container');
+        if (container.classList.contains('chat-fullscreen')) {
+            
+            container.classList.remove('chat-fullscreen');
+        } else {
+            container.classList.add('chat-fullscreen');
+        }
+    });
+},1000)
+
   
