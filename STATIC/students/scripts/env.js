@@ -24,8 +24,8 @@ const env = {
             if (dashboardElement) {
                 dashboardElement.click(); // Trigger a click event on the dashboardElement
             }
-        }, 3000); // 3000 milliseconds = 3 seconds
-        
+        }, 1500); // 3000 milliseconds = 3 seconds
+
         let url = new URL(window.location.href);
         env.active_page = url.searchParams.get('app');
         if (env.active_page === null) {
