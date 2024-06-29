@@ -18,6 +18,14 @@ const env = {
     },
     "messages": [],
     "init": () => {
+
+        setTimeout(() => {
+            const dashboardElement = document.getElementById('dashboard');
+            if (dashboardElement) {
+                dashboardElement.click(); // Trigger a click event on the dashboardElement
+            }
+        }, 3000); // 3000 milliseconds = 3 seconds
+        
         let url = new URL(window.location.href);
         env.active_page = url.searchParams.get('app');
         if (env.active_page === null) {
@@ -86,7 +94,7 @@ const env = {
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp;
-                                console.log(resp);
+                                console.log("resp=",resp);
                                 dash = dash.replace("{{assignments.submitted}}", resp.submitted.length);
                                 dash = dash.replace("{{assignments.pending}}", resp.assigned.length);
                                 dash = dash.replace("{{proficiency}}", ((resp.submitted.length / resp.assigned.length) * 100).toFixed(2));
