@@ -252,10 +252,11 @@ function redirectToDashboard() {
 }
 
 
-document.querySelector('.chat-popup').addEventListener('click', function () {
+document.getElementById("chatpop").addEventListener('click', function () {
     console.log("clikce")
     const container = document.getElementById('container');
     if (container.classList.contains('chat-fullscreen')) {
+        console.log(container.classList.contains('chat-fullscreen'))
         container.classList.remove('chat-fullscreen');
     } else {
         container.classList.add('chat-fullscreen');
