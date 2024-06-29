@@ -18,16 +18,18 @@ const env = {
     },
     "messages": [],
     "init": () => {
+        let url = new URL(window.location.href);
+        env.active_page = url.searchParams.get('app');
 
+        if(env.active_page === "dash")
         setTimeout(() => {
             const dashboardElement = document.getElementById('dashboard');
             if (dashboardElement) {
                 dashboardElement.click(); // Trigger a click event on the dashboardElement
             }
-        }, 1500); // 3000 milliseconds = 3 seconds
+        }, 1500); // 1500 milliseconds
 
-        let url = new URL(window.location.href);
-        env.active_page = url.searchParams.get('app');
+
         if (env.active_page === null) {
             env.active_page = "dash";
         }
@@ -374,7 +376,7 @@ const env = {
             env.scripts.data.assignments.submissions.sort((a, b) => {
                 return new Date(b.date_time) - new Date(a.date_time);
             });
-                                    if(assignment === "Completed"){
+                                    if (assignment === "Completed") {
                                         env.scripts.data.assignments.submissions.forEach((e) => {
                                             var temp2 = pa_elm.completed;
 
@@ -413,6 +415,20 @@ const env = {
                                     assign = assign.replace("{{assignments.pending}}", assignments_pending);
                                     env.app.innerHTML = assign
                                     
+                                    if (assignment === "Completed") {
+                                        document.getElementById("pending_btn").style.backgroundColor = "#f7f7f7";
+                                        document.getElementById("pending_btn").style.color = "black";
+                                        document.getElementById("pending_btn").style.border = "1px solid #dddddd";
+                                        document.getElementById("completed_btn").style.backgroundColor = "#010536";
+                                        document.getElementById("completed_btn").style.color = "white";
+                                    }
+                                    else {
+                                        document.getElementById("pending_btn").style.backgroundColor = "#010536";
+                                        document.getElementById("pending_btn").style.color = "white";
+                                        document.getElementById("pending_btn").style.border = "none";
+                                        document.getElementById("completed_btn").style.backgroundColor = "#f7f7f7";
+                                        document.getElementById("completed_btn").style.color = "black";
+                                    }
                                 }, 100);
                             })
                     })
