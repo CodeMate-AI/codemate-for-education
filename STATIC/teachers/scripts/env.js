@@ -365,7 +365,8 @@ const env = {
                                   const date = new Date(e.date_time);
                                  // Convert the Date object to a Unix timestamp (in seconds)
                                   const submissionDateUnix = Math.floor(date.getTime() / 1000);
-                                if(submissionDateUnix <= env.scripts.data.submissions.assignment_data.due_date) {
+                                  console.log("submissionDateUnix=",submissionDateUnix)
+                                if(submissionDateUnix <= env.scripts.data.submissions.assignment_data[0].due_date) {
                                     temp2 = temp2.replace("{{students.ontime}}", "Ontime");
                                     temp2 = temp2.replace("{{bg_color}}", "#2A9D8F");
                                 } else {
