@@ -410,7 +410,7 @@ const env = {
                 return new Date(b.date_time) - new Date(a.date_time);
             });
                                     if (assignment === "Completed") {
-                                        env.scripts.data.assignments.submissions.forEach((e) => {
+                                        env.scripts.data.assignments.submissions.slice(2).forEach((e) => {
                                             var temp2 = pa_elm.completed;
 
                                             console.log(e);
