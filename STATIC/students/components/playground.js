@@ -162,7 +162,8 @@ document.getElementById("chat_in").addEventListener('keydown', function(event) {
     }
 });
 
-document.querySelector(".submit_button button").addEventListener("click", async function () {
+async function handleSubmitAssignment() {
+    console.log("submit click")
     const confirmation = confirm("Are you sure you want to submit?");
     if (confirmation) {
         try {
@@ -234,7 +235,10 @@ document.querySelector(".submit_button button").addEventListener("click", async 
             document.getElementById("assignment-submit-modal").style.display = "none";
         }
     }
-});
+}
+
+document.querySelector(".submit_button button").removeEventListener("click", handleSubmitAssignment);
+document.querySelector(".submit_button button").addEventListener("click", handleSubmitAssignment);
 
 function redirectToDashboard() {
     let newUrl = new URL(window.location.href);
@@ -255,29 +259,21 @@ function redirectToDashboard() {
 //most probably the issue was the addEventListener was running twice (when removeEventListener was not there) and
 //hence consecutively two times the code was running on click thus nullifying the effect, now with removeEventListener
 //we make sure it there is only one occurence
-setTimeout(() => {
-    document.getElementById("chatpop").removeEventListener('click', function () {
-        console.log("clikce")
+
+function openMobileChat() {
+    console.log("clikce")
+    
+    const container = document.getElementById('container');
+    if (container.classList.contains('chat-fullscreen')) {
         
-        const container = document.getElementById('container');
-        if (container.classList.contains('chat-fullscreen')) {
-            
-            container.classList.remove('chat-fullscreen');
-        } else {
-            container.classList.add('chat-fullscreen');
-        }
-    });
-    document.getElementById("chatpop").addEventListener('click', function () {
-        console.log("clikce")
-        
-        const container = document.getElementById('container');
-        if (container.classList.contains('chat-fullscreen')) {
-            
-            container.classList.remove('chat-fullscreen');
-        } else {
-            container.classList.add('chat-fullscreen');
-        }
-    });
-},1000)
+        container.classList.remove('chat-fullscreen');
+    } else {
+        container.classList.add('chat-fullscreen');
+    }
+}
+
+    document.getElementById("chatpop").removeEventListener('click', openMobileChat);
+    document.getElementById("chatpop").addEventListener('click', openMobileChat);
+
 
   
