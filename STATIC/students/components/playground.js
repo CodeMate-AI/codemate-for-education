@@ -50,7 +50,8 @@ setTimeout(()=>{
         document.querySelector(".submit_button button").style.display = "none";
     
     if (search_params.assignment === "Completed") {
-         {
+        {
+            document.querySelector(".submit_button button").style.display = "none";
             fetch(`https://backend.edu.codemate.ai/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
             .then(resp => resp.json())
             .then((submissionResp) => {
@@ -151,16 +152,25 @@ function sendMessage(){
     })
 }
 
-// assigning the sendMessage function to the send_button's onclick event
-document.getElementById("send_button").onclick = sendMessage;
+// converted to inline html since in production running twice
+// document.getElementById("send_button").onclick = sendMessage;
 
 // adding an event listener to the chat_in input for the keydown event
-document.getElementById("chat_in").addEventListener('keydown', function(event) {
+
+function sendMessageOnEnter(event) {
     if (event.key === 'Enter') {
         event.preventDefault(); 
         sendMessage(); 
     }
-});
+}
+
+//converted to inline html
+// document.getElementById("chat_in").addEventListener('keydown', function(event) {
+//     if (event.key === 'Enter') {
+//         event.preventDefault(); 
+//         sendMessage(); 
+//     }
+// });
 
 async function handleSubmitAssignment() {
     console.log("submit click")

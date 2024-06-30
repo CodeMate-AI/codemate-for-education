@@ -57,16 +57,16 @@
       <div class="text-area input-output flex flex-col gap-2.5 w-full lg:w-[45%]">
           <label for="input" class="headings text-[#011936] font-semibold text-lg">Sample Input</label>
           <div class="input_button flex flex-col sm:flex-row justify-between items-center w-full border border-[#d1d1d1] outline-none p-0.5 rounded-md text-[1rem]">
-              <input type="text" id="input" class="flex-2 border-none p-1.5 m-0 focus:outline-none">
-              <span class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">(Optional)</span>
+              <input type="text" id="input" class="flex-2 border-none p-1.5 m-0 focus:outline-none" placeholder="Optional">
+              <!-- <span class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">(Optional)</span> -->
               <!-- <button class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">Or Generate using AI</button> -->
           </div>
       </div>
       <div class="text-area input-output flex flex-col gap-2.5 w-full lg:w-[45%]">
           <label for="output" class="headings text-[#011936] font-semibold text-lg">Sample Output</label>
           <div class="input_button flex flex-col sm:flex-row justify-between items-center w-full border border-[#d1d1d1] outline-none p-0.5 rounded-md text-[1rem]">
-              <input type="text" id="output" class="flex-2 border-none p-1.5 m-0 focus:outline-none">
-              <span class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">(Optional)</span>
+              <input type="text" id="output" class="flex-2 border-none p-1.5 m-0 focus:outline-none" placeholder="Optional">
+              <!-- <span class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">(Optional)</span> -->
               <!-- <button class="lg:flex-1 px-2 lg:px-0 border-none m-0 text-[#48AEF3] bg-none w-fit">Or Generate using AI</button> -->
           </div>
       </div>

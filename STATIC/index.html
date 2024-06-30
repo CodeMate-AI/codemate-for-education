@@ -301,7 +301,7 @@
                         <div class="container flex flex-col items-start justify-center">
                             <div class="container__item flex">
                                 <form class="form flex flex-col gap-y-2">
-                                    <input type="email" class="form__field
+                                    <input type="email" onkeydown="submitOnEnter(event)" class="form__field
                                     w-[350px] h-[50px] rounded-xl bg-[#fff]
                                     text-[#a3a3a3]
                                     border-0 outline-0
@@ -310,7 +310,7 @@
                                     inline-block
                                     bg-transparent text-inherit
                                     border-0 outline-0 p-0 cursor-pointer
-                                    " id="send_temp_auth">Send</button>
+                                    " id="send_temp_auth" onclick="login()">Send</button>
                                 </form>
                             </div>
                         </div>
@@ -320,17 +320,25 @@
         </div> 
     </body>
     <script>
-        document.getElementById("send_temp_auth").onclick = ()=>{
-            var email = document.getElementsByClassName("form__field")[0].value;
-            if (email == "student@edu.codemate.ai"){
-                console.log("STUDENT ACCOUNT");
-                window.open(window.location.href + "students/?institute_id=123456&student_id=001&app=dash", "_self");
-            }else{
-                if(email == "teacher@edu.codemate.ai"){
-                    console.log("TEACHER ACCOUNT");
-                    window.open(window.location.href + "teachers/?institute_id=123456&teacher_id=001", "_self");// = "./teachers/?institute_id=123456&teacher_id=001"
-                }
+      function login(){
+        var email = document.getElementsByClassName("form__field")[0].value;
+        if (email == "student@edu.codemate.ai"){
+            console.log("STUDENT ACCOUNT");
+            window.open(window.location.href + "students/?institute_id=123456&student_id=001&app=dash", "_self");
+        }else{
+            if(email == "teacher@edu.codemate.ai"){
+                console.log("TEACHER ACCOUNT");
+                window.open(window.location.href + "teachers/?institute_id=123456&teacher_id=001", "_self");// = "./teachers/?institute_id=123456&teacher_id=001"
             }
         }
+      }
+       
+      function submitOnEnter(event){
+          if (event.key === 'Enter') {
+              event.preventDefault(); 
+              login(); 
+          }
+      }
+        <!-- document.getElementById("send_temp_auth").onclick = login; -->
     </script>
 </html>

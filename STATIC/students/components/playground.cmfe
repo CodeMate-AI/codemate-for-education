@@ -309,7 +309,7 @@
         </div>
         <div id="chat_inp">
             <div id="input_box">
-                <input type="text" id="chat_in" placeholder="Type your message...">
+                <input type="text" id="chat_in" onkeydown="sendMessageOnEnter(event)" placeholder="Type your message...">
                 <div style="display: flex; height: 100%; width: auto; align-items: center;">
                     <!-- <div style="background: #009eff36; border: 1px solid rgba(0, 255, 255, 0.096); height: 100%; width: 45px; display: flex; align-items: center; justify-content: center;"> -->
                         <i id="enhanced_context_toggle" class="ph ph-diamonds-four hidden"></i>
@@ -317,7 +317,7 @@
                     <!-- </div> -->
                 </div>
             </div>
-            <i id="send_button" class="ph ph-paper-plane-right"></i>
+            <i id="send_button" onclick="sendMessage()" class="ph ph-paper-plane-right"></i>
         </div>
     </div>
 </div>
