@@ -237,7 +237,7 @@ async function handleSubmitAssignment() {
     }
 }
 //converted to onclick in html and why this was runnign twice coz on click submit_button, button inside it also getting
-//clickd and hence for both same event listener was getting added and hence runnign twice
+//clickd and hence for both same event listener was getting added and hence running twice but still double execution of file still a possibility in production
 // document.querySelector(".submit_button button").addEventListener("click", handleSubmitAssignment);
 
 function redirectToDashboard() {
@@ -256,7 +256,10 @@ function redirectToDashboard() {
 }
 
 
-//converted to onclick lets see if this solves the issue
+// the issue was the addEventListener was running twice in production and hence same stuff is present two times
+//confirmed with getEventListeners but shocking part is that didnt happen in local
+
+////converted to onclick lets see if this solves the issue
 
 function openMobileChat() {
     console.log("clikce")
