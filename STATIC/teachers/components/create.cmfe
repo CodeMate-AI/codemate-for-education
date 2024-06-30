@@ -1,4 +1,4 @@
-<div id="loader" class="loading-modal absolute h-screen top-0 left-0 w-full hidden items-center justify-center bg-black/50">
+<div id="loader" class="loading-modal fixed h-screen top-0 left-0 w-full hidden items-center justify-center bg-black/50">
     <div class="loader animate-spin"></div>
 </div>
 <div id="header" class="h-24 w-full rounded-2xl flex flex-col justify-center mb-2.5">
