@@ -1,3 +1,36 @@
+
+//sometimes dash_elms becoming undefined so lets also keep it here for reducing such chances
+dash_elms = {
+    "submitted_assignment": `<div class='sa__'>
+                        <div class="sa_ds">
+                            <span>{{sa.title}}</span>
+                            <div class="desc_task">{{sa.task}}</div>
+                        </div>
+                        <div class="sa_an">{{sa.stat}}</div>
+                        <div class="sa_cl">
+                            <div class="sa_rept tooltip" data-tip="View Report" submission_id="{{sa.submission_id}}" assignment_id="{{sa.assignment_id}}">
+                                <i class="ph-fill cursor-pointer ph-cloud-arrow-down {{sa.donwload.report}}"></i>
+                            </div>
+                           <!-- <div class="sa_view-sa tooltip" data-tip="View Submission">
+                                <i class="ph ph-info"></i>
+                            </div>-->
+                        </div>
+                    </div>`,
+
+    "submitted_assignment_stats": {
+        "pending": `<div class="sa_stat_pending">
+                        <i class="ph-fill ph-clock"></i>
+                        <span>Yet To Evaluate</span>
+                    </div>`,
+
+        "success": `<div class="sa_stat_success">
+                        <div class="success_acc__"></div>
+                        <div class="success_eff__"></div>
+                        <div class="success_scr__"></div>
+                    </div>`
+    }
+}
+
 const env = {
     "active_page": null,
     "app": document.getElementById("app"),
