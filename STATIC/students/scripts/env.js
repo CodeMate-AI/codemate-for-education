@@ -146,7 +146,10 @@ const env = {
                                     var assignments__sa = "";
                                     console.log("env.scripts.data.dash=",env.scripts.data.dash)
                                    if(env.scripts.data.dash.submissions.length !== 0) {
-                                    if(dash_elms !== undefined) {
+                                       if (dash_elms !== undefined) {
+                                        env.scripts.data.dash.submissions.sort((a, b) => {
+                                            return new Date(b.date_time) - new Date(a.date_time);
+                                        });
                                         env.scripts.data.dash.submissions.slice(2, 5).forEach((e) => {
                                             console.log("e=",e);
                                             // console.log(e.assignment.id);
