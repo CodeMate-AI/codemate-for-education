@@ -242,7 +242,7 @@
     <span id="task___">{{description}}</span>
 </div>-->
 <div id="main">
-<div class="chat-popup" id="chatpop">
+<div class="chat-popup" id="chatpop" onclick="openMobileChat()">
 <!-- <img width="48" height="48" src="https://img.icons8.com/fluency/48/bot.png" alt="bot"/> -->
 <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g filter="url(#filter0_d_872_472)">
@@ -279,7 +279,7 @@
             </p>
         </div>
         <div id="editor"></div>
-        <div class="submit_button">
+        <div class="submit_button" onclick="handleSubmitAssignment()">
             <button>Submit</button>
         </div>
     </div>

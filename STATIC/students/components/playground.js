@@ -236,9 +236,9 @@ async function handleSubmitAssignment() {
         }
     }
 }
-
-document.querySelector(".submit_button button").removeEventListener("click", handleSubmitAssignment);
-document.querySelector(".submit_button button").addEventListener("click", handleSubmitAssignment);
+//converted to onclick in html and why this was runnign twice coz on click submit_button, button inside it also getting
+//clickd and hence for both same event listener was getting added and hence runnign twice
+// document.querySelector(".submit_button button").addEventListener("click", handleSubmitAssignment);
 
 function redirectToDashboard() {
     let newUrl = new URL(window.location.href);
@@ -256,9 +256,7 @@ function redirectToDashboard() {
 }
 
 
-//most probably the issue was the addEventListener was running twice (when removeEventListener was not there) and
-//hence consecutively two times the code was running on click thus nullifying the effect, now with removeEventListener
-//we make sure it there is only one occurence
+//converted to onclick lets see if this solves the issue
 
 function openMobileChat() {
     console.log("clikce")
@@ -272,8 +270,6 @@ function openMobileChat() {
     }
 }
 
-    document.getElementById("chatpop").removeEventListener('click', openMobileChat);
-    document.getElementById("chatpop").addEventListener('click', openMobileChat);
 
 
   
