@@ -1,3 +1,6 @@
+<div id="loader" class="loading-modal absolute h-screen top-0 left-0 w-full hidden items-center justify-center bg-black/50">
+    <div class="loader animate-spin"></div>
+</div>
 <div id="header" class="h-24 w-full rounded-2xl flex flex-col justify-center mb-2.5">
   <h1 class="text-3xl font-bold subpixel-antialiased text-[#011936]">Create Assignment</h1>
 </div>
@@ -28,7 +31,7 @@
       <p>Publish and Share</p>
   </div>
 </div>
-<form id="create-form" class="flex flex-col gap-5 pt-7 pb-2.5">
+<form id="create-form" class="flex flex-col gap-5 pt-7 pb-2.5" onsubmit="formSubmission(event)">
   <div class="title-wali-div flex flex-col lg:flex-row gap-x-4">
       <div class="div1 flex-1 flex flex-col gap-2.5 m-0">
           <label for="title" class="headings text-[#011936] font-semibold text-lg">Enter Title</label>

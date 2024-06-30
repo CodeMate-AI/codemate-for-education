@@ -130,15 +130,15 @@ function docsUploadHandler() {
 docsUploadHandler()
 
 
-function formSubmission() {
-  //create-form
+//same double running in production issue , make it as onsubmit in inline
+async function formSubmission(e) {
+  e.preventDefault()
   let newUrl = new URL(window.location.href);
   let institute_id = newUrl.searchParams.get('institute_id');
   const teacher_id = newUrl.searchParams.get('teacher_id');
-  const form = document.getElementById("create-form")
+  // const form = document.getElementById("create-form")
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault()
+  // form.addEventListener("submit", async (e) => {
     const title = document.getElementById("title").value
     const description = document.getElementById("description").value
     const problem_statement = document.getElementById("problem").value
@@ -168,7 +168,8 @@ function formSubmission() {
       parameters
     }));
 
-    try {
+  try {
+    document.getElementById("loader").style.display = "flex";
      const data =  await fetch(`https://backend.edu.codemate.ai/add_task/?teacher_id=${teacher_id}&institute_id=${institute_id}`, { // Modify the endpoint as needed
         method: "POST",
         headers: {
@@ -197,15 +198,15 @@ function formSubmission() {
       window.location.reload();
       document.getElementById("dashboard").click();//for being on the safe side
       var notyf = new Notyf();
-      
+      document.getElementById("loader").style.display = "none";
      notyf.success("Assignment has been published successfully.")
-    } catch (error) {
+  } catch (error) {
+    document.getElementById("loader").style.display = "none";
       console.log(error)
       var notyf = new Notyf();
       notyf.error(error)
     }
-  })
 }
 
-formSubmission()
+// formSubmission()
 
