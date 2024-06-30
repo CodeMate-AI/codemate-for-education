@@ -195,7 +195,7 @@ function formSubmission() {
       //was there which was kinda confusing
       history.pushState({}, '', newUrl)
       window.location.reload();
-
+      document.getElementById("dashboard").click();//for being on the safe side
       var notyf = new Notyf();
       
      notyf.success("Assignment has been published successfully.")

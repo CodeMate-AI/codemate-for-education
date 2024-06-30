@@ -130,9 +130,9 @@ const env = {
                             .then((resp) => {
                                 env.scripts.data.dash = resp;
                                 console.log("resp=",resp);
-                                dash = dash.replace("{{assignments.submitted}}", resp.submitted.length);
+                                dash = dash.replace("{{assignments.submitted}}", resp.submissions.length);
                                 dash = dash.replace("{{assignments.pending}}", resp.assigned.length);
-                                dash = dash.replace("{{proficiency}}", ((resp.submitted.length / resp.assigned.length) * 100).toFixed(2));
+                                dash = dash.replace("{{proficiency}}", ((resp.submissions.length / resp.assigned.length) * 100).toFixed(2));
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -144,15 +144,15 @@ const env = {
                             }).then(() => {
                                 setTimeout(() => {
                                     var assignments__sa = "";
-                                    console.log("env.scripts.data.dash.submitted=",env.scripts.data.dash.submitted)
-                                   if(env.scripts.data.dash.submitted.length !== 0) {
+                                    console.log("env.scripts.data.dash=",env.scripts.data.dash)
+                                   if(env.scripts.data.dash.submissions.length !== 0) {
                                     if(dash_elms !== undefined) {
-                                        env.scripts.data.dash.submitted.forEach((e) => {
-                                            console.log(e);
+                                        env.scripts.data.dash.submissions.slice(2, 5).forEach((e) => {
+                                            console.log("e=",e);
                                             // console.log(e.assignment.id);
                                             var temp = dash_elms.submitted_assignment;
-                                            temp = temp.replace("{{sa.title}}", e.title);
-                                            temp = temp.replace("{{sa.task}}", e.description);
+                                            temp = temp.replace("{{sa.title}}", e.assignment.title);
+                                            temp = temp.replace("{{sa.task}}", e.assignment.description);
                                             temp = temp.replace("{{sa.submission_id}}", e.id);
                                             // temp = temp.replace("{{sa.assignment_id}}", e.assignment.id);
                                             if (e.status == "pending") {
