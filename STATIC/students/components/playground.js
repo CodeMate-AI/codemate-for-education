@@ -51,8 +51,8 @@ var editor = ace.edit("editor");
     else
         document.querySelector(".submit_button button").style.display = "none";
     
-        let newUrl = new URL(window.location.href);
-                                    let assignment = newUrl.searchParams.get('assignment');
+         let newurl = new URL(window.location.href);
+                                    let assignment = newurl.searchParams.get('assignment');
     if (assignment === "Completed") {
         {
             document.querySelector(".submit_button button").style.display = "none";
