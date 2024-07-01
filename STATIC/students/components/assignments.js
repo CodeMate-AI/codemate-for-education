@@ -191,7 +191,8 @@ clickHandler()
 function viewSubmission() {
       // Get the assignment ID from the button attribute
       let assignmentId = this.getAttribute('submission_id');
-
+console.log("submission_id",assignmentId)
+  console.log("running")
       const languages = [
         'Python',
         'JavaScript',
