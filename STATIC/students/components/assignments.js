@@ -82,7 +82,7 @@ pa_elm = {
 </div>
 <div class="btn">
   <div class="btn-inside">
-    <button submission_id="{{assignments.completed.id}}" assignment_id="{{assignments.completed.aid}}" class="w-[206px] task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
+    <button onclick="viewSubmission()" submission_id="{{assignments.completed.id}}" assignment_id="{{assignments.completed.aid}}" class="w-[206px] task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
   </div>
 </div>
 </div>
@@ -182,12 +182,13 @@ buttons.forEach(button => {
 clickHandler()
 
 
-function viewSubmissionsHandler() {
-  let buttons = document.querySelectorAll('button[submission_id]');
+// function viewSubmissionsHandler() {
+//   let buttons = document.querySelectorAll('button[submission_id]');
 
-// Iterate over each button and attach click event listener
-buttons.forEach(button => {
-  button.addEventListener('click', function() {
+// // Iterate over each button and attach click event listener
+// buttons.forEach(button => {
+//   button.addEventListener('click', 
+function viewSubmission() {
       // Get the assignment ID from the button attribute
       let assignmentId = this.getAttribute('submission_id');
 
@@ -225,8 +226,9 @@ buttons.forEach(button => {
         history.pushState({}, '', `?app=playground&assignment=Completed&submission_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
         window.location.reload()
       })
-  });
-});
 }
+// );
+// });
+// }
 
-viewSubmissionsHandler()
+// viewSubmissionsHandler()
