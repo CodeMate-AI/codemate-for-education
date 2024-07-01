@@ -47,9 +47,9 @@ window.addEventListener("popstate", setActiveBasedOnQuery);
 //     }
 // }
 
-window.addEventListener("popstate", () => {
-  refreshAssignments(); // Update when the URL changes
-});
+// window.addEventListener("popstate", () => {
+//   refreshAssignments(); // Update when the URL changes
+// });
 
 
 pa_elm = {
