@@ -47,9 +47,9 @@ window.addEventListener("popstate", setActiveBasedOnQuery);
 //     }
 // }
 
-// window.addEventListener("popstate", () => {
-//   refreshAssignments(); // Update when the URL changes
-// });
+window.addEventListener("popstate", () => {
+  refreshAssignments(); // Update when the URL changes
+});
 
 
 pa_elm = {
@@ -82,7 +82,7 @@ pa_elm = {
 </div>
 <div class="btn">
   <div class="btn-inside">
-    <button onclick="viewSubmission()" submission_id="{{assignments.completed.id}}" assignment_id="{{assignments.completed.aid}}" class="w-[206px] task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
+    <button submission_id="{{assignments.completed.id}}" assignment_id="{{assignments.completed.aid}}" class="w-[206px] task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
   </div>
 </div>
 </div>
@@ -121,13 +121,13 @@ pa_elm = {
 // }
 
 
-// document.querySelectorAll(".task_elm").forEach((e)=>{
-//   e.onclick = ()=>{
-//     search__ = window.location.search;
-//     search__ = search__.replace("assignments", "playground");
-//     window.location.href = window.location.pathname+search__+"&submission_id="+e.getAttribute("submission_id")+"&assignment_id="+e.getAttribute("assignment_id");
-//   }
-// })
+document.querySelectorAll(".task_elm").forEach((e)=>{
+  e.onclick = ()=>{
+    search__ = window.location.search;
+    search__ = search__.replace("assignments", "playground");
+    window.location.href = window.location.pathname+search__+"&submission_id="+e.getAttribute("submission_id")+"&assignment_id="+e.getAttribute("assignment_id");
+  }
+})
 
 
 
@@ -182,17 +182,15 @@ buttons.forEach(button => {
 clickHandler()
 
 
-// function viewSubmissionsHandler() {
-//   let buttons = document.querySelectorAll('button[submission_id]');
+function viewSubmissionsHandler() {
+  let buttons = document.querySelectorAll('button[submission_id]');
 
-// // Iterate over each button and attach click event listener
-// buttons.forEach(button => {
-//   button.addEventListener('click', 
-function viewSubmission() {
+// Iterate over each button and attach click event listener
+buttons.forEach(button => {
+  button.addEventListener('click', function() {
       // Get the assignment ID from the button attribute
       let assignmentId = this.getAttribute('submission_id');
-console.log("submission_id",assignmentId)
-  console.log("running")
+
       const languages = [
         'Python',
         'JavaScript',
@@ -221,24 +219,14 @@ console.log("submission_id",assignmentId)
             break; // Exit the loop if a match is found
           }
         }
-        let currentUrl = new URL(window.location.href);
-
-    // Use URLSearchParams to work with the query string
-    let searchParams = currentUrl.searchParams;
-    searchParams.set('app', 'playground');
-    searchParams.set('assignment', 'Completed');
-    searchParams.set('submission_id', assignmentId);
-    searchParams.set('language', assign_language);
-    searchParams.set('institute_id', searchParams.get('institute_id'));
-    searchParams.set('student_id', searchParams.get('student_id'));
-
-    // Update the URL with the new query string
-    history.pushState({}, '', currentUrl.toString());
-        // window.location.reload()
+        let newUrl = new URL(window.location.href);
+        let institute_id = newUrl.searchParams.get('institute_id');
+        let student_id= newUrl.searchParams.get('student_id')
+        history.pushState({}, '', `?app=playground&mode=Completed&submission_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+        window.location.reload()
       })
+  });
+});
 }
-// );
-// });
-// }
 
-// viewSubmissionsHandler()
+viewSubmissionsHandler()
