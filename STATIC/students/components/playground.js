@@ -41,8 +41,8 @@ setTimeout(()=>{
                 fetch(`https://backend.edu.codemate.ai/student/get_assignment?institute_id=${search_params.institute_id}&assignment_id=${search_params.assignment_id}&student_id=${search_params.student_id}`)
                     .then(resp => resp.json())
                     .then(resp => {
-                        console.log(resp.assignment.language.toLowerCase());
-                        editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
+                        // console.log(resp.assignment.language.toLowerCase());
+                        // editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
                     });
             })
     }
