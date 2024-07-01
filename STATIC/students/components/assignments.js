@@ -171,8 +171,9 @@ buttons.forEach(button => {
           }
           let newUrl = new URL(window.location.href);
           let institute_id = newUrl.searchParams.get('institute_id');
-          let student_id= newUrl.searchParams.get('student_id')
-          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+          let student_id = newUrl.searchParams.get('student_id')
+          let assignment= newUrl.searchParams.get('assignment')
+          history.pushState({}, '', `?app=playground&assignment_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}&assignment=${assignment}`);
           window.location.reload()
         })
     });
