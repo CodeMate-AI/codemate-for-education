@@ -1,4 +1,6 @@
 function fillContainerWithDivs(containerId) {
+    if (!document.getElementById(containerId))
+        return;  
     const container = document.getElementById(containerId);
 
     // Calculate the number of rows and columns needed

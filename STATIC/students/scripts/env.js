@@ -204,8 +204,8 @@ const env = {
                                         console.log(success_elms);
 
                                         var counter = 0;
-                                        console.log("env.scripts.data.dash.students=",env.scripts.data.dash.students)
-                                        env.scripts.data.dash.students.assignments.submitted.forEach((e) => {
+                                        console.log("env.scripts.data.dash.submissions (for boxes)=",env.scripts.data.dash.submissions)
+                                        env.scripts.data.dash.submissions.forEach((e) => {
                                             if (e.status == "completed") {
                                                 var sa__upss = new ProgressBar.Circle(success_elms.acc[counter], {
                                                     color: '#aaa',
