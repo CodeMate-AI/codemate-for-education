@@ -23,7 +23,7 @@ var editor = ace.edit("editor");
 
 
 
-setTimeout(()=>{
+// setTimeout(()=>{
     if (search_params.assignment_id != "" && search_params.assignment_id != undefined) {
         fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id=" + search_params.assignment_id)
             .then(resp => resp.json())
@@ -64,7 +64,7 @@ setTimeout(()=>{
             });
         }
     }
-}, 500);
+// }, 500);
 
 
 

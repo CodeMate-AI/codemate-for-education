@@ -338,7 +338,7 @@ const env = {
                         .then((res) => res.json())
                         .then((res) => {
                                 env.scripts.data.playground = res;
-                                console.log(res);
+                                console.log("res=",res);
                                 // playground = playground.replace("{{title}}", res.assignment.title);
                                 // playground = playground.replace("{{description}}", res.assignment.description);
                                 // return assign
@@ -350,7 +350,7 @@ const env = {
                                 elm.src = env.scripts.paths.playground;
                                 document.body.appendChild(elm);
                             }).then(() => {
-                                setTimeout(() => {
+                                // setTimeout(() => {
                                     //  let assignments_pending = "";
                     
                                     // env.scripts.data.playground.assignments.forEach((e) => {
@@ -367,11 +367,11 @@ const env = {
                 
                                     // env.app.innerHTML = assign+assignments_pending;
                                     env.app.innerHTML = playground;
-                                    setTimeout(()=>{
+                                    // setTimeout(()=>{
                                         env.app.appendChild(env.scripts.elements.playground);
-                                    }, 100);
+                                    // }, 100);
                                     // playground = playground.replace("{{assignments.pending}}", assignments_pending);
-                                }, 100);
+                                // }, 100);
                             })
                     })
             },
@@ -431,7 +431,17 @@ const env = {
                                         env.scripts.data.assignments.assigned.sort((a, b) => {
                                             return new Date(parseInt(b.due_date) * 1000) - new Date(parseInt(a.due_date) * 1000);
                                         });
-                                        env.scripts.data.assignments.assigned.forEach((e) => {
+                                        // create an array of all aid values from the submissions array.
+let submittedAssignmentIds = env.scripts.data.assignments.submissions.map(submission => submission.aid);
+
+// filter the assigned array to include only those assignments
+// whose id is not found in the submittedAssignmentIds array.
+let unsubmittedAssignments = env.scripts.data.assignments.assigned.filter(assignment => {
+    return !submittedAssignmentIds.includes(assignment.id);
+});
+
+//so initally we were using assigned array but we need the pending ones so simply remove the ones which are submitted
+unsubmittedAssignments.forEach((e) => {
                                             var temp2 = pa_elm.pending;
                                             console.log(e);
                                     
