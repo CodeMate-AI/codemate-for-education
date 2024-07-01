@@ -51,7 +51,9 @@ var editor = ace.edit("editor");
     else
         document.querySelector(".submit_button button").style.display = "none";
     
-    if (search_params.assignment === "Completed") {
+        let newUrl = new URL(window.location.href);
+                                    let assignment = newUrl.searchParams.get('assignment');
+    if (assignment === "Completed") {
         {
             document.querySelector(".submit_button button").style.display = "none";
             fetch(`https://backend.edu.codemate.ai/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
