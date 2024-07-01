@@ -121,13 +121,13 @@ pa_elm = {
 // }
 
 
-document.querySelectorAll(".task_elm").forEach((e)=>{
-  e.onclick = ()=>{
-    search__ = window.location.search;
-    search__ = search__.replace("assignments", "playground");
-    window.location.href = window.location.pathname+search__+"&submission_id="+e.getAttribute("submission_id")+"&assignment_id="+e.getAttribute("assignment_id");
-  }
-})
+// document.querySelectorAll(".task_elm").forEach((e)=>{
+//   e.onclick = ()=>{
+//     search__ = window.location.search;
+//     search__ = search__.replace("assignments", "playground");
+//     window.location.href = window.location.pathname+search__+"&submission_id="+e.getAttribute("submission_id")+"&assignment_id="+e.getAttribute("assignment_id");
+//   }
+// })
 
 
 
