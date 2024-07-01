@@ -220,10 +220,19 @@ function viewSubmission() {
             break; // Exit the loop if a match is found
           }
         }
-        let newUrl = new URL(window.location.href);
-        let institute_id = newUrl.searchParams.get('institute_id');
-        let student_id= newUrl.searchParams.get('student_id')
-        history.pushState({}, '', `?app=playground&assignment=Completed&submission_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+        let currentUrl = new URL(window.location.href);
+
+    // Use URLSearchParams to work with the query string
+    let searchParams = currentUrl.searchParams;
+    searchParams.set('app', 'playground');
+    searchParams.set('assignment', 'Completed');
+    searchParams.set('submission_id', assignmentId);
+    searchParams.set('language', assign_language);
+    searchParams.set('institute_id', searchParams.get('institute_id'));
+    searchParams.set('student_id', searchParams.get('student_id'));
+
+    // Update the URL with the new query string
+    history.pushState({}, '', currentUrl.toString());
         // window.location.reload()
       })
 }
