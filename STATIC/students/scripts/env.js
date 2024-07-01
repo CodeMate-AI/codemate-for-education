@@ -181,6 +181,7 @@ const env = {
                                     // console.log(dash);
                                    
                                     setTimeout(() => {
+                                        if(fillContainerWithDivs)
                                         fillContainerWithDivs('presenter');
                                         setTimeout(()=>{
                                             document.querySelectorAll(".sa_rept").forEach((e)=>{
