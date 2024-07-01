@@ -23,7 +23,7 @@ var editor = ace.edit("editor");
 
 
 
-// setTimeout(()=>{
+setTimeout(()=>{
     if (search_params.assignment_id != "" && search_params.assignment_id != undefined) {
         fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id=" + search_params.assignment_id)
             .then(resp => resp.json())
@@ -41,19 +41,15 @@ var editor = ace.edit("editor");
                 fetch(`https://backend.edu.codemate.ai/student/get_assignment?institute_id=${search_params.institute_id}&assignment_id=${search_params.assignment_id}&student_id=${search_params.student_id}`)
                     .then(resp => resp.json())
                     .then(resp => {
-                        //no such language from resp
-                        // console.log("resp=",resp)
-                        // console.log(resp.assignment.language.toLowerCase());
-                        // editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
+                        console.log(resp.assignment.language.toLowerCase());
+                        editor.session.setMode(`ace/mode/${resp.assignment.language.toLowerCase()}`);
                     });
             })
     }
     else
         document.querySelector(".submit_button button").style.display = "none";
     
-         let newurl = new URL(window.location.href);
-                                    let assignment = newurl.searchParams.get('assignment');
-    if (assignment === "Completed") {
+    if (search_params.assignment === "Completed") {
         {
             document.querySelector(".submit_button button").style.display = "none";
             fetch(`https://backend.edu.codemate.ai/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
@@ -66,7 +62,7 @@ var editor = ace.edit("editor");
             });
         }
     }
-// }, 500);
+}, 500);
 
 
 
