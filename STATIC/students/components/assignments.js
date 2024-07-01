@@ -224,7 +224,7 @@ function viewSubmission() {
         let institute_id = newUrl.searchParams.get('institute_id');
         let student_id= newUrl.searchParams.get('student_id')
         history.pushState({}, '', `?app=playground&assignment=Completed&submission_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
-        window.location.reload()
+        // window.location.reload()
       })
 }
 // );
