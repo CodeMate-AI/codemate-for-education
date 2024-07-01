@@ -50,8 +50,8 @@ dash_elm_teachers = {
                 </div>
                 <div class="flex p-2 px-4 border-[#7c758f] border rounded-lg justify-between w-[280px] sm:w-[300px] items-center">
                     <span class="text-[#4a5766] text-base"> Yet To Submit</span>
-                    <span class="font-semibold">{{assignments.pending.yet}}</span>
-                    <button class="font-semibold !px-5">Notify</button>
+                    <span class="font-semibold pr-2">{{assignments.pending.yet}}</span>
+                    <!--<button class="font-semibold !px-5">Notify</button>-->
                 </div>
             </div>
     </div>

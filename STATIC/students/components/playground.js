@@ -50,7 +50,8 @@ setTimeout(()=>{
         document.querySelector(".submit_button button").style.display = "none";
     
     if (search_params.assignment === "Completed") {
-         {
+        {
+            document.querySelector(".submit_button button").style.display = "none";
             fetch(`https://backend.edu.codemate.ai/student/get_submission?submission_id=${search_params.submission_id}&institute_id=123456`)
             .then(resp => resp.json())
             .then((submissionResp) => {
@@ -151,18 +152,28 @@ function sendMessage(){
     })
 }
 
-// assigning the sendMessage function to the send_button's onclick event
-document.getElementById("send_button").onclick = sendMessage;
+// converted to inline html since in production running twice
+// document.getElementById("send_button").onclick = sendMessage;
 
 // adding an event listener to the chat_in input for the keydown event
-document.getElementById("chat_in").addEventListener('keydown', function(event) {
+
+function sendMessageOnEnter(event) {
     if (event.key === 'Enter') {
         event.preventDefault(); 
         sendMessage(); 
     }
-});
+}
 
-document.querySelector(".submit_button button").addEventListener("click", async function () {
+//converted to inline html
+// document.getElementById("chat_in").addEventListener('keydown', function(event) {
+//     if (event.key === 'Enter') {
+//         event.preventDefault(); 
+//         sendMessage(); 
+//     }
+// });
+
+async function handleSubmitAssignment() {
+    console.log("submit click")
     const confirmation = confirm("Are you sure you want to submit?");
     if (confirmation) {
         try {
@@ -234,7 +245,10 @@ document.querySelector(".submit_button button").addEventListener("click", async 
             document.getElementById("assignment-submit-modal").style.display = "none";
         }
     }
-});
+}
+//converted to onclick in html and why this was runnign twice coz on click submit_button, button inside it also getting
+//clickd and hence for both same event listener was getting added and hence running twice but still double execution of file still a possibility in production
+// document.querySelector(".submit_button button").addEventListener("click", handleSubmitAssignment);
 
 function redirectToDashboard() {
     let newUrl = new URL(window.location.href);
@@ -252,13 +266,23 @@ function redirectToDashboard() {
 }
 
 
-document.querySelector('.chat-popup').addEventListener('click', function () {
+// the issue was the addEventListener was running twice in production and hence same stuff is present two times
+//confirmed with getEventListeners but shocking part is that didnt happen in local
+
+////converted to onclick lets see if this solves the issue
+
+function openMobileChat() {
     console.log("clikce")
+    
     const container = document.getElementById('container');
     if (container.classList.contains('chat-fullscreen')) {
+        
         container.classList.remove('chat-fullscreen');
     } else {
         container.classList.add('chat-fullscreen');
     }
-});
+}
+
+
+
   

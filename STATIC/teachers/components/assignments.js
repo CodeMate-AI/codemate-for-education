@@ -12,7 +12,7 @@ assign_teachers = {
             </div>
             </div>
             <div class="flex flex-col text-lg gap-y-4">
-                <div class="flex p-2 border-[#7c858f] border rounded-lg justify-evenly w-[280px] sm:w-[300px] items-center">
+                <div class="flex p-2 px-3 border-[#7c858f] border rounded-lg justify-between w-[280px] sm:w-[300px] items-center">
                     <span class="text-[#4a5766] text-base">Submissions</span>
                     <span class="font-semibold">{{assignments.pending.submissions}}</span>
                     <div class="bton w-fit">
@@ -21,10 +21,10 @@ assign_teachers = {
                     </div>
                     </div>
                 </div>
-                <div class="flex p-2 border-[#7c758f] border rounded-lg justify-evenly w-[280px] sm:w-[300px] items-center">
+                <div class="flex p-2 px-3 border-[#7c758f] border rounded-lg justify-between w-[280px] sm:w-[300px] items-center">
                     <span class="text-[#4a5766] text-base"> Yet To Submit</span>
-                    <span class="font-semibold">{{assignments.pending.yet}}</span>
-                    <button class="font-semibold !px-5 !py-2">Notify</button>
+                    <span class="font-semibold pr-2">{{assignments.pending.yet}}</span>
+                    <!--<button class="font-semibold !px-5 !py-2">Notify</button>-->
                 </div>
             </div>
     </div>

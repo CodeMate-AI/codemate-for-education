@@ -255,10 +255,10 @@
     </div>
     <br>
     <br>
-    <div id="strks_mgr">
+    <!-- <div id="strks_mgr">
         <h2>My Submissions</h2>
         <div id="presenter"></div>
-    </div>
+    </div> -->
     <div id="submitted_assignments" class="flex justify-between items-center">
         <h2>Submitted Assignments</h2>
         <h3 class="text-[#48aef3] cursor-pointer" id="view-all">View All</h3>

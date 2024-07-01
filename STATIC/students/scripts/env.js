@@ -1,3 +1,36 @@
+
+//sometimes dash_elms becoming undefined so lets also keep it here for reducing such chances
+dash_elms = {
+    "submitted_assignment": `<div class='sa__'>
+                        <div class="sa_ds">
+                            <span>{{sa.title}}</span>
+                            <div class="desc_task">{{sa.task}}</div>
+                        </div>
+                        <div class="sa_an">{{sa.stat}}</div>
+                        <div class="sa_cl">
+                            <div class="sa_rept tooltip" data-tip="View Report" submission_id="{{sa.submission_id}}" assignment_id="{{sa.assignment_id}}">
+                                <i class="ph-fill cursor-pointer ph-cloud-arrow-down {{sa.donwload.report}}"></i>
+                            </div>
+                           <!-- <div class="sa_view-sa tooltip" data-tip="View Submission">
+                                <i class="ph ph-info"></i>
+                            </div>-->
+                        </div>
+                    </div>`,
+
+    "submitted_assignment_stats": {
+        "pending": `<div class="sa_stat_pending">
+                        <i class="ph-fill ph-clock"></i>
+                        <span>Yet To Evaluate</span>
+                    </div>`,
+
+        "success": `<div class="sa_stat_success">
+                        <div class="success_acc__"></div>
+                        <div class="success_eff__"></div>
+                        <div class="success_scr__"></div>
+                    </div>`
+    }
+}
+
 const env = {
     "active_page": null,
     "app": document.getElementById("app"),
@@ -20,6 +53,16 @@ const env = {
     "init": () => {
         let url = new URL(window.location.href);
         env.active_page = url.searchParams.get('app');
+
+        if(env.active_page === "dash")
+        setTimeout(() => {
+            const dashboardElement = document.getElementById('dashboard');
+            if (dashboardElement) {
+                dashboardElement.click(); // Trigger a click event on the dashboardElement
+            }
+        }, 1500); // 1500 milliseconds
+
+
         if (env.active_page === null) {
             env.active_page = "dash";
         }
@@ -86,10 +129,10 @@ const env = {
                             .then((resp) => resp.json())
                             .then((resp) => {
                                 env.scripts.data.dash = resp;
-                                console.log(resp);
-                                dash = dash.replace("{{assignments.submitted}}", resp.submitted.length);
+                                console.log("resp=",resp);
+                                dash = dash.replace("{{assignments.submitted}}", resp.submissions.length);
                                 dash = dash.replace("{{assignments.pending}}", resp.assigned.length);
-                                dash = dash.replace("{{proficiency}}", ((resp.submitted.length / resp.assigned.length) * 100).toFixed(2));
+                                dash = dash.replace("{{proficiency}}", ((resp.submissions.length / resp.assigned.length) * 100).toFixed(2));
                                 return dash;
                             }).then((dash) => {
                                 env.scripts.elements.dash = document.createElement("script");
@@ -101,15 +144,18 @@ const env = {
                             }).then(() => {
                                 setTimeout(() => {
                                     var assignments__sa = "";
-                                    console.log("env.scripts.data.dash.submitted=",env.scripts.data.dash.submitted)
-                                   if(env.scripts.data.dash.submitted.length !== 0) {
-                                    if(dash_elms !== undefined) {
-                                        env.scripts.data.dash.submitted.forEach((e) => {
-                                            console.log(e);
+                                    console.log("env.scripts.data.dash=",env.scripts.data.dash)
+                                   if(env.scripts.data.dash.submissions.length !== 0) {
+                                       if (dash_elms !== undefined) {
+                                        env.scripts.data.dash.submissions.sort((a, b) => {
+                                            return new Date(b.date_time) - new Date(a.date_time);
+                                        });
+                                        env.scripts.data.dash.submissions.slice(2, 5).forEach((e) => {
+                                            console.log("e=",e);
                                             // console.log(e.assignment.id);
                                             var temp = dash_elms.submitted_assignment;
-                                            temp = temp.replace("{{sa.title}}", e.title);
-                                            temp = temp.replace("{{sa.task}}", e.description);
+                                            temp = temp.replace("{{sa.title}}", e.assignment.title);
+                                            temp = temp.replace("{{sa.task}}", e.assignment.description);
                                             temp = temp.replace("{{sa.submission_id}}", e.id);
                                             // temp = temp.replace("{{sa.assignment_id}}", e.assignment.id);
                                             if (e.status == "pending") {
@@ -158,8 +204,8 @@ const env = {
                                         console.log(success_elms);
 
                                         var counter = 0;
-                                        console.log("env.scripts.data.dash.students=",env.scripts.data.dash.students)
-                                        env.scripts.data.dash.students.assignments.submitted.forEach((e) => {
+                                        console.log("env.scripts.data.dash.submissions (for boxes)=",env.scripts.data.dash.submissions)
+                                        env.scripts.data.dash.submissions.forEach((e) => {
                                             if (e.status == "completed") {
                                                 var sa__upss = new ProgressBar.Circle(success_elms.acc[counter], {
                                                     color: '#aaa',
@@ -366,8 +412,8 @@ const env = {
             env.scripts.data.assignments.submissions.sort((a, b) => {
                 return new Date(b.date_time) - new Date(a.date_time);
             });
-                                    if(assignment === "Completed"){
-                                        env.scripts.data.assignments.submissions.forEach((e) => {
+                                    if (assignment === "Completed") {
+                                        env.scripts.data.assignments.submissions.slice(2).forEach((e) => {
                                             var temp2 = pa_elm.completed;
 
                                             console.log(e);
@@ -405,6 +451,20 @@ const env = {
                                     assign = assign.replace("{{assignments.pending}}", assignments_pending);
                                     env.app.innerHTML = assign
                                     
+                                    if (assignment === "Completed") {
+                                        document.getElementById("pending_btn").style.backgroundColor = "#f7f7f7";
+                                        document.getElementById("pending_btn").style.color = "black";
+                                        document.getElementById("pending_btn").style.border = "1px solid #dddddd";
+                                        document.getElementById("completed_btn").style.backgroundColor = "#010536";
+                                        document.getElementById("completed_btn").style.color = "white";
+                                    }
+                                    else {
+                                        document.getElementById("pending_btn").style.backgroundColor = "#010536";
+                                        document.getElementById("pending_btn").style.color = "white";
+                                        document.getElementById("pending_btn").style.border = "none";
+                                        document.getElementById("completed_btn").style.backgroundColor = "#f7f7f7";
+                                        document.getElementById("completed_btn").style.color = "black";
+                                    }
                                 }, 100);
                             })
                     })

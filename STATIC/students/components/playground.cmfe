@@ -242,7 +242,7 @@
     <span id="task___">{{description}}</span>
 </div>-->
 <div id="main">
-<div class="chat-popup">
+<div class="chat-popup" id="chatpop" onclick="openMobileChat()">
 <!-- <img width="48" height="48" src="https://img.icons8.com/fluency/48/bot.png" alt="bot"/> -->
 <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g filter="url(#filter0_d_872_472)">
@@ -279,7 +279,7 @@
             </p>
         </div>
         <div id="editor"></div>
-        <div class="submit_button">
+        <div class="submit_button" onclick="handleSubmitAssignment()">
             <button>Submit</button>
         </div>
     </div>
@@ -309,7 +309,7 @@
         </div>
         <div id="chat_inp">
             <div id="input_box">
-                <input type="text" id="chat_in" placeholder="Type your message...">
+                <input type="text" id="chat_in" onkeydown="sendMessageOnEnter(event)" placeholder="Type your message...">
                 <div style="display: flex; height: 100%; width: auto; align-items: center;">
                     <!-- <div style="background: #009eff36; border: 1px solid rgba(0, 255, 255, 0.096); height: 100%; width: 45px; display: flex; align-items: center; justify-content: center;"> -->
                         <i id="enhanced_context_toggle" class="ph ph-diamonds-four hidden"></i>
@@ -317,7 +317,7 @@
                     <!-- </div> -->
                 </div>
             </div>
-            <i id="send_button" class="ph ph-paper-plane-right"></i>
+            <i id="send_button" onclick="sendMessage()" class="ph ph-paper-plane-right"></i>
         </div>
     </div>
 </div>

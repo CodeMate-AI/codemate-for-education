@@ -355,12 +355,18 @@ const env = {
                             env.app.innerHTML = submissions
                           } else {
                             
-                            env.scripts.data.submissions.submissions.forEach((e) => {
+                              env.scripts.data.submissions.submissions.forEach((e) => {
+                                console.log("e=",e)
                                 var temp2 = uncheck_assign.unchecked;
                              
                                 temp2 = temp2.replace("{{students.name}}", "Srishti");
-                                temp2 = temp2.replace("{{students.submitted_on}}", "12-04-24");
-                                if(e.date_time <= env.scripts.data.submissions.assignment_data.due_date) {
+                                  temp2 = temp2.replace("{{students.submitted_on}}", e.date_time);
+                                  console.log("env.scripts.data.submissions.assignment_data=", env.scripts.data.submissions.assignment_data)
+                                  const date = new Date(e.date_time);
+                                 // Convert the Date object to a Unix timestamp (in seconds)
+                                  const submissionDateUnix = Math.floor(date.getTime() / 1000);
+                                  console.log("submissionDateUnix=",submissionDateUnix)
+                                if(submissionDateUnix <= env.scripts.data.submissions.assignment_data[0].due_date) {
                                     temp2 = temp2.replace("{{students.ontime}}", "Ontime");
                                     temp2 = temp2.replace("{{bg_color}}", "#2A9D8F");
                                 } else {
@@ -478,8 +484,9 @@ const env = {
                         }).then((assign) => {
                             var assignments__sa = "";
                             let promises = [];
-                            
-                            env.scripts.data.assignments.assignments.forEach((e) => {
+                            // Reverse the assignments array
+                let reversedAssignments = env.scripts.data.assignments.assignments.slice().reverse();
+                reversedAssignments.forEach((e) => {
                                 let submissionsUrl = `https://backend.edu.codemate.ai/teacher/get_submissions?institute_id=${institute_id}&teacher_id=${teacher_id}&assignment_id=${e.id}`;
                                 promises.push(
                                     fetch(submissionsUrl)

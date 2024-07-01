@@ -1,6 +1,6 @@
 function checking() {
   // Get all input and textarea elements
-  const inputFields = document.querySelectorAll('input[type="text"], input[type="radio"], textarea');
+  const inputFields = document.querySelectorAll('.compulsory');
 
   // Get reference to the button
   const publishButton = document.querySelector('.publish_button');
@@ -15,9 +15,10 @@ function checking() {
     // If all fields have content, change button background color to blue, otherwise revert to default
     if (publishButton) {
       publishButton.style.backgroundColor = areAllFieldsFilled() ? '#48AEF3' : '';
-      publishButton.addEventListener("click", () => {
+      publishButton.disabled = !areAllFieldsFilled(); // Enable or disable the button
+      // publishButton.addEventListener("click", () => {
 
-      })
+      // })
     }
   }
 
@@ -129,15 +130,15 @@ function docsUploadHandler() {
 docsUploadHandler()
 
 
-function formSubmission() {
-  //create-form
+//same double running in production issue , make it as onsubmit in inline
+async function formSubmission(e) {
+  e.preventDefault()
   let newUrl = new URL(window.location.href);
   let institute_id = newUrl.searchParams.get('institute_id');
   const teacher_id = newUrl.searchParams.get('teacher_id');
-  const form = document.getElementById("create-form")
+  // const form = document.getElementById("create-form")
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault()
+  // form.addEventListener("submit", async (e) => {
     const title = document.getElementById("title").value
     const description = document.getElementById("description").value
     const problem_statement = document.getElementById("problem").value
@@ -167,7 +168,8 @@ function formSubmission() {
       parameters
     }));
 
-    try {
+  try {
+    document.getElementById("loader").style.display = "flex";
      const data =  await fetch(`https://backend.edu.codemate.ai/add_task/?teacher_id=${teacher_id}&institute_id=${institute_id}`, { // Modify the endpoint as needed
         method: "POST",
         headers: {
@@ -190,16 +192,21 @@ function formSubmission() {
 
      let newUrl = new URL(window.location.href);
      newUrl.searchParams.set('assignment_id',await response.task_id);
-     newUrl.searchParams.set('app', "publish");
-     history.pushState({}, '', newUrl)
-
-     alert("Assignment has been published successfully.")
-    } catch (error) {
+      newUrl.searchParams.set('app', "dash");//initially it was publish instead of dash but again option of making it public 
+      //was there which was kinda confusing
+      history.pushState({}, '', newUrl)
+      window.location.reload();
+      document.getElementById("dashboard").click();//for being on the safe side
+      var notyf = new Notyf();
+      document.getElementById("loader").style.display = "none";
+     notyf.success("Assignment has been published successfully.")
+  } catch (error) {
+    document.getElementById("loader").style.display = "none";
       console.log(error)
-      alert(error)
+      var notyf = new Notyf();
+      notyf.error(error)
     }
-  })
 }
 
-formSubmission()
+// formSubmission()
 

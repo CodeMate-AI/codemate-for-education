@@ -1,4 +1,6 @@
 function fillContainerWithDivs(containerId) {
+    if (!document.getElementById(containerId))
+        return;  
     const container = document.getElementById(containerId);
 
     // Calculate the number of rows and columns needed
@@ -98,9 +100,9 @@ dash_elms = {
                             <div class="sa_rept tooltip" data-tip="View Report" submission_id="{{sa.submission_id}}" assignment_id="{{sa.assignment_id}}">
                                 <i class="ph-fill cursor-pointer ph-cloud-arrow-down {{sa.donwload.report}}"></i>
                             </div>
-                            <div class="sa_view-sa tooltip !hidden" data-tip="View Submission">
+                           <!-- <div class="sa_view-sa tooltip" data-tip="View Submission">
                                 <i class="ph ph-info"></i>
-                            </div>
+                            </div>-->
                         </div>
                     </div>`,
 
