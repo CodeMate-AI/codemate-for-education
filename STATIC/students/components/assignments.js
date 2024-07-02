@@ -65,7 +65,7 @@ pa_elm = {
   </div>
   <div class="btn flex w-full sm:w-fit ">
     <div class="btn-inside w-full sm:w-fit">
-      <button assignment_id="{{assignments.pending.aid}}" class="w-full sm:w-fit task_elm py-3 sm:py-2 px-10 rounded bg-gradient-to-r from-cyan-400 to-sky-600 text-white border-none focus:outline-none" nav="task" id="start">START</button>
+      <button assignment_id="{{assignments.pending.aid}}" class="start-button w-full sm:w-fit task_elm py-3 sm:py-2 px-10 rounded bg-gradient-to-r from-cyan-400 to-sky-600 text-white border-none focus:outline-none" nav="task" id="start">START</button>
     </div>
   </div>
 </div>
@@ -82,7 +82,7 @@ pa_elm = {
 </div>
 <div class="btn">
   <div class="btn-inside">
-    <button submission_id="{{assignments.completed.id}}" assignment_id="{{assignments.completed.aid}}" class="w-[206px] task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
+    <button submission_id="{{assignments.completed.id}}" assignment_id="{{assignments.completed.aid}}" class="view-submission-button w-[206px] task_elm py-2 px-10 rounded bg-[#2ca3f2] text-white border-none focus:outline-none" nav="task" id="view">View Submission</button>
   </div>
 </div>
 </div>
@@ -121,19 +121,19 @@ pa_elm = {
 // }
 
 
-document.querySelectorAll(".task_elm").forEach((e)=>{
-  e.onclick = ()=>{
-    search__ = window.location.search;
-    search__ = search__.replace("assignments", "playground");
-    window.location.href = window.location.pathname+search__+"&submission_id="+e.getAttribute("submission_id")+"&assignment_id="+e.getAttribute("assignment_id");
-  }
-})
+// document.querySelectorAll(".task_elm").forEach((e)=>{
+//   e.onclick = ()=>{
+//     search__ = window.location.search;
+//     search__ = search__.replace("assignments", "playground");
+//     window.location.href = window.location.pathname+search__+"&submission_id="+e.getAttribute("submission_id")+"&assignment_id="+e.getAttribute("assignment_id");
+//   }
+// })
 
 
 
 
 function clickHandler() {
-    let buttons = document.querySelectorAll('button[assignment_id]');
+    let buttons = document.querySelectorAll('.start-button');
 
 // Iterate over each button and attach click event listener
 buttons.forEach(button => {
@@ -184,13 +184,14 @@ clickHandler()
 
 
 function viewSubmissionsHandler() {
-  let buttons = document.querySelectorAll('button[submission_id]');
+  let buttons = document.querySelectorAll('.view-submission-button');
 
 // Iterate over each button and attach click event listener
 buttons.forEach(button => {
   button.addEventListener('click', function() {
       // Get the assignment ID from the button attribute
-      let assignmentId = this.getAttribute('submission_id');
+    let submissionID = this.getAttribute('submission_id');
+    let assignmentID=this.getAttribute('assignment_id')
 
       const languages = [
         'Python',
@@ -205,9 +206,10 @@ buttons.forEach(button => {
 
 
 
-      fetch("https://backend.edu.codemate.ai/student/get_assignment?institute_id=123456&assignment_id="+assignmentId)
+      fetch("https://backend.edu.codemate.ai/student/get_assignment?institute_id=123456&assignment_id="+assignmentID)
       .then(resp=>resp.json())
       .then((resp)=>{
+        console.log("resp=",resp)
         // Convert the description to lowercase and split into words
         const descriptionWords = resp.assignment.description.toLowerCase().split(/\s+/); // Split by whitespace
 
@@ -223,7 +225,7 @@ buttons.forEach(button => {
         let newUrl = new URL(window.location.href);
         let institute_id = newUrl.searchParams.get('institute_id');
         let student_id= newUrl.searchParams.get('student_id')
-        history.pushState({}, '', `?app=playground&mode=Completed&submission_id=${assignmentId}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+        history.pushState({}, '', `?app=playground&assignment=Completed&submission_id=${submissionID}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
         window.location.reload()
       })
   });
