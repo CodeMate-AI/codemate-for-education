@@ -5,6 +5,7 @@ const env = {
         "paths": {
             "dash": "./components/dash.js",
             "create": "./components/create.js",
+            "create2": "./components/create2.js",
             "choose": "./components/choose.js",
             "publish": "./components/share.js",
             "submissions": "./components/submissions.js",
@@ -17,6 +18,7 @@ const env = {
         "elements": {
             "dash": null,
             "create": null,
+            "create2":null,
             "choose": null,
             "publish": null,
             "submissions": null,
@@ -29,6 +31,7 @@ const env = {
         "data": {
             "dash": null,
             "create": null,
+            "create2": null,
             "choose": null,
             "publish": null,
             "submissions" : null,
@@ -232,15 +235,8 @@ const env = {
                 const queryParams = new URL(window.location.href);
                 const mode = queryParams.searchParams.get('mode'); 
             
-                let createFile;
-                if (mode === 'manual') {
-                    createFile = "./components/create.cmfe";
-                } else if (mode === 'ai') {
-                    createFile = "./components/create-2.cmfe";
-                } else {
-                    // Default to a certain file if no mode is specified
-                    createFile = "./components/create.cmfe";
-                }
+                let createFile= "./components/create.cmfe";
+
                 fetch(createFile)
                     .then((create) => create.text())
                     .then((create) => {
@@ -258,6 +254,33 @@ const env = {
                      
                             env.app.innerHTML = create;
                             env.app.appendChild(env.scripts.elements.create);
+                   
+                    })
+            },
+            "create2": () => {
+                const queryParams = new URL(window.location.href);
+                const mode = queryParams.searchParams.get('mode'); 
+            
+                let createFile2
+                    createFile2 = "./components/create2.cmfe";
+                
+                fetch(createFile2)
+                    .then((create2) => create2.text())
+                    .then((create2) => {
+                        env.scripts.elements.create2 = document.createElement("script");
+                        env.scripts.elements.create2.src = env.scripts.paths.create2;
+                        return create2;
+                    })
+                    .then((create2) => {
+                        var elm = document.createElement("script");
+                        elm.src = env.scripts.paths.create2
+                        document.body.appendChild(elm);
+                        return create2
+                    })
+                    .then((create2) => {
+                     
+                            env.app.innerHTML = create2;
+                            env.app.appendChild(env.scripts.elements.create2);
                    
                     })
             },
