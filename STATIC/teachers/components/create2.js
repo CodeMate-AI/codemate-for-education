@@ -97,7 +97,7 @@ setInterval(checkFields, 1000);
 
 
 //now "do magic" logic
-
+let input = { title: "", description: "", codingProblem: "" };
 let easyProblem = { title: "sdsdsdsd", description: "sdsdsdsd", codingProblem: "sdsdsd", selected:false };
 let mediumProblem = { title: "sdsd", description: "sdsdsd", codingProblem: "sdsdsd", selected:false };
 let hardProblem = { title: "sdsdsd", description: "sdsdsd", codingProblem: "sdsdsd", selected:false };
@@ -168,7 +168,9 @@ async function doMagic(event) {
   const titleValue = document.getElementById('title').value.trim();
   const descriptionValue = document.getElementById('description').value.trim();
   const codingProblemValue = document.getElementById('codingProblem').value.trim();
-
+  input.title = titleValue;
+  input.description = descriptionValue;
+  input.codingProblem = codingProblemValue;
   const easyStatementElement = document.getElementById('easyStatement');
   const mediumStatementElement = document.getElementById('mediumStatement');
   const hardStatementElement = document.getElementById('hardStatement');
@@ -189,6 +191,7 @@ async function doMagic(event) {
   // await Promise.all(tasks);
 
   document.getElementById("loader").style.display = "none";
+  if(currentTab==0)
   nextPrev(1);
 }
 
