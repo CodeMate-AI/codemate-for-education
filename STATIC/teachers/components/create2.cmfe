@@ -55,11 +55,14 @@
           padding:0 !important;
         }
 </style>
-<div class="flex flex-col w-full h-screen">
+<div class="flex flex-col w-full h-screen overflow-y-hidden">
   <div id="loader" class="loading-modal absolute h-screen w-full z-[10] items-center justify-center bg-black/20 hidden">
-    <div class="loader animate-spin"></div>
+    <div class="flex flex-col w-fit gap-y-1 items-center justify-center">
+      <div class="loader animate-spin"></div>
+      <div id="loader-text" class="text-[#48aef3] text-xl w-fit"></div>
+    </div>
 </div>
-  <div class="text-2xl p-5 py-7 text-left font-semibold border-b-2 border-[#D9D9D9]">Create Assignment using AI</div>
+  <div class="text-2xl p-5 py-3 text-left font-semibold border-b-2 border-[#D9D9D9]">Create Assignment using AI</div>
   <div id="signUpForm" class="w-full p-5 flex-1 shadow-md rounded-2xl bg-white">
     <!-- start step indicators -->
     <div class="form-header flex gap-3 mb-4 text-xs text-center">
@@ -139,9 +142,9 @@
             </button>
           </div>
           <div class="suggestions flex flex-col gap-y-5">
-            <div  id="easy" class="flex border-2 border-[#e8e8e8] p-2 py-6 rounded-lg w-fit">
+            <div  id="easy" class="flex border-2 border-[#e8e8e8] p-2 py-3 rounded-lg w-fit">
               <div class="checkbox justify-center w-[20%] sm:w-auto flex items-center sm:px-10 sm:border-r-2 border-[#e8e8e8]" >
-                <div id="easyUnselected">
+                <div id="easyUnselected" onclick="selectEasy()">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="12" fill="#E8E8E8"/>
                     </svg>                    
@@ -171,9 +174,9 @@
                 </button>
               </div>
             </div>
-            <div  id="medium" class="flex border-2 border-[#e8e8e8] p-2 py-6 rounded-lg w-fit">
+            <div  id="medium" class="flex border-2 border-[#e8e8e8] p-2 py-3 rounded-lg w-fit">
               <div class="checkbox justify-center w-[20%] sm:w-auto flex items-center sm:px-10 sm:border-r-2 border-[#e8e8e8]" >
-                <div id="mediumUnselected">
+                <div id="mediumUnselected" onclick="selectMedium()">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="12" fill="#E8E8E8"/>
                     </svg>                    
@@ -203,9 +206,9 @@
                 </button>
               </div>
             </div>
-            <div  id="hard" class="flex border-2 border-[#e8e8e8] p-2 py-6 rounded-lg w-fit">
+            <div  id="hard" class="flex border-2 border-[#e8e8e8] p-2 py-3 rounded-lg w-fit">
               <div class="checkbox justify-center w-[20%] sm:w-auto flex items-center sm:px-10 sm:border-r-2 border-[#e8e8e8]" >
-                <div id="hardUnselected">
+                <div id="hardUnselected" onclick="selectHard()">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="12" cy="12" r="12" fill="#E8E8E8"/>
                     </svg>                    
@@ -236,6 +239,24 @@
               </div>
             </div>
           </div>
+          <button class="continue w-fit cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" id="continue" disabled>
+            <svg width="155" height="48" viewBox="0 0 155 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="155" height="48" rx="8" fill="url(#paint0_linear_688_589)"/>
+              <path d="M35.108 21.7898H32.983C32.9223 21.4413 32.8106 21.1326 32.6477 20.8636C32.4848 20.5909 32.2822 20.3598 32.0398 20.1705C31.7973 19.9811 31.5208 19.839 31.2102 19.7443C30.9034 19.6458 30.572 19.5966 30.2159 19.5966C29.5833 19.5966 29.0227 19.7557 28.5341 20.0739C28.0455 20.3883 27.6629 20.8504 27.3864 21.4602C27.1098 22.0663 26.9716 22.8068 26.9716 23.6818C26.9716 24.572 27.1098 25.322 27.3864 25.9318C27.6667 26.5379 28.0492 26.9962 28.5341 27.3068C29.0227 27.6136 29.5814 27.767 30.2102 27.767C30.5587 27.767 30.8845 27.7216 31.1875 27.6307C31.4943 27.536 31.7689 27.3977 32.0114 27.2159C32.2576 27.0341 32.464 26.8106 32.6307 26.5455C32.8011 26.2803 32.9186 25.9773 32.983 25.6364L35.108 25.6477C35.0284 26.2008 34.8561 26.7197 34.5909 27.2045C34.3295 27.6894 33.9867 28.1174 33.5625 28.4886C33.1383 28.8561 32.642 29.1439 32.0739 29.3523C31.5057 29.5568 30.875 29.6591 30.1818 29.6591C29.1591 29.6591 28.2462 29.4223 27.4432 28.9489C26.6402 28.4754 26.0076 27.7917 25.5455 26.8977C25.0833 26.0038 24.8523 24.9318 24.8523 23.6818C24.8523 22.428 25.0852 21.3561 25.5511 20.4659C26.017 19.572 26.6515 18.8883 27.4545 18.4148C28.2576 17.9413 29.1667 17.7045 30.1818 17.7045C30.8295 17.7045 31.4318 17.7955 31.9886 17.9773C32.5455 18.1591 33.0417 18.4261 33.4773 18.7784C33.9129 19.1269 34.2708 19.5549 34.5511 20.0625C34.8352 20.5663 35.0208 21.142 35.108 21.7898ZM40.7543 29.6705C39.902 29.6705 39.1634 29.483 38.5384 29.108C37.9134 28.733 37.4285 28.2083 37.0838 27.5341C36.7429 26.8598 36.5724 26.072 36.5724 25.1705C36.5724 24.2689 36.7429 23.4792 37.0838 22.8011C37.4285 22.1231 37.9134 21.5966 38.5384 21.2216C39.1634 20.8466 39.902 20.6591 40.7543 20.6591C41.6065 20.6591 42.3452 20.8466 42.9702 21.2216C43.5952 21.5966 44.0781 22.1231 44.419 22.8011C44.7637 23.4792 44.9361 24.2689 44.9361 25.1705C44.9361 26.072 44.7637 26.8598 44.419 27.5341C44.0781 28.2083 43.5952 28.733 42.9702 29.108C42.3452 29.483 41.6065 29.6705 40.7543 29.6705ZM40.7656 28.0227C41.2277 28.0227 41.6141 27.8958 41.9247 27.642C42.2353 27.3845 42.4664 27.0398 42.6179 26.608C42.7732 26.1761 42.8509 25.6951 42.8509 25.1648C42.8509 24.6307 42.7732 24.1477 42.6179 23.7159C42.4664 23.2803 42.2353 22.9337 41.9247 22.6761C41.6141 22.4186 41.2277 22.2898 40.7656 22.2898C40.2921 22.2898 39.8982 22.4186 39.5838 22.6761C39.2732 22.9337 39.0402 23.2803 38.8849 23.7159C38.7334 24.1477 38.6577 24.6307 38.6577 25.1648C38.6577 25.6951 38.7334 26.1761 38.8849 26.608C39.0402 27.0398 39.2732 27.3845 39.5838 27.642C39.8982 27.8958 40.2921 28.0227 40.7656 28.0227ZM48.7386 24.3864V29.5H46.6818V20.7727H48.6477V22.2557H48.75C48.9508 21.767 49.2708 21.3788 49.7102 21.0909C50.1534 20.803 50.7008 20.6591 51.3523 20.6591C51.9545 20.6591 52.4792 20.7879 52.9261 21.0455C53.3769 21.303 53.7254 21.6761 53.9716 22.1648C54.2216 22.6534 54.3447 23.2462 54.3409 23.9432V29.5H52.2841V24.2614C52.2841 23.678 52.1326 23.2216 51.8295 22.892C51.5303 22.5625 51.1155 22.3977 50.5852 22.3977C50.2254 22.3977 49.9053 22.4773 49.625 22.6364C49.3485 22.7917 49.1307 23.017 48.9716 23.3125C48.8163 23.608 48.7386 23.9659 48.7386 24.3864ZM60.7898 20.7727V22.3636H55.7727V20.7727H60.7898ZM57.0114 18.6818H59.0682V26.875C59.0682 27.1515 59.1098 27.3636 59.1932 27.5114C59.2803 27.6553 59.3939 27.7538 59.5341 27.8068C59.6742 27.8598 59.8295 27.8864 60 27.8864C60.1288 27.8864 60.2462 27.8769 60.3523 27.858C60.4621 27.839 60.5455 27.822 60.6023 27.8068L60.9489 29.4148C60.839 29.4527 60.6818 29.4943 60.4773 29.5398C60.2765 29.5852 60.0303 29.6117 59.7386 29.6193C59.2235 29.6345 58.7595 29.5568 58.3466 29.3864C57.9337 29.2121 57.6061 28.9432 57.3636 28.5795C57.125 28.2159 57.0076 27.7614 57.0114 27.2159V18.6818ZM62.5099 29.5V20.7727H64.5668V29.5H62.5099ZM63.544 19.5341C63.2183 19.5341 62.938 19.4261 62.7031 19.2102C62.4683 18.9905 62.3509 18.7273 62.3509 18.4205C62.3509 18.1098 62.4683 17.8466 62.7031 17.6307C62.938 17.411 63.2183 17.3011 63.544 17.3011C63.8736 17.3011 64.1539 17.411 64.3849 17.6307C64.6198 17.8466 64.7372 18.1098 64.7372 18.4205C64.7372 18.7273 64.6198 18.9905 64.3849 19.2102C64.1539 19.4261 63.8736 19.5341 63.544 19.5341ZM68.7386 24.3864V29.5H66.6818V20.7727H68.6477V22.2557H68.75C68.9508 21.767 69.2708 21.3788 69.7102 21.0909C70.1534 20.803 70.7008 20.6591 71.3523 20.6591C71.9545 20.6591 72.4792 20.7879 72.9261 21.0455C73.3769 21.303 73.7254 21.6761 73.9716 22.1648C74.2216 22.6534 74.3447 23.2462 74.3409 23.9432V29.5H72.2841V24.2614C72.2841 23.678 72.1326 23.2216 71.8295 22.892C71.5303 22.5625 71.1155 22.3977 70.5852 22.3977C70.2254 22.3977 69.9053 22.4773 69.625 22.6364C69.3485 22.7917 69.1307 23.017 68.9716 23.3125C68.8163 23.608 68.7386 23.9659 68.7386 24.3864ZM81.9943 25.8295V20.7727H84.0511V29.5H82.0568V27.9489H81.9659C81.7689 28.4375 81.4451 28.8371 80.9943 29.1477C80.5473 29.4583 79.9962 29.6136 79.3409 29.6136C78.7689 29.6136 78.2633 29.4867 77.8239 29.233C77.3883 28.9754 77.0473 28.6023 76.8011 28.1136C76.5549 27.6212 76.4318 27.0265 76.4318 26.3295V20.7727H78.4886V26.0114C78.4886 26.5644 78.6402 27.0038 78.9432 27.3295C79.2462 27.6553 79.6439 27.8182 80.1364 27.8182C80.4394 27.8182 80.733 27.7443 81.017 27.5966C81.3011 27.4489 81.5341 27.2292 81.7159 26.9375C81.9015 26.642 81.9943 26.2727 81.9943 25.8295ZM90.0298 29.6705C89.1548 29.6705 88.3991 29.4886 87.7628 29.125C87.1302 28.7576 86.6435 28.2386 86.3026 27.5682C85.9616 26.8939 85.7912 26.1004 85.7912 25.1875C85.7912 24.2898 85.9616 23.5019 86.3026 22.8239C86.6473 22.142 87.1283 21.6117 87.7457 21.233C88.3632 20.8504 89.0885 20.6591 89.9219 20.6591C90.4598 20.6591 90.9673 20.7462 91.4446 20.9205C91.9257 21.0909 92.3499 21.3561 92.7173 21.7159C93.0885 22.0758 93.3802 22.5341 93.5923 23.0909C93.8045 23.6439 93.9105 24.303 93.9105 25.0682V25.6989H86.7571V24.3125H91.9389C91.9351 23.9186 91.8499 23.5682 91.6832 23.2614C91.5166 22.9508 91.2836 22.7064 90.9844 22.5284C90.6889 22.3504 90.3442 22.2614 89.9503 22.2614C89.5298 22.2614 89.1605 22.3636 88.8423 22.5682C88.5241 22.7689 88.276 23.0341 88.098 23.3636C87.9238 23.6894 87.8348 24.0473 87.831 24.4375V25.6477C87.831 26.1553 87.9238 26.5909 88.1094 26.9545C88.295 27.3144 88.5545 27.5909 88.8878 27.7841C89.2211 27.9735 89.6113 28.0682 90.0582 28.0682C90.3575 28.0682 90.6283 28.0265 90.8707 27.9432C91.1132 27.8561 91.3234 27.7292 91.5014 27.5625C91.6795 27.3958 91.8139 27.1894 91.9048 26.9432L93.8253 27.1591C93.7041 27.6667 93.473 28.1098 93.1321 28.4886C92.795 28.8636 92.3632 29.1553 91.8366 29.3636C91.3101 29.5682 90.7079 29.6705 90.0298 29.6705Z" fill="white"/>
+              <g clip-path="url(#clip0_688_589)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M123.901 24.66L119.659 28.905C119.366 29.1975 118.891 29.1975 118.599 28.905C118.305 28.6125 118.305 28.1325 118.599 27.84L121.689 24.75H113.75C113.335 24.75 113 24.4125 113 24C113 23.5875 113.335 23.25 113.75 23.25H121.689L118.599 20.16C118.305 19.8675 118.305 19.395 118.599 19.095C118.891 18.8025 119.366 18.8025 119.659 19.095L123.901 23.34C124.081 23.52 124.138 23.7675 124.096 24C124.138 24.2325 124.081 24.48 123.901 24.66ZM119 12C112.372 12 107 17.37 107 24C107 30.63 112.372 36 119 36C125.628 36 131 30.63 131 24C131 17.37 125.628 12 119 12Z" fill="white"/>
+              </g>
+              <defs>
+              <linearGradient id="paint0_linear_688_589" x1="1.15484e-06" y1="24" x2="155" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#2CA3F2"/>
+              <stop offset="1" stop-color="#48AEF3"/>
+              </linearGradient>
+              <clipPath id="clip0_688_589">
+              <rect width="24" height="24" fill="white" transform="translate(107 12)"/>
+              </clipPath>
+              </defs>
+              </svg>              
+          </button>
         </div>
     </div>
 
@@ -273,7 +294,7 @@ original button is also commented -->
   <div id="easyView" class="onView bg-white w-[350px] sm:w-[600px] flex-col p-5 rounded-lg gap-y-3 hidden">
     <div class="flex justify-between">
       <span class="text-xl text-[#44a99d] font-bold ">Easy Problem</span>
-      <span onclick="closeProblemModal()">
+      <span onclick="closeProblemModal()" class="cursor-pointer">
         <svg id="closeProblemModal" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M27.5 15.0859C27.5 21.9894 21.9035 27.5859 15 27.5859C8.09644 27.5859 2.5 21.9894 2.5 15.0859C2.5 8.18237 8.09644 2.58594 15 2.58594C21.9035 2.58594 27.5 8.18237 27.5 15.0859ZM11.212 11.298C11.5782 10.9319 12.1717 10.9319 12.5379 11.298L15 13.7601L17.462 11.298C17.8281 10.9319 18.4218 10.9319 18.7879 11.298C19.154 11.6641 19.154 12.2577 18.7879 12.6238L16.3258 15.0859L18.7879 17.5479C19.154 17.9141 19.154 18.5077 18.7879 18.8738C18.4218 19.2399 17.8281 19.2399 17.462 18.8738L15 16.4118L12.5379 18.8738C12.1718 19.2399 11.5782 19.2399 11.2121 18.8738C10.846 18.5077 10.846 17.9141 11.2121 17.5481L13.6741 15.0859L11.212 12.6238C10.8459 12.2577 10.8459 11.6641 11.212 11.298Z" fill="#EF476F"/>
           </svg>  
@@ -287,21 +308,21 @@ original button is also commented -->
     <div class="description flex flex-col gap-y-1">
       <span class="text-lg font-semibold">Description</span>
       <span id="easyViewDescription">sdsdddddddddddddddddddddddddddddddddd</span>
-      <input id="easyEditDescription" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none">
+      <textarea rows="3" id="easyEditDescription" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none"></textarea>
     </div>
     <div class="codingProblem flex flex-col gap-y-1 mb-3">
       <span class="text-lg font-semibold">Coding Problem</span>
       <span id="easyViewCodingProblem">sdsdddddddddddddddddddddddddddddddddd</span>
-      <input id="easyEditCodingProblem" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none">
+      <textarea rows="3" id="easyEditCodingProblem" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none"></textarea>
     </div>
     <div class="edit-and-save flex justify-between">
-      <button class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
+      <button id="easyEdit" onclick="editEasyProblem()" class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
         Edit
         </button>
-        <button class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
+        <button id="easySave" onclick="saveEasyProblem()" class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M 26.980469 5.9902344 A 1.0001 1.0001 0 0 0 26.292969 6.2929688 L 11 21.585938 L 4.7070312 15.292969 A 1.0001 1.0001 0 1 0 3.2929688 16.707031 L 10.292969 23.707031 A 1.0001 1.0001 0 0 0 11.707031 23.707031 L 27.707031 7.7070312 A 1.0001 1.0001 0 0 0 26.980469 5.9902344 z"></path>
           </svg>
@@ -312,7 +333,7 @@ original button is also commented -->
   <div id="mediumView" class="onView bg-white w-[350px] sm:w-[600px] flex-col p-5 rounded-lg gap-y-3 hidden">
     <div class="flex justify-between">
       <span class="text-xl text-[#f77f00] font-bold ">Medium Problem</span>
-      <span onclick="closeProblemModal()">
+      <span onclick="closeProblemModal()" class="cursor-pointer">
         <svg id="closeProblemModal" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M27.5 15.0859C27.5 21.9894 21.9035 27.5859 15 27.5859C8.09644 27.5859 2.5 21.9894 2.5 15.0859C2.5 8.18237 8.09644 2.58594 15 2.58594C21.9035 2.58594 27.5 8.18237 27.5 15.0859ZM11.212 11.298C11.5782 10.9319 12.1717 10.9319 12.5379 11.298L15 13.7601L17.462 11.298C17.8281 10.9319 18.4218 10.9319 18.7879 11.298C19.154 11.6641 19.154 12.2577 18.7879 12.6238L16.3258 15.0859L18.7879 17.5479C19.154 17.9141 19.154 18.5077 18.7879 18.8738C18.4218 19.2399 17.8281 19.2399 17.462 18.8738L15 16.4118L12.5379 18.8738C12.1718 19.2399 11.5782 19.2399 11.2121 18.8738C10.846 18.5077 10.846 17.9141 11.2121 17.5481L13.6741 15.0859L11.212 12.6238C10.8459 12.2577 10.8459 11.6641 11.212 11.298Z" fill="#EF476F"/>
           </svg>  
@@ -334,13 +355,13 @@ original button is also commented -->
       <textarea rows="3" id="mediumEditCodingProblem" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none"></textarea>
     </div>
     <div class="edit-and-save flex justify-between">
-      <button class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
+      <button id="mediumEdit" onclick="editMediumProblem()" class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
         Edit
         </button>
-        <button class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
+        <button id="mediumSave" onclick="saveMediumProblem()" class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M 26.980469 5.9902344 A 1.0001 1.0001 0 0 0 26.292969 6.2929688 L 11 21.585938 L 4.7070312 15.292969 A 1.0001 1.0001 0 1 0 3.2929688 16.707031 L 10.292969 23.707031 A 1.0001 1.0001 0 0 0 11.707031 23.707031 L 27.707031 7.7070312 A 1.0001 1.0001 0 0 0 26.980469 5.9902344 z"></path>
           </svg>
@@ -351,7 +372,7 @@ original button is also commented -->
   <div id="hardView" class="onView bg-white w-[350px] sm:w-[600px] flex-col p-5 rounded-lg gap-y-3 hidden">
     <div class="flex justify-between">
       <span class="text-xl text-[#ef476f] font-bold ">Hard Problem</span>
-      <span onclick="closeProblemModal()">
+      <span onclick="closeProblemModal()" class="cursor-pointer">
         <svg id="closeProblemModal" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M27.5 15.0859C27.5 21.9894 21.9035 27.5859 15 27.5859C8.09644 27.5859 2.5 21.9894 2.5 15.0859C2.5 8.18237 8.09644 2.58594 15 2.58594C21.9035 2.58594 27.5 8.18237 27.5 15.0859ZM11.212 11.298C11.5782 10.9319 12.1717 10.9319 12.5379 11.298L15 13.7601L17.462 11.298C17.8281 10.9319 18.4218 10.9319 18.7879 11.298C19.154 11.6641 19.154 12.2577 18.7879 12.6238L16.3258 15.0859L18.7879 17.5479C19.154 17.9141 19.154 18.5077 18.7879 18.8738C18.4218 19.2399 17.8281 19.2399 17.462 18.8738L15 16.4118L12.5379 18.8738C12.1718 19.2399 11.5782 19.2399 11.2121 18.8738C10.846 18.5077 10.846 17.9141 11.2121 17.5481L13.6741 15.0859L11.212 12.6238C10.8459 12.2577 10.8459 11.6641 11.212 11.298Z" fill="#EF476F"/>
           </svg>  
@@ -364,22 +385,22 @@ original button is also commented -->
     </div>
     <div class="description flex flex-col gap-y-1">
       <span class="text-lg font-semibold">Description</span>
-      <span id="hardViewTitle">sdsdddddddddddddddddddddddddddddddddd</span>
+      <span id="hardViewDescription">sdsdddddddddddddddddddddddddddddddddd</span>
       <textarea rows="3" id="hardEditDescription" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none"></textarea>
     </div>
     <div class="codingProblem flex flex-col gap-y-1 mb-3">
       <span class="text-lg font-semibold">Coding Problem</span>
-      <span id="hardViewTitle">sdsdddddddddddddddddddddddddddddddddd</span>
-      <textarea rows="3" id="hardEditDescription" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none"></textarea>
+      <span id="hardViewCodingProblem">sdsdddddddddddddddddddddddddddddddddd</span>
+      <textarea rows="3" id="hardEditCodingProblem" type="text" class="w-full p-2 rounded-md border-[1px] border-gray-300 hidden resize-none"></textarea>
     </div>
     <div class="edit-and-save flex justify-between">
-      <button class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
+      <button id="hardEdit" onclick="editHardProblem()" class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
         Edit
         </button>
-        <button class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
+        <button id="hardSave" onclick="saveHardProblem()" class="flex items-center py-2.5 px-4 gap-x-2 text-lg bg-sky-400 rounded-xl hover:rounded-3xl hover:bg-sky-600 transition-all duration-300 text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path d="M 26.980469 5.9902344 A 1.0001 1.0001 0 0 0 26.292969 6.2929688 L 11 21.585938 L 4.7070312 15.292969 A 1.0001 1.0001 0 1 0 3.2929688 16.707031 L 10.292969 23.707031 A 1.0001 1.0001 0 0 0 11.707031 23.707031 L 27.707031 7.7070312 A 1.0001 1.0001 0 0 0 26.980469 5.9902344 z"></path>
           </svg>
