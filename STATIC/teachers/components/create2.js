@@ -125,7 +125,7 @@ async function fetchTask(content, element, difficulty) {
   if (difficulty === "hard")
     document.getElementById("loader-text").innerText = "Creating Hard Problem...";
   try {
-    const response = await fetch("http://localhost:8000/generate", {
+    const response = await fetch("https://backend.edu.codemate.ai/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -377,6 +377,11 @@ setInterval(checkSelect, 500);
 function openPublishModal() {
   document.getElementById("publish").style.display = "flex";
   document.getElementById("publishModal").style.display = "flex";
+}
+
+function closePublishModal() {
+  document.getElementById("publish").style.display = "none";
+  document.getElementById("publishModal").style.display = "none";
 }
 
 //logic for additional details like evaluation parameters
