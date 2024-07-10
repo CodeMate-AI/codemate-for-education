@@ -156,8 +156,12 @@ const env = {
                                             var temp = dash_elms.submitted_assignment;
                                             temp = temp.replace("{{sa.title}}", e.assignment.title);
                                             temp = temp.replace("{{sa.task}}", e.assignment.description);
-                                            temp = temp.replace("{{sa.submission_id}}", e.id);
-                                            // temp = temp.replace("{{sa.assignment_id}}", e.assignment.id);
+                                            temp = temp.replace(/{{sa.submission_id}}/g, e.id);
+                                            //now giving the accuracy, efficiency, score values
+                                            temp = temp.replace(/{{sa.accuracy}}/g, e.evaluation.accuracy * 10);
+temp = temp.replace(/{{sa.efficiency}}/g, e.evaluation.efficiency * 10);
+temp = temp.replace(/{{sa.score}}/g, e.evaluation.score * 10);
+                                            temp = temp.replace(/{{sa.assignment_id}}/g, e.assignment.id);
                                             if (e.status == "pending") {
                                                 temp = temp.replace("{{sa.stat}}", dash_elms.submitted_assignment_stats.pending);
                                                 temp = temp.replace("{{sa.donwload.report}}", "sa_rept_disabled");
@@ -179,6 +183,59 @@ const env = {
                                     env.app.appendChild(env.scripts.elements.dash);
                                    }
                                     // console.log(dash);
+
+                                    //view submission
+                                    function viewSubmissionsHandler() {
+                                        let buttons = document.querySelectorAll('.view-submission-button');
+                                      
+                                      // Iterate over each button and attach click event listener
+                                      buttons.forEach(button => {
+                                        button.addEventListener('click', function() {
+                                            // Get the assignment ID from the button attribute
+                                          let submissionID = this.getAttribute('submission_id');
+                                          let assignmentID=this.getAttribute('assignment_id')
+                                      
+                                            const languages = [
+                                              'Python',
+                                              'JavaScript',
+                                              'Java',
+                                               'C',
+                                              'C++',
+                                              'PHP',
+                                              'Rust',
+                                              'Golang'
+                                            ];
+                                      
+                                      
+                                      
+                                            fetch("https://backend.edu.codemate.ai/student/get_assignment?institute_id=123456&assignment_id="+assignmentID)
+                                            .then(resp=>resp.json())
+                                            .then((resp)=>{
+                                              console.log("resp=",resp)
+                                              // Convert the description to lowercase and split into words
+                                              const descriptionWords = resp.assignment.description.toLowerCase().split(/\s+/); // Split by whitespace
+                                      
+                                              let assign_language = "python";
+                                              console.log(descriptionWords);
+                                              // Check if any known language matches a word in the description
+                                              for (let word of descriptionWords) {
+                                                if (languages.includes(word)) {
+                                                  assign_language = word; // If a matching language is found
+                                                  break; // Exit the loop if a match is found
+                                                }
+                                              }
+                                              let newUrl = new URL(window.location.href);
+                                              let institute_id = newUrl.searchParams.get('institute_id');
+                                              let student_id= newUrl.searchParams.get('student_id')
+                                              history.pushState({}, '', `?app=playground&assignment=Completed&submission_id=${submissionID}&assignment_id=${assignmentID}&language=${assign_language}&institute_id=${institute_id}&student_id=${student_id}`);
+                                              window.location.reload()
+                                            })
+                                        });
+                                      });
+                                      }
+                                      
+                                    setTimeout(viewSubmissionsHandler, 100);
+                                    //view report
                                    
                                     setTimeout(() => {
                                         if(typeof fillContainerWithDivs === 'function')
