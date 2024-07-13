@@ -90,12 +90,12 @@ function formatDate(date) {
 
 //sa_view-sa tooltip wali div is made hidden since it cant be commented yet has no functionality
 dash_elms = {
-    "submitted_assignment": `<div class='sa__ !h-[146px] !justify-between'>
-                        <div class="sa_ds w-[470px]">
+    "submitted_assignment": `<div class='sa__ !sm:h-[146px] flex-wrap justify-center sm:!justify-between'>
+                        <div class="sa_ds w-full lg:w-[470px] mb-3 lg:mb-0">
                             <span class="line-clamp-1">{{sa.title}}</span>
                             <div class="desc_task">{{sa.task}}</div>
                         </div>
-                                <div class="progress flex justify-between w-[246px] h-[98px]">
+                                <div class="progress flex justify-between w-[246px] h-[98px] mb-6 sm:mb-0">
             <div class="accuracy flex flex-col h-full">
                 <div class="relative w-[60px] h-[60px]">
                     <svg class="w-full h-full" viewBox="0 0 100 100">
@@ -243,4 +243,43 @@ document.getElementById("view-all").addEventListener("click", function () {
     // Update the URL and reload the page
     history.pushState({}, '', newUrl);
     window.location.reload();
+});
+
+//skill graph logic
+Chart.defaults.font.size = 14;
+new Chart(document.getElementById('myChart'), {
+  type: 'bar',
+  data: {
+    labels: [
+        ['Problem', 'Solving'],
+        ['Logic', 'Building'],
+        ['Data', 'Structure'],
+        ['Code', 'Efficiency'],
+        ['Code', 'Accuracy']
+      ],
+    datasets: [{
+      label: 'Score',
+      data: [65, 19, 37, 5, 20, 55],
+      backgroundColor: [
+        '#2ba2f2',
+        '#2a9c8e',
+        '#8338eb',
+        '#fac600',
+        '#e53945',
+      ],
+    }]
+  },
+    options: {
+        plugins: {
+            legend: {
+              display: false
+            },
+
+          },
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
 });

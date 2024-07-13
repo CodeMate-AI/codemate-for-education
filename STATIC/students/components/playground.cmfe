@@ -109,7 +109,7 @@
     #editor{
         flex: 2;
         border: 2px solid #d1d1d1;
-        border-radius: 15px;
+        border-radius: 5px;
         width: 100%;
         position: relative;
     }
@@ -127,7 +127,7 @@
 
     #task_manager{
         height: 100%;
-        width: 65%;
+        width: 100%;
         display: flex;
         flex-direction: column;
     } #task___{
@@ -159,16 +159,14 @@
         border-radius: 10px;
         max-width: 90%;
     }
-    .submit_button {
-        padding-top: 4px;
-    }
+
     .submit_button > button {
         background: #48AEF3;
         border: none;
         outline: none;
         border-radius: 5px;
         color: white;
-        padding: 10px;
+        padding: 8px;
         padding-left:20px;
         padding-right:20px;
     }
@@ -194,15 +192,14 @@
     position:relative;
 }
 
-    @media(max-width:1300px){
         #main{
             flex-direction:column;
             width:100%;
         }
-        .ia{
+        /* .ia{
             width:100% !important;
             margin-left:0 !important;
-        }
+        } */
 
         .submit_button{
             text-align:center;
@@ -228,20 +225,75 @@
     border-radius:10px;
     border:1px solid grey;
 }
-    }
+.select-menu{
+    width: 190px;
+}
+.select-menu .select-btn{
+    display: flex;
+    height: 36px;
+    background: #fff;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 8px;
+    align-items: center;
+    cursor: pointer;
+    justify-content: space-between;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+.select-btn i{
+    font-size: 25px;
+    transition: 0.3s;
+}
+.select-menu.active .select-btn i{
+    transform: rotate(-180deg);
+}
+.select-menu .options{
+    position: absolute;
+    z-index:10;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,0.1);
+    display: none;
+}
+.select-menu.active .options{
+    display: block;
+}
+.options .option{
+    display: flex;
+    height: 36px;
+    cursor: pointer;
+    padding: 0 16px;
+    border-radius: 8px;
+    align-items: center;
+    background: #fff;
+}
+.options .option:hover{
+    background: #F2F2F2;
+}
+.option i{
+    font-size: 25px;
+    margin-right: 12px;
+}
+.option .option-text{
+    font-size: 18px;
+    color: #333;
+}
 </style>
 <div class="loading-modal absolute h-screen w-full z-[10] items-center justify-center bg-black/50 hidden" id="assignment-submit-modal">
     <div class="loader animate-spin"></div>
 </div>
-<div id="header">
+<!-- <div id="header">
     <span>Student Portal</span>
     <h1>Playground</h1>
-</div>
+</div> -->
 <!--<div id="header">
     <h3 style="text-decoration: underline;">{{title}}</h3>
     <span id="task___">{{description}}</span>
 </div>-->
-<div id="main">
+<div class="lg:!p-0" id="main">
 <div class="chat-popup" id="chatpop" onclick="openMobileChat()">
 <!-- <img width="48" height="48" src="https://img.icons8.com/fluency/48/bot.png" alt="bot"/> -->
 <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -273,15 +325,79 @@
     </svg>
     
 </div>
-    <div class="ia" id="task_manager">
-        <div id="task___">
+    <div class="ia lg:!flex-row lg:!gap-x-[4%]" id="task_manager">
+        <div class="lg:!w-[48%]" id="task___">
             <p id="task_______">
             </p>
         </div>
-        <div id="editor"></div>
-        <div class="submit_button" onclick="handleSubmitAssignment()">
-            <button>Submit</button>
-        </div>
+        <div class="lg:!w-[48%] h-full flex flex-col">
+            <div class="first-line mb-2 flex gap-x-2 items-center justify-evenly flex-wrap">
+                <button class="changeMode flex" id="editor-theme-toggler" onclick="changeTheme()">
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: #3bb6f8;"><path d="M6.995 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007-2.246-5.007-5.007-5.007S6.995 9.239 6.995 12zM11 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2H2zm17 0h3v2h-3zM5.637 19.778l-1.414-1.414 2.121-2.121 1.414 1.414zM16.242 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.344 7.759 4.223 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z"></path></svg>
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: #3bb6f8;" class="hidden"><path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.942 9.942 0 0 0-5.12 2.735c-3.905 3.905-3.905 10.237 0 14.142 3.906 3.906 10.237 3.905 14.143 0a9.946 9.946 0 0 0 2.735-5.119A9.003 9.003 0 0 1 12 11.807z"></path></svg>
+                </button>
+                <button class="run disabled:opacity-50" id="run" disabled onclick="runCode()">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M32.1129 14.0289C35.2957 15.7597 35.2957 20.2402 32.1129 21.9711L12.8949 32.4217C9.80152 34.104 6 31.9144 6 28.4506V7.54935C6 4.08552 9.80153 1.89603 12.8949 3.57822L32.1129 14.0289Z" fill="#2CA3F2"/>
+                        </svg>                       
+                </button>
+                <div class="fileUpload">
+                    <input disabled type="file" id="file-input" style="display: none;" onchange="uploadFile(event)">
+    <label for="file-input" id="upload-button" class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+        <svg width="36" height="36" viewBox="0 0 36 36" style="fill: #3bb6f8;" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30.75 15.285H26.415C22.86 15.285 19.965 12.39 19.965 8.835V4.5C19.965 3.675 19.29 3 18.465 3H12.105C7.485 3 3.75 6 3.75 11.355V24.645C3.75 30 7.485 33 12.105 33H23.895C28.515 33 32.25 30 32.25 24.645V16.785C32.25 15.96 31.575 15.285 30.75 15.285ZM17.295 20.295C17.07 20.52 16.785 20.625 16.5 20.625C16.215 20.625 15.93 20.52 15.705 20.295L14.625 19.215V25.5C14.625 26.115 14.115 26.625 13.5 26.625C12.885 26.625 12.375 26.115 12.375 25.5V19.215L11.295 20.295C10.86 20.73 10.14 20.73 9.705 20.295C9.27 19.86 9.27 19.14 9.705 18.705L12.705 15.705C12.81 15.615 12.915 15.54 13.035 15.48C13.065 15.465 13.11 15.45 13.14 15.435C13.23 15.405 13.32 15.39 13.425 15.375C13.47 15.375 13.5 15.375 13.545 15.375C13.665 15.375 13.785 15.405 13.905 15.45C13.92 15.45 13.92 15.45 13.935 15.45C14.055 15.495 14.175 15.585 14.265 15.675C14.28 15.69 14.295 15.69 14.295 15.705L17.295 18.705C17.73 19.14 17.73 19.86 17.295 20.295Z" fill="#3bb6f8"/>
+            <path d="M26.1445 13.2157C27.5695 13.2307 29.5495 13.2307 31.2445 13.2307C32.0995 13.2307 32.5495 12.2257 31.9495 11.6257C29.7895 9.45072 25.9195 5.53572 23.6995 3.31572C23.0845 2.70072 22.0195 3.12072 22.0195 3.97572V9.21072C22.0195 11.4007 23.8795 13.2157 26.1445 13.2157Z" fill="#3bb6f8"/>
+        </svg>
+    </label>
+</div>
+                <div class="select-menu">
+                    <div class="select-btn">
+                        <span class="sBtn-text">Select your option</span>
+                        <i class="bx bx-chevron-down"></i>
+                    </div>
+                    <ul class="options">
+                        <li class="option">
+                            <i class="bx bxl-javascript" style="color: #171515;"></i>
+                            <span class="option-text">Javascript</span>
+                        </li>
+                        <li class="option">
+                            <i class="bx bxl-python" style="color: #E1306C;"></i>
+                            <span class="option-text">Python</span>
+                        </li>
+                        <li class="option">
+                            <i class="bx bxl-java" style="color: #0E76A8;"></i>
+                            <span class="option-text">Java</span>
+                        </li>
+                        <!-- <li class="option">
+                            <i class="bx bxl-facebook-circle" style="color: #4267B2;"></i>
+                            <span class="option-text">C</span>
+                        </li> -->
+                        <li class="option">
+                            <i class="bx bxl-c-plus-plus" style="color: #1DA1F2;"></i>
+                            <span class="option-text">C++</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="submit_button !m-0" onclick="handleSubmitAssignment()">
+                    <button>Submit Assignment</button>
+                </div>
+                <!-- <div class="select-language flex flex-wrap justify-center items-center p-0 m-0 text-white">
+                    <div class="select" tabindex="1">
+                        <input class="selectopt" name="language" type="radio" id="opt1" value="javascript" checked onchange="changeEditorLanguage()">
+                        <label for="opt1" class="option">Javascript</label>
+                        <input class="selectopt" name="language" type="radio" id="opt2" value="python" onchange="changeEditorLanguage()">
+                        <label for="opt2" class="option">Python</label>
+                        <input class="selectopt" name="language" type="radio" id="opt3" value="c" onchange="changeEditorLanguage()">
+                        <label for="opt3" class="option">C</label>
+                        <input class="selectopt" name="language" type="radio" id="opt4" value="c_cpp" onchange="changeEditorLanguage()">
+                        <label for="opt4" class="option">C++</label>
+                        <input class="selectopt" name="language" type="radio" id="opt5" value="java" onchange="changeEditorLanguage()">
+                        <label for="opt5" class="option">Java</label>
+                    </div>
+                  </div> -->
+            </div>
+            <div class="w-full h-full" id="editor"></div>
+    </div>
     </div>
     <div class="ia" id="container">
         <style>
