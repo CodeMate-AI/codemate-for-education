@@ -97,8 +97,10 @@ const runButton = document.getElementById('run');
 setInterval(() => {
     if (editor.getValue().trim() !== "") {
         runButton.disabled = false;
+        document.getElementById("submitYourAssignment").disabled = false;
     } else {
         runButton.disabled = true;
+        document.getElementById("submitYourAssignment").disabled = true;
     }
 }, 500);
 
@@ -121,14 +123,15 @@ setInterval(() => {
       const header = {
         "Content-type": "application/json",
       };
-  
+      document.getElementById("assignment-submit-modal").style.display = "flex";
       const res = await fetch("https://emkc.org/api/v2/piston/execute", {
         method: "POST",
         body: JSON.stringify(bodyData),
         mode: "cors",
         headers: header,
       });
-      const output = await res.json();
+         const output = await res.json();
+         document.getElementById("assignment-submit-modal").style.display = "none";
       // console.log("ouput",output)
       if (output.compile) {
         if (output.compile.stderr) {
@@ -136,7 +139,8 @@ setInterval(() => {
         }
       }
   
-      console.log( output.run);
+         document.getElementById("output").innerText = output.run.output;
+         document.getElementById("outputWindow").style.display="block"
     } catch (err) {
       return "Error in compiling";
     }

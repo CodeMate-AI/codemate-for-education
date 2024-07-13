@@ -1,10 +1,13 @@
 <style>
+    #app{
+        padding:0 !important;
+    }
     #main{
-        height: calc(100% - 50px);
+        /* height: calc(100% - 50px); */
         width: 100%;
-        flex: 1;
+        /* flex: 1; */
         display: flex;
-        padding: 20px;
+        /* padding: 20px; */
         justify-content: space-between;
         box-sizing: border-box;
     }
@@ -107,10 +110,9 @@
     }
 
     #editor{
-        flex: 2;
+        /* flex: 2; */
         border: 2px solid #d1d1d1;
         border-radius: 5px;
-        width: 100%;
         position: relative;
     }
 
@@ -126,15 +128,15 @@
     }
 
     #task_manager{
-        height: 100%;
-        width: 100%;
+        /* height: 100%;
+        width: 100%; */
         display: flex;
         flex-direction: column;
     } #task___{
         /* flex: 1; */
         width: 100%;
         overflow-y: auto;
-        max-height: 200px;
+        /* max-height: 200px; */
     } #task___ h2{
         font-size: 20px;
         font-weight: bold;
@@ -179,12 +181,12 @@
     position:absolute;
     z-index:200;
     display:block !important;
-    height:100vh;
-    width:100%;
+    width:425px;
+    height:600px;
+    border-radius:10px;
     margin-left:0 !important;
-    border-radius:0px !important;
-    top:0;
-    left:0;
+    top:5vh;
+    right:5vw;
     background-color:white;
 }
 #app{
@@ -223,7 +225,7 @@
 #chat_box{
     height:calc(100% - 50px);
     border-radius:10px;
-    border:1px solid grey;
+    /* border:1px solid grey; */
 }
 .select-menu{
     width: 190px;
@@ -293,7 +295,8 @@
     <h3 style="text-decoration: underline;">{{title}}</h3>
     <span id="task___">{{description}}</span>
 </div>-->
-<div class="lg:!p-0" id="main">
+<div class="lg:!p-0 h-screen overflow-y-scroll" id="main">
+    <div>
 <div class="chat-popup" id="chatpop" onclick="openMobileChat()">
 <!-- <img width="48" height="48" src="https://img.icons8.com/fluency/48/bot.png" alt="bot"/> -->
 <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -326,12 +329,13 @@
     
 </div>
     <div class="ia lg:!flex-row lg:!gap-x-[4%]" id="task_manager">
-        <div class="lg:!w-[48%]" id="task___">
+        <div class="mt-10 lg:mt-0 lg:h-screen overflow-y-auto p-3 lg:!w-[40%]" id="task___">
             <p id="task_______">
             </p>
         </div>
-        <div class="lg:!w-[48%] h-full flex flex-col">
-            <div class="first-line mb-2 flex gap-x-2 items-center justify-evenly flex-wrap">
+        <div class="h-screen bg-[#f3f7f8] overflow-y-auto p-3 px-6 lg:!w-[60%] flex flex-col">
+            <div>
+            <div class="first-line mb-2 flex gap-x-2 items-center justify-evenly flex-wrap gap-y-4">
                 <button class="changeMode flex" id="editor-theme-toggler" onclick="changeTheme()">
                     <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: #3bb6f8;"><path d="M6.995 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007-2.246-5.007-5.007-5.007S6.995 9.239 6.995 12zM11 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2H2zm17 0h3v2h-3zM5.637 19.778l-1.414-1.414 2.121-2.121 1.414 1.414zM16.242 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.344 7.759 4.223 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z"></path></svg>
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" style="fill: #3bb6f8;" class="hidden"><path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.942 9.942 0 0 0-5.12 2.735c-3.905 3.905-3.905 10.237 0 14.142 3.906 3.906 10.237 3.905 14.143 0a9.946 9.946 0 0 0 2.735-5.119A9.003 9.003 0 0 1 12 11.807z"></path></svg>
@@ -378,8 +382,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="submit_button !m-0" onclick="handleSubmitAssignment()">
-                    <button>Submit Assignment</button>
+                <div class="submit_button !m-0">
+                    <button class="disabled:opacity-50" id="submitYourAssignment" onclick="handleSubmitAssignment()">Submit Assignment</button>
                 </div>
                 <!-- <div class="select-language flex flex-wrap justify-center items-center p-0 m-0 text-white">
                     <div class="select" tabindex="1">
@@ -396,7 +400,12 @@
                     </div>
                   </div> -->
             </div>
-            <div class="w-full h-full" id="editor"></div>
+            <div class="h-[500px] sm:h-[600px]" id="editor"></div>
+            <div class="output hidden mt-4" id="outputWindow">
+                <span class="text-3xl font-semibold">Output</span>
+                <div class="bg-white p-4 rounded mt-4" id="output"></div>
+            </div>
+        </div>
     </div>
     </div>
     <div class="ia" id="container">
@@ -436,5 +445,6 @@
             <i id="send_button" onclick="sendMessage()" class="ph ph-paper-plane-right"></i>
         </div>
     </div>
+</div>
 </div>
 
