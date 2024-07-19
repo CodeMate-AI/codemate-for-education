@@ -101,6 +101,15 @@ const env = {
 
                 let newUrl = new URL(window.location.href);
                 newUrl.searchParams.set('app', env.active_page);
+
+                  //if directly playground is clicked, then it is for free coding session and not associated with assignment
+                if (newUrl.searchParams.get('app') === "playground") {
+                    newUrl.searchParams.forEach((value, key) => {
+                        if (!['institute_id', 'student_id', 'app', 'language'].includes(key)) {
+                            newUrl.searchParams.delete(key);
+                        }
+                    });
+                }
                 if (newUrl.searchParams.get('app') === "playground" && newUrl.searchParams.get('id') === null && newUrl.searchParams.get('language') === null) {
                     // newUrl.searchParams.set('id', "123456")
                     newUrl.searchParams.set('language', "text")
@@ -111,6 +120,9 @@ const env = {
                     newUrl.searchParams.delete('language')
                 }
                 history.pushState({}, '', newUrl);
+                if (newUrl.searchParams.get('app') === "playground") {
+                    window.location.reload();   
+                }
             }
         })
     },
