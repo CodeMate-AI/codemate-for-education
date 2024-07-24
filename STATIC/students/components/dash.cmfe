@@ -224,11 +224,11 @@
     cursor: pointer;
   }
 </style>
-<div id="header">
+<div id="header"  class="mx-auto max-w-[1150px]">
     <!-- <span>Student Portal</span> -->
     <span class="!text-[32px] !text-[#011936] font-[600]">Dashboard</span>
 </div>
-<div id="screen_container">
+<div id="screen_container" class="mx-auto max-w-[1150px]">
     <div id="assignments_stats" class="mb-4">
         <div class="stats__ w-[332px] h-[96px] rounded-xl p-6 bg-[#F7F7F7] flex gap-x-6" id="submitted">
             <!-- Assignments submitted -->
@@ -283,10 +283,12 @@
     <div class="visuals flex flex-wrap justify-between">
         <div class="submissionsVisuals sm:w-[509px]  flex flex-col gap-y-4">
             <span class="text-2xl text-[#011936] font-semibold">My Submissions</span>
+            <canvas id="mySubmissionChart"></canvas>
         </div>
         <div class="skillGraph w-full sm:w-[509px] flex flex-col gap-y-4">
             <span class="text-2xl text-[#011936] font-semibold">Skill Graph</span>
-            <canvas id="myChart"></canvas>
+            <div class="loader animate-spin mx-auto my-auto" id="skillLoader"></div>
+            <canvas id="myChart" class="hidden"></canvas>
         </div>
     </div>
     <div id="submitted_assignments" class="flex justify-between items-center font-[Inter] -mt-1">

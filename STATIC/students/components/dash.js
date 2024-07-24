@@ -247,6 +247,99 @@ document.getElementById("view-all").addEventListener("click", function () {
 
 //skill graph logic
 Chart.defaults.font.size = 14;
+// new Chart(document.getElementById('myChart'), {
+//   type: 'bar',
+//   data: {
+//     labels: [
+//         ['Problem', 'Solving'],
+//         ['Logic', 'Building'],
+//         ['Data', 'Structure'],
+//         ['Code', 'Efficiency'],
+//         ['Code', 'Accuracy']
+//       ],
+//     datasets: [{
+//       label: 'Score',
+//       data: [65, 19, 37, 5, 20, 55],
+//       backgroundColor: [
+//         '#2ba2f2',
+//         '#2a9c8e',
+//         '#8338eb',
+//         '#fac600',
+//         '#e53945',
+//       ],
+//     }]
+//   },
+//     options: {
+//         plugins: {
+//             legend: {
+//               display: false
+//             },
+
+//           },
+//     scales: {
+//       y: {
+//         beginAtZero: true
+//       }
+//     }
+//   }
+// });
+
+async function handleSkillsShow() {
+  // fetch assignments data
+  let newUrl = new URL(window.location.href);
+  let institute_id = newUrl.searchParams.get("institute_id");
+  let student_id = newUrl.searchParams.get('student_id');
+let response = await fetch(`https://backend.edu.codemate.ai/student/get_assignments?institute_id=${institute_id}&student_id=${student_id}`);
+let data = await response.json();
+let submissions = data.submissions;
+
+// sort submissions by date
+submissions.sort((a, b) => {
+    return new Date(b.date_time) - new Date(a.date_time);
+});
+submissions.splice(0, 2); // Remove bad data
+
+// taking the first five objects of submissions array else it would take a lot of time
+let topFiveSubmissions = submissions.slice(0, 3);
+
+// function to create prompt
+function createPrompt(submissions) {
+    return submissions.map(e => `Assignment: ${e.assignment.description}\nCode: ${e.submission}`).join('\n\n');
+}
+
+// function to get score
+async function getScore(prompt, metric) {
+    let response = await fetch('https://backend.edu.codemate.ai/generate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: `${prompt}\n\nPlease provide the average ${metric} marks out of 100 .By that what I mean is grade the assignments solutions based on the assignments questions based on your discretion and then give the average marks which you think the student deserves. Make sure to return only the number and nothing else.`,
+        })
+    });
+  let data = await response.json();
+  console.log(data.response)
+    return parseFloat(data.response); // Ensure to parse the response to get the number
+}
+
+// create prompt from top five submissions
+let prompt = createPrompt(topFiveSubmissions);
+
+// get scores
+let problemSolvingScore = await getScore(prompt, 'Problem Solving');
+let logicBuildingScore = await getScore(prompt, 'Logic Building');
+let dataStructureScore = await getScore(prompt, 'Data Structure');
+let codeEfficiencyScore = await getScore(prompt, 'Code Efficiency');
+let codeAccuracyScore = await getScore(prompt, 'Code Accuracy');
+
+  //remove loader since data is fetched and now chart can be shown
+  document.getElementById("skillLoader").style.display = "none";
+  document.getElementById('myChart').style.display = "block";
+// assign the array of results to the chart data
+let scores = [problemSolvingScore, logicBuildingScore, dataStructureScore, codeEfficiencyScore, codeAccuracyScore];
+
+// load the chart only when the result is received
 new Chart(document.getElementById('myChart'), {
   type: 'bar',
   data: {
@@ -259,7 +352,7 @@ new Chart(document.getElementById('myChart'), {
       ],
     datasets: [{
       label: 'Score',
-      data: [65, 19, 37, 5, 20, 55],
+      data: scores,
       backgroundColor: [
         '#2ba2f2',
         '#2a9c8e',
@@ -269,17 +362,127 @@ new Chart(document.getElementById('myChart'), {
       ],
     }]
   },
-    options: {
-        plugins: {
-            legend: {
-              display: false
-            },
-
-          },
+  options: {
+    plugins: {
+        legend: {
+          display: false
+        },
+    },
     scales: {
       y: {
+        max:100,
         beginAtZero: true
       }
     }
   }
 });
+}
+
+handleSkillsShow();
+//submissions graph logic
+// new Chart(document.getElementById('mySubmissionChart'), {
+//   type: 'line',
+//   data: {
+//     labels: [
+//         20,21,22,23,24,25,26,27,28,29,30
+//       ],
+//     datasets: [{
+//       label: 'Score',
+//       data: [1,0,0,0,1,0,0,0,1,0,0],
+//       // backgroundColor: [
+//       //   '#2ba2f2',
+//       //   '#2a9c8e',
+//       //   '#8338eb',
+//       //   '#fac600',
+//       //   '#e53945',
+//       // ],
+//       fill: false,
+//     borderColor: 'rgb(75, 192, 192)',
+//     tension: 0.1
+//     }]
+//   },
+//   //   options: {
+//   //       plugins: {
+//   //           legend: {
+//   //             display: false
+//   //           },
+
+//   //         },
+//   //   scales: {
+//   //     y: {
+//   //       beginAtZero: true
+//   //     }
+//   //   }
+//   // }
+// });
+
+async function fetchAndProcessData() {
+  let newUrl = new URL(window.location.href);
+  let institute_id = newUrl.searchParams.get("institute_id");
+  let student_id = newUrl.searchParams.get('student_id');
+
+  try {
+      let response = await fetch(`https://backend.edu.codemate.ai/student/get_assignments?institute_id=${institute_id}&student_id=${student_id}`);
+      let data = await response.json();
+      let submissions = data.submissions;
+
+      // Sort submissions by date
+      submissions.sort((a, b) => {
+          return new Date(b.date_time) - new Date(a.date_time);
+      });
+      submissions.splice(0, 2);//bad data removed, stuff like accuracy value not present and date format different from rest
+      // Get the date of the first object and extract the day
+      let latestDate = new Date(submissions[0].date_time);
+      let latestDay = latestDate.getDate();
+
+      // Create an array of the last 10 days
+      let days = [];
+      for (let i = 9; i >= 0; i--) {
+          let day = new Date(latestDate);
+          day.setDate(latestDay - i);
+          days.push(day.getDate());
+      }
+
+      // Count the number of submissions for each day
+      let numSubmissions = Array(10).fill(0);
+      submissions.forEach(submission => {
+          let submissionDate = new Date(submission.date_time).getDate();
+          let index = days.indexOf(submissionDate);
+          if (index !== -1) {
+              numSubmissions[index]++;
+          }
+      });
+
+      // Create the chart
+      new Chart(document.getElementById('mySubmissionChart'), {
+          type: 'line',
+          data: {
+              labels: days,
+              datasets: [{
+                  label: 'Number of Submissions',
+                  data: numSubmissions,
+                  fill: false,
+                  borderColor: 'rgb(75, 192, 192)',
+                  tension: 0.1
+              }]
+          },
+          options: {
+              plugins: {
+                  legend: {
+                      display: false
+                  }
+              },
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  } catch (error) {
+      console.error('Error fetching or processing data:', error);
+  }
+}
+
+// Call the function at the beginning
+fetchAndProcessData();

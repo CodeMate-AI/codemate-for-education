@@ -162,7 +162,9 @@ const env = {
                                         env.scripts.data.dash.submissions.sort((a, b) => {
                                             return new Date(b.date_time) - new Date(a.date_time);
                                         });
-                                        env.scripts.data.dash.submissions.slice(2, 5).forEach((e) => {
+                                           //bad data removed, stuff like accuracy value not present and date format different from rest when removing first two elements
+                                           //rest not considered since we need 5 only
+                                        env.scripts.data.dash.submissions.slice(2, 7).forEach((e) => {
                                             console.log("e=",e);
                                             // console.log(e.assignment.id);
                                             var temp = dash_elms.submitted_assignment;
