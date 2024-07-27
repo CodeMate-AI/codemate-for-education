@@ -1,19 +1,56 @@
 const User = require('../models/User');
 const Assignment = require('../models/assignment');
 const Submission = require('../models/submission');
+const Institute = require('../models/Institute');
 
 const getAssignments = async (req, res) => {
-    const { institute_id, student_id } = req.query;
+    const { institute_id, classroom_id, student_id } = req.query;
 
-    const student = await User.findById(student_id);
-    if (!student) {
-        return res.status(404).json({ status: 'failure', message: 'Student not found' });
+    try {
+        const institute = await Institute.findById(institute_id);
+        if (!institute) {
+            return res.status(404).json({ status: 'failure', message: 'Institute not found' });
+        }
+
+        const classroom = institute.classrooms.find(c => c.id === classroom_id);
+        if (!classroom) {
+            return res.status(404).json({ status: 'failure', message: 'Classroom not found' });
+        }
+
+        const student = classroom.students.find(s => s.id === student_id);
+        if (!student) {
+            return res.status(404).json({ status: 'failure', message: 'Student not found' });
+        }
+
+        res.status(200).json({ status: 'success', assigned: student.assigned , submissions:student.submissions });
+    } catch (error) {
+        res.status(500).json({ status: 'failure', message: 'Server error', error });
     }
+};
 
-    const assignments = await Assignment.find({ _id: { $in: student.assigned.map(a => a.aid) } });
-    const submissions = await Submission.find({ student_id });
+const getSubmissions = async (req, res) => {
+    const { institute_id, classroom_id, student_id } = req.query;
 
-    res.status(200).json({ status: 'success', assigned: assignments, submissions });
+    try {
+        const institute = await Institute.findById(institute_id);
+        if (!institute) {
+            return res.status(404).json({ status: 'failure', message: 'Institute not found' });
+        }
+
+        const classroom = institute.classrooms.find(c => c.id === classroom_id);
+        if (!classroom) {
+            return res.status(404).json({ status: 'failure', message: 'Classroom not found' });
+        }
+
+        const student = classroom.students.find(s => s.id === student_id);
+        if (!student) {
+            return res.status(404).json({ status: 'failure', message: 'Student not found' });
+        }
+
+        res.status(200).json({ status: 'success', assigned: student.assigned , submissions:student.submissions });
+    } catch (error) {
+        res.status(500).json({ status: 'failure', message: 'Server error', error });
+    }
 };
 
 const submitAssignment = async (req, res) => {
@@ -33,4 +70,4 @@ const submitAssignment = async (req, res) => {
     res.status(201).json({ status: 'success', message: 'Assignment submitted successfully' });
 };
 
-module.exports = { getAssignments, submitAssignment };
+module.exports = { getAssignments, getSubmissions, submitAssignment };

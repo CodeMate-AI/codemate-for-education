@@ -4,6 +4,7 @@ const assignmentSchema = new mongoose.Schema({
     id: { type: String, unique: true, required: true },
     teacher_id: { type: String, required: true },
     classroom_id: { type: String, required: true },
+    institute_id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     problem_statement: { type: String, required: true },
