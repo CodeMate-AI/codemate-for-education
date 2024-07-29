@@ -101,6 +101,15 @@ const env = {
 
                 let newUrl = new URL(window.location.href);
                 newUrl.searchParams.set('app', env.active_page);
+
+                  //if directly playground is clicked, then it is for free coding session and not associated with assignment
+                if (newUrl.searchParams.get('app') === "playground") {
+                    newUrl.searchParams.forEach((value, key) => {
+                        if (!['institute_id', 'student_id', 'app', 'language'].includes(key)) {
+                            newUrl.searchParams.delete(key);
+                        }
+                    });
+                }
                 if (newUrl.searchParams.get('app') === "playground" && newUrl.searchParams.get('id') === null && newUrl.searchParams.get('language') === null) {
                     // newUrl.searchParams.set('id', "123456")
                     newUrl.searchParams.set('language', "text")
@@ -111,6 +120,9 @@ const env = {
                     newUrl.searchParams.delete('language')
                 }
                 history.pushState({}, '', newUrl);
+                if (newUrl.searchParams.get('app') === "playground") {
+                    window.location.reload();   
+                }
             }
         })
     },
@@ -150,7 +162,9 @@ const env = {
                                         env.scripts.data.dash.submissions.sort((a, b) => {
                                             return new Date(b.date_time) - new Date(a.date_time);
                                         });
-                                        env.scripts.data.dash.submissions.slice(2, 5).forEach((e) => {
+                                           //bad data removed, stuff like accuracy value not present and date format different from rest when removing first two elements
+                                           //rest not considered since we need 5 only
+                                        env.scripts.data.dash.submissions.slice(2, 7).forEach((e) => {
                                             console.log("e=",e);
                                             // console.log(e.assignment.id);
                                             var temp = dash_elms.submitted_assignment;

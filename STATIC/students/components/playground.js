@@ -8,8 +8,8 @@ temp.forEach((e)=>{
 })
 
 var editor = ace.edit("editor");
-    // editor.setTheme("ace/theme/tomorrow_night");
-    editor.session.setMode(`ace/mode/${search_params.language}`);
+    editor.setTheme("ace/theme/chrome"); // Initial theme: light
+    editor.session.setMode(`ace/mode/javascript`);//initially set to javascript
     editor.setShowPrintMargin(false);
 
     editor.setFontSize(20);
@@ -20,9 +20,132 @@ var editor = ace.edit("editor");
         enableCodeLens: true
     });
 
+//change theme logic
+const themeToggler = document.getElementById('editor-theme-toggler');
+const sunIcon = document.getElementById('sun');
+const moonIcon = document.getElementById('moon');
 
+  function changeTheme() {
+    if (editor.getTheme() === "ace/theme/chrome") {
+        editor.setTheme("ace/theme/monokai"); // change to dark theme
+        sunIcon.style.display = "none";
+        moonIcon.style.display="block"
+    } else {
+        editor.setTheme("ace/theme/chrome"); // change to light theme
+        sunIcon.style.display = "block";
+        moonIcon.style.display="none"
+    }
+};
 
+//     function changeEditorLanguage() {
+//         // Get the selected language
+//         var selectedLanguage = document.querySelector('input[name="language"]:checked').value;
+        
+//         // Set the Ace Editor mode based on the selected language
+//         editor.session.setMode("ace/mode/" + selectedLanguage);
+// }
 
+const languageModeMap = {
+    "Javascript": "ace/mode/javascript",
+    "Java": "ace/mode/java",
+    "Python": "ace/mode/python",
+    "C++": "ace/mode/c_cpp",
+    "C": "ace/mode/c_cpp"
+};
+
+    
+const optionMenu = document.querySelector(".select-menu"),
+       selectBtn = optionMenu.querySelector(".select-btn"),
+       options = optionMenu.querySelectorAll(".option"),
+       sBtn_text = optionMenu.querySelector(".sBtn-text");
+
+selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));       
+
+options.forEach(option =>{
+    option.addEventListener("click", ()=>{
+        let selectedOption = option.querySelector(".option-text").innerText;
+        sBtn_text.innerText = selectedOption;
+        if (languageModeMap[selectedOption]) {
+            editor.session.setMode(languageModeMap[selectedOption]);
+        }
+        optionMenu.classList.remove("active");
+    });
+});
+ // function to programmatically click the first option
+ function clickFirstOption() {
+    const firstOption = options[0];
+    firstOption.click();
+}
+
+// call the function to click the first option as initial language
+clickFirstOption();
+
+//logic to upload file
+ function uploadFile(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            editor.setValue(e.target.result, -1);
+        };
+        reader.readAsText(file);
+    }
+};
+
+//enable run when theres some code
+const runButton = document.getElementById('run');
+setInterval(() => {
+    if (editor.getValue().trim() !== "") {
+        runButton.disabled = false;
+        document.getElementById("submitYourAssignment").disabled = false;
+    } else {
+        runButton.disabled = true;
+        document.getElementById("submitYourAssignment").disabled = true;
+    }
+}, 500);
+
+//run the code using piston api
+ async function runCode() {
+     try {
+        console.log(sBtn_text.innerText.toLowerCase())
+      const bodyData = {
+        language:  sBtn_text.innerText.toLowerCase(),
+        version: "x",
+        files: [
+          {
+            name: "ProgramFile",
+            content: editor.getValue().trim(),
+          },
+        ],
+        stdin: "",
+      };
+  
+      const header = {
+        "Content-type": "application/json",
+      };
+      document.getElementById("assignment-submit-modal").style.display = "flex";
+      const res = await fetch("https://emkc.org/api/v2/piston/execute", {
+        method: "POST",
+        body: JSON.stringify(bodyData),
+        mode: "cors",
+        headers: header,
+      });
+         const output = await res.json();
+         document.getElementById("assignment-submit-modal").style.display = "none";
+      // console.log("ouput",output)
+      if (output.compile) {
+        if (output.compile.stderr) {
+          return output.compile;
+        }
+      }
+  
+         document.getElementById("output").innerText = output.run.output;
+         document.getElementById("outputWindow").style.display="block"
+    } catch (err) {
+      return "Error in compiling";
+    }
+  };
+  
 setTimeout(()=>{
     if (search_params.assignment_id != "" && search_params.assignment_id != undefined) {
         fetch("https://backend.edu.codemate.ai/get_task?institute_id=123456&task_id=" + search_params.assignment_id)

@@ -125,7 +125,6 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-bottom: 20px;
 }#screen_container::-webkit-scrollbar-track,
 #screen_container::-webkit-scrollbar-track-piece,
@@ -225,12 +224,12 @@
     cursor: pointer;
   }
 </style>
-<div id="header">
+<div id="header"  class="mx-auto max-w-[1150px]">
     <!-- <span>Student Portal</span> -->
     <span class="!text-[32px] !text-[#011936] font-[600]">Dashboard</span>
 </div>
-<div id="screen_container">
-    <div id="assignments_stats">
+<div id="screen_container" class="mx-auto max-w-[1150px]">
+    <div id="assignments_stats" class="mb-4">
         <div class="stats__ w-[332px] h-[96px] rounded-xl p-6 bg-[#F7F7F7] flex gap-x-6" id="submitted">
             <!-- Assignments submitted -->
             <svg width="160" height="48" viewBox="0 0 160 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -277,15 +276,24 @@
             <div class="stats w-[100px] !h-[48px] !text-[32px] !font-[600] text-[#011936] text-right flex justify-end items-center">{{assignments.pending}}</div>
         </div>
     </div>
-    <br>
-    <br>
     <!-- <div id="strks_mgr">
         <h2>My Submissions</h2>
         <div id="presenter"></div>
     </div> -->
-    <div id="submitted_assignments" class="flex justify-between items-center font-[Inter]">
+    <div class="visuals flex flex-wrap justify-between">
+        <div class="submissionsVisuals sm:w-[509px]  flex flex-col gap-y-4">
+            <span class="text-2xl text-[#011936] font-semibold">My Submissions</span>
+            <canvas id="mySubmissionChart"></canvas>
+        </div>
+        <div class="skillGraph w-full sm:w-[509px] flex flex-col gap-y-4">
+            <span class="text-2xl text-[#011936] font-semibold">Skill Graph</span>
+            <div class="loader animate-spin mx-auto my-auto" id="skillLoader"></div>
+            <canvas id="myChart" class="hidden"></canvas>
+        </div>
+    </div>
+    <div id="submitted_assignments" class="flex justify-between items-center font-[Inter] -mt-1">
         <span class="text-[#011936] text-2xl font-[600] mb-4">Recent Submissions</span>
-        <h3 class="text-[#48aef3] cursor-pointer" id="view-all">View All</h3>
+        <h3 class="text-[#48aef3] cursor-pointer mb-3 font-semibold" id="view-all">View All</h3>
     </div>
     <div id="submitted_assignments_cover">
         {{sa.stat}}
